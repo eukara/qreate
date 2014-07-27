@@ -4,18 +4,24 @@
 // Feel free to modify and to redristribute,
 // but do so along with your modified code!
 
-void(entity trent) qreate_tool_denied =
+float (entity trent) qreate_tool_denied =
 {
+	
+	if((trent.spawner && trent.spawner != self) || (!trent.spawner && trent.solid == SOLID_BSP))
+	{
+		if(self.qmsg > time)
+			return FALSE;
 
-	if(self.qmsg > time)
-		return;
+		if(trent == world)
+			return FALSE;
 
-	if(trent == world)
-		return;
+		self.qmsg = time + 2;
+		sprint(self, "This does not belong to you.\n");
 
-	self.qmsg = time + 2;
-	sprint(self, "This does not belong to you.\n");
+		return FALSE;
+	}
 
+	return TRUE;
 };
 void(float mode, float reverse) qreate_tool_rotate =
 {
@@ -29,11 +35,8 @@ void(float mode, float reverse) qreate_tool_rotate =
 	src_z = self.absmin_z + self.size_z * 0.7;
 	traceline (src, src + v_forward*1024, FALSE, self);
 
-	if (trace_ent.spawner != self && trace_ent.spawner)
-	{
-		qreate_tool_denied(trace_ent);
+	if (qreate_tool_denied(trace_ent) == FALSE)
 		return;
-	}
 	
 	if(trace_ent != world)
 	{
@@ -74,11 +77,9 @@ void(float mode, float reverse) qreate_tool_move =
 	src_z = self.absmin_z + self.size_z * 0.7;
 	traceline (src, src + v_forward*1024, FALSE, self);
 
-	if (trace_ent.spawner != self && trace_ent.spawner)
-	{
-		qreate_tool_denied(trace_ent);
+	if (qreate_tool_denied(trace_ent) == FALSE)
 		return;
-	}
+
 	if(trace_ent != world)
 	{
 		if(mode == 0)
@@ -120,11 +121,8 @@ void() qreate_tool_remove =
 	src_z = self.absmin_z + self.size_z * 0.7;
 	traceline (src, src + v_forward*1024, FALSE, self);
 
-	if (trace_ent.spawner != self && trace_ent.spawner)
-	{
-		qreate_tool_denied(trace_ent);
+	if (qreate_tool_denied(trace_ent) == FALSE)
 		return;
-	}
 	if(trace_ent != world)
 	{
 		if(trace_ent.classname == "player")
@@ -149,11 +147,8 @@ void() qreate_tool_skin =
 	src_z = self.absmin_z + self.size_z * 0.7;
 	traceline (src, src + v_forward*1024, FALSE, self);
 
-	if (trace_ent.spawner != self && trace_ent.spawner)
-	{
-		qreate_tool_denied(trace_ent);
+	if (qreate_tool_denied(trace_ent) == FALSE)
 		return;
-	}
 
 	if(trace_ent != world)
 	{
@@ -179,11 +174,8 @@ void() qreate_tool_light =
 	src_z = self.absmin_z + self.size_z * 0.7;
 	traceline (src, src + v_forward*1024, FALSE, self);
 
-	if (trace_ent.spawner != self && trace_ent.spawner)
-	{
-		qreate_tool_denied(trace_ent);
+	if (qreate_tool_denied(trace_ent) == FALSE)
 		return;
-	}
 
 	if(trace_ent != world)
 	{
@@ -216,11 +208,9 @@ void(float reverse) qreate_tool_frame =
 	src_z = self.absmin_z + self.size_z * 0.7;
 	traceline (src, src + v_forward*1024, FALSE, self);
 
-	if (trace_ent.spawner != self && trace_ent.spawner)
-	{
-		qreate_tool_denied(trace_ent);
+	if (qreate_tool_denied(trace_ent) == FALSE)
 		return;
-	}
+
 	if(trace_ent != world)
 	{
 		if(reverse == 0)
@@ -358,11 +348,9 @@ void() qreate_tool_quakebreak =
 	traceline (src, src + v_forward*1024, FALSE, self);
 
 
-	if (trace_ent.spawner != self && trace_ent.spawner)
-	{
-		qreate_tool_denied(trace_ent);
+	if (qreate_tool_denied(trace_ent) == FALSE)
 		return;
-	}
+
 	if(trace_ent != world)
 	{
 		if(trace_ent.model == "progs/player.mdl")
