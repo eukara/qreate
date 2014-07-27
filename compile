@@ -1,0 +1,9 @@
+#!/bin/sh
+qcc
+zip -r qreate_progs_src.zip ./
+mv ./qreate_progs_src.zip ../backups/progs_src$(date -d "today" +"%Y%m%d%H%M").zip
+rm ./error.log
+rm ./files.dat
+rm ./progdefs.h
+
+

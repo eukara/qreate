@@ -1,0 +1,54 @@
+../../progs.dat
+
+defs.qc
+qr_defs.qc		// Qreate - eukos
+qr_rp_defs.qc		// Qreate - eukos
+qr_hacks.qc		// Qreate - eukos
+qr_rp_weapons.qc	// Qreate - eukos
+qr_rp_jobs.qc		// Qreate - eukos
+qr_rp_hud.qc		// Qreate - eukos
+qr_rp_precaches.qc	// Qreate - eukos
+qr_rp_main.qc		// Qreate - eukos
+qr_rp_menu.qc		// Qreate - eukos
+
+subs.qc
+fight.qc
+ai.qc
+combat.qc
+items.qc
+qr_tools.qc		// Qreate - eukos
+qr_binds.qc		// Qreate - eukos
+weapons.qc
+world.qc
+client.qc
+player.qc
+monsters.qc
+doors.qc
+buttons.qc
+triggers.qc
+plats.qc
+misc.qc
+
+ogre.qc
+demon.qc
+shambler.qc
+knight.qc
+soldier.qc
+wizard.qc
+dog.qc
+zombie.qc
+boss.qc
+
+tarbaby.qc		// registered
+hknight.qc		// registered
+fish.qc			// registered
+shalrath.qc		// registered
+enforcer.qc		// registered
+oldone.qc		// registered
+
+qr_spawner.qc 		// Qreate - eukos
+qr_altspawn.qc		// Qreate - eukos
+qr_vehicle.qc		// Qreate - eukos
+qr_soa_rotate.qc   	// Qreate - eukos
+qr_rp_entities.qc	// Qreate - eukos
+

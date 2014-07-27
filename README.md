@@ -1,4 +1,5 @@
-qreate-qc
+Qreate-QC
 =========
 
-QC code of the Qreate code base
+Serverside QC code.
+To compile use the latest version of frikqcc!
