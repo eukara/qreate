@@ -1198,6 +1198,7 @@ void() ClientConnect =
 		ExitIntermission ();
 };
 
+void(entity player) qreate_cleanup;
 
 /*
 ===========
@@ -1220,6 +1221,9 @@ void() ClientDisconnect =
 	bprint (" frags\n");
 	sound (self, CHAN_BODY, "player/tornoff2.wav", 1, ATTN_NONE);
 	set_suicide_frame ();
+
+	// eukara - attempt cleanup of their entities
+	qreate_cleanup(self);
 };
 
 /*

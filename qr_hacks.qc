@@ -77,3 +77,18 @@ void() qreate_serversidenoclip =
 		sprint(self, "noclip on\n");
 	}
 }
+
+void(entity player) qreate_cleanup =
+{
+	local entity    finder;
+
+        finder = findradius (self.origin, 20000);
+
+        while(finder) 
+        {
+                if(finder.spawner == player)
+			remove(finder);
+
+                finder = finder.chain;
+        }
+};
