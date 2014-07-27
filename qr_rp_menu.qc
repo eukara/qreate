@@ -105,14 +105,14 @@ float() RP_Menu_Input =
 			else if(self.impulse == 4)
 				RP_Unarrest();
 			else
-				return 0;
+				return FALSE;
 		}
 		else if(self.rp_job == JOB_MOBSTER)
 		{
 			if(self.impulse == 3)
 				RP_LockPickAttempt();
 			else
-				return 0;
+				return FALSE;
 		}
 		else if (self.rp_job == JOB_GUNDEALER)
 		{
@@ -121,14 +121,14 @@ float() RP_Menu_Input =
 			else if(self.impulse == 4)
 				RP_SellShells();
 			else
-				return 0;
+				return FALSE;
 		}
 		else if (self.rp_job == JOB_MEDIC)
 		{
 			if(self.impulse == 3)
 				RP_HealPlayer();
 			else
-				return 0;
+				return FALSE;
 		}
 		else if (self.rp_job == JOB_MERCHANT)
 		{
@@ -137,17 +137,17 @@ float() RP_Menu_Input =
 			else if(self.impulse == 4)
 				RP_Basketball_Spawn();
 			else
-				return 0;
+				return FALSE;
 		}
 		else if (self.rp_job == JOB_MAYOR)
 		{
 			if(self.impulse == 3)
 				RP_SwitchLockdown();
 			else
-				return 0;
+				return FALSE;
 		}	
 		else
-			return 0;
+			return FALSE;
 	}
 	else if (self.rp_inmenu)
 	{
@@ -167,17 +167,17 @@ float() RP_Menu_Input =
 		RP_SetJob(JOB_MAYOR);
 	else
 	{
-		return 0;
+		return FALSE;
 	}
 	
 	}
 	else
 	{
-		return 0;
+		return FALSE;
 	}
 
 	self.rp_inmenu = FALSE;
 	self.rp_infmenu = FALSE;
 	self.impulse = 0;
-	return 1;
+	return TRUE;
 };

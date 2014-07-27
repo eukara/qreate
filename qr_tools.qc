@@ -29,7 +29,7 @@ void(float mode, float reverse) qreate_tool_rotate =
 	src_z = self.absmin_z + self.size_z * 0.7;
 	traceline (src, src + v_forward*1024, FALSE, self);
 
-	if (trace_ent.spawner != self)
+	if (trace_ent.spawner != self && trace_ent.spawner)
 	{
 		qreate_tool_denied(trace_ent);
 		return;
@@ -73,7 +73,8 @@ void(float mode, float reverse) qreate_tool_move =
 	src = self.origin + v_forward*10;
 	src_z = self.absmin_z + self.size_z * 0.7;
 	traceline (src, src + v_forward*1024, FALSE, self);
-	if (trace_ent.spawner != self)
+
+	if (trace_ent.spawner != self && trace_ent.spawner)
 	{
 		qreate_tool_denied(trace_ent);
 		return;
@@ -118,7 +119,8 @@ void() qreate_tool_remove =
 	src = self.origin + v_forward*10;
 	src_z = self.absmin_z + self.size_z * 0.7;
 	traceline (src, src + v_forward*1024, FALSE, self);
-	if (trace_ent.spawner != self)
+
+	if (trace_ent.spawner != self && trace_ent.spawner)
 	{
 		qreate_tool_denied(trace_ent);
 		return;
@@ -146,7 +148,8 @@ void() qreate_tool_skin =
 	src = self.origin + v_forward*10;
 	src_z = self.absmin_z + self.size_z * 0.7;
 	traceline (src, src + v_forward*1024, FALSE, self);
-	if (trace_ent.spawner != self)
+
+	if (trace_ent.spawner != self && trace_ent.spawner)
 	{
 		qreate_tool_denied(trace_ent);
 		return;
@@ -175,7 +178,8 @@ void() qreate_tool_light =
 	src = self.origin + v_forward*10;
 	src_z = self.absmin_z + self.size_z * 0.7;
 	traceline (src, src + v_forward*1024, FALSE, self);
-	if (trace_ent.spawner != self)
+
+	if (trace_ent.spawner != self && trace_ent.spawner)
 	{
 		qreate_tool_denied(trace_ent);
 		return;
@@ -211,7 +215,8 @@ void(float reverse) qreate_tool_frame =
 	src = self.origin + v_forward*10;
 	src_z = self.absmin_z + self.size_z * 0.7;
 	traceline (src, src + v_forward*1024, FALSE, self);
-	if (trace_ent.spawner != self)
+
+	if (trace_ent.spawner != self && trace_ent.spawner)
 	{
 		qreate_tool_denied(trace_ent);
 		return;
@@ -353,7 +358,7 @@ void() qreate_tool_quakebreak =
 	traceline (src, src + v_forward*1024, FALSE, self);
 
 
-	if (trace_ent.spawner != self)
+	if (trace_ent.spawner != self && trace_ent.spawner)
 	{
 		qreate_tool_denied(trace_ent);
 		return;
