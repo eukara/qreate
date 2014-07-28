@@ -241,7 +241,7 @@ void() monster_knight =
 	self.movetype = MOVETYPE_STEP;
 
 	setmodel (self, "progs/knight.mdl");
-
+	self.classname = "monster_knight";
 	setsize (self, '-16 -16 -24', '16 16 40');
 	self.health = 75;
 

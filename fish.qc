@@ -160,7 +160,7 @@ void() monster_fish =
 	self.movetype = MOVETYPE_STEP;
 
 	setmodel (self, "progs/fish.mdl");
-
+	self.classname = "monster_fish";
 	setsize (self, '-16 -16 -24', '16 16 24');
 	self.health = 25;
 	

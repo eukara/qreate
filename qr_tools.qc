@@ -316,6 +316,16 @@ void() qreate_break_explode =
 	BecomeExplosion ();
 };
 
+void() qreate_break_explodechain =
+{
+	self.takedamage = DAMAGE_NO;
+	sound (self, CHAN_VOICE, "weapons/r_exp3.wav", 1, ATTN_NORM);
+	particle (self.origin, '0 0 0', 75, 255);
+	T_RadiusDamage (self, self.owner, 50, world);
+	self.origin_z = self.origin_z + 32;
+	BecomeExplosion ();
+};
+
 void() qreate_break_gibblet =
 {
 	sound (self, CHAN_VOICE, "player/udeath.wav", 1, ATTN_NORM);
@@ -389,13 +399,22 @@ void() qreate_tool_quakebreak =
 		else
 			pmod = 0;
 
-		if(trace_ent.qmode == 3)
+		if(trace_ent.qmode == 4)
 		{
 			centerprint(self, "QB: NONE\n");
 			trace_ent.takedamage = DAMAGE_NO;
 			trace_ent.qmode = 0;
 		}
 		else if(trace_ent.qmode == 1)
+		{	
+			centerprint(self, "QB: EXPLODE CHAIN\n");
+			trace_ent.health = 1;
+			trace_ent.th_die = qreate_break_explodechain;
+			trace_ent.takedamage = DAMAGE_AIM;
+			trace_ent.qmode = 2;
+		}
+
+		else if(trace_ent.qmode == 2)
 		{
 			centerprint(self, "QB: GIBBING\n");
 			trace_ent.health = 1;
@@ -403,17 +422,17 @@ void() qreate_tool_quakebreak =
 			trace_ent.takedamage = DAMAGE_AIM;
 			
 			if(pmod)
-				trace_ent.qmode = 2;
-			else
 				trace_ent.qmode = 3;
+			else
+				trace_ent.qmode = 4;
 		}
-		else if(trace_ent.qmode == 2 && pmod == 1)
+		else if(trace_ent.qmode == 3 && pmod == 1)
 		{	
 			centerprint(self, "QB: PLEASE NO\n");
 			trace_ent.health = 1;
 			trace_ent.th_die = qreate_dance;
 			trace_ent.takedamage = DAMAGE_AIM;
-			trace_ent.qmode = 3;
+			trace_ent.qmode = 4;
 		}
 		else
 		{	

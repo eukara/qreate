@@ -421,7 +421,7 @@ void() monster_ogre =
 	self.movetype = MOVETYPE_STEP;
 
 	setmodel (self, "progs/ogre.mdl");
-
+	self.classname = "monster_ogre";
 	setsize (self, VEC_HULL2_MIN, VEC_HULL2_MAX);
 	self.health = 200;
 

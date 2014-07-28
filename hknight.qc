@@ -398,12 +398,12 @@ void() hknight_melee =
 */
 void() monster_hell_knight =
 {
-
+	
 	self.solid = SOLID_SLIDEBOX;
 	self.movetype = MOVETYPE_STEP;
 
 	setmodel (self, "progs/hknight.mdl");
-
+	self.classname = "monster_hell_knight";
 	setsize (self, '-16 -16 -24', '16 16 40');
 	self.health = 250;
 

@@ -378,7 +378,7 @@ void() monster_wizard =
 	self.movetype = MOVETYPE_STEP;
 
 	setmodel (self, "progs/wizard.mdl");
-
+	self.classname = "monster_wizard";
 	setsize (self, '-16 -16 -24', '16 16 40');
 	self.health = 80;
 

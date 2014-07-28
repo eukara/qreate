@@ -250,9 +250,10 @@ void() monster_army =
 
 	self.solid = SOLID_SLIDEBOX;
 	self.movetype = MOVETYPE_STEP;
+	self.flags = FL_MONSTER;
 
 	setmodel (self, "progs/soldier.mdl");
-
+	self.classname = "monster_army";
 	setsize (self, '-16 -16 -24', '16 16 40');
 	self.health = 30;
 

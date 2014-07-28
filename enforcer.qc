@@ -316,7 +316,7 @@ void() monster_enforcer =
 	self.movetype = MOVETYPE_STEP;
 
 	setmodel (self, "progs/enforcer.mdl");
-
+	self.classname = "monster_enforcer";
 	setsize (self, '-16 -16 -24', '16 16 40');
 	self.health = 80;
 

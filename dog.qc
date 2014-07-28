@@ -332,7 +332,7 @@ void() monster_dog =
 
 	self.solid = SOLID_SLIDEBOX;
 	self.movetype = MOVETYPE_STEP;
-
+	self.classname = "monster_dog";
 	setmodel (self, "progs/dog.mdl");
 
 	setsize (self, '-32 -32 -24', '32 32 40');

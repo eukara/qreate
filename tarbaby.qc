@@ -193,7 +193,7 @@ void() monster_tarbaby =
 
 	self.solid = SOLID_SLIDEBOX;
 	self.movetype = MOVETYPE_STEP;
-
+	self.classname = "monster_tarbaby";
 	setmodel (self, "progs/tarbaby.mdl");
 
 	setsize (self, '-16 -16 -24', '16 16 40');

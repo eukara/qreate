@@ -1299,7 +1299,7 @@ void(entity targ, entity attacker) ClientObituary =
 			else
 			{
 				attacker.frags = attacker.frags + 1;
-
+				
 				rnum = attacker.weapon;
 				if (rnum == IT_AXE)
 				{

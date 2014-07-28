@@ -182,7 +182,7 @@ void() monster_demon1 =
 
 	self.solid = SOLID_SLIDEBOX;
 	self.movetype = MOVETYPE_STEP;
-
+	self.classname = "monster_demon1";
 	setmodel (self, "progs/demon.mdl");
 
 	setsize (self, VEC_HULL2_MIN, VEC_HULL2_MAX);

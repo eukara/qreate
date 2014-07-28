@@ -332,7 +332,7 @@ void() monster_shambler =
 	self.solid = SOLID_SLIDEBOX;
 	self.movetype = MOVETYPE_STEP;
 	setmodel (self, "progs/shambler.mdl");
-
+	self.classname = "monster_shambler";
 	setsize (self, VEC_HULL2_MIN, VEC_HULL2_MAX);
 	self.health = 600;
 
