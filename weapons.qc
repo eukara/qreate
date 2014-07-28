@@ -917,6 +917,9 @@ void() W_Attack2 =
 			qreate_tool_skin(1);
 		else if(self.tselected == 8)
 			qreate_tool_frame(1);
+		else if(self.tselected == 9)
+			qreate_tool_light(1);
+
 
 	}
 };
@@ -1024,7 +1027,7 @@ if (self.secfire == 1)
 		else if(self.tselected == 8)
 			qreate_tool_frame(0);
 		else if(self.tselected == 9)
-			qreate_tool_light();
+			qreate_tool_light(0);
 		else if(self.tselected == 10)
 			qreate_tool_quakebreak();
 		else if(self.tselected == 11)

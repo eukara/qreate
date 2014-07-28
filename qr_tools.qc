@@ -177,7 +177,7 @@ void(float reverse) qreate_tool_skin =
 	}
 };
 
-void() qreate_tool_light =
+void(float reverse) qreate_tool_light =
 {
 	local entity new;
 	local vector dir;
@@ -194,16 +194,32 @@ void() qreate_tool_light =
 
 	if(trace_ent != world)
 	{
-		if(trace_ent.effects == 2)
-		trace_ent.effects = 0;
-		else if(trace_ent.effects == 0)
-		trace_ent.effects = 1;
-		else if(trace_ent.effects == 1)
-		trace_ent.effects = 4;
-		else if(trace_ent.effects == 4)
-		trace_ent.effects = 8;
-		else if(trace_ent.effects == 8)
-		trace_ent.effects = 2;
+		if(reverse == 0)
+		{
+			if(trace_ent.effects == 2)
+				trace_ent.effects = 0;
+			else if(trace_ent.effects == 0)
+				trace_ent.effects = 1;
+			else if(trace_ent.effects == 1)
+				trace_ent.effects = 4;
+			else if(trace_ent.effects == 4)
+				trace_ent.effects = 8;
+			else if(trace_ent.effects == 8)
+				trace_ent.effects = 2;
+		}
+		else
+		{
+			if(trace_ent.effects == 2)
+				trace_ent.effects = 8;
+			else if(trace_ent.effects == 8)
+				trace_ent.effects = 4;
+			else if(trace_ent.effects == 4)
+				trace_ent.effects = 1;
+			else if(trace_ent.effects == 1)
+				trace_ent.effects = 0;
+			else if(trace_ent.effects == 0)
+				trace_ent.effects = 8;
+		}
 
 		sound (self, CHAN_AUTO, "effects/switch01.wav", 1, ATTN_NORM);
 		self.attack_finished = time + 0.4;
