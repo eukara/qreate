@@ -828,7 +828,7 @@ void() W_SetCurrentAmmo =
 	}
 	else if (self.weapon == IT_TOOL)
 	{
-		self.currentammo = 666;
+		self.currentammo = 100;
 		self.weaponmodel = "progs/v_btt.mdl";
 		self.weaponframe = 0;
 	}
