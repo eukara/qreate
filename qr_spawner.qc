@@ -30,6 +30,7 @@ void(void() monstername) qreate_spawn =
 	new = spawn();
 	new.origin = trace_endpos + '0 0 24';
 	new.angles_y = self.angles_y;
+	new.qreate_modify = FALSE;
 		
 	new.think = monstername;
 	new.spawner = self;

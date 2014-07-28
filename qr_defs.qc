@@ -29,3 +29,4 @@ float SVC_SETVIEWANGLES = 10;
 .float qreate_altmenut;
 .float qmsg;
 .float qreate_bosscnt;
+.float qreate_modify;

@@ -49,9 +49,12 @@ void() qreate_altspawnmenut_draw =
 	self.rp_menutime = time + 0.75;
 
 	if(self.qreate_altmenulstt == 0)
-		centerprint(self, "\n  TOOL LIST          (1/2)  \n\n  ) remove tool            \n  ) rotate x axis          \n  ) rotate y axis          \n  ) rotate z axis          \n  ) move x axis            \n  ) move y axis            \n  ) next ç                 \n");
+		centerprint(self, "\n  TOOL LIST          (1/3)  \n\n  ) remove tool            \n  ) rotate x axis          \n  ) rotate y axis          \n  ) rotate z axis          \n  ) move x axis            \n  ) move y axis            \n  ) next ç                 \n");
 	else if(self.qreate_altmenulstt == 1)
-		centerprint(self, "\n  TOOL LIST          (2/2)  \n\n  ) move z axis            \n  ) change skin            \n  ) change frame           \n  ) change effects         \n  ) quake breaker!         \n  ) switch viewpoint       \n  ) next ç                 \n");
+		centerprint(self, "\n  TOOL LIST          (2/3)  \n\n  ) move z axis            \n  ) change skin            \n  ) change frame           \n  ) change effects         \n  ) quake breaker!         \n  ) switch viewpoint       \n  ) next ç                 \n");
+	else if(self.qreate_altmenulstt == 2)
+		centerprint(self, "\n  TOOL LIST          (3/3)  \n\n  ) change permissions     \n                            \n                            \n                            \n                            \n                            \n  ) next ç                 \n");
+
 }
 
 void() qreate_altspawnmenu_switch =
@@ -322,6 +325,9 @@ float() qreate_altspawnmenut_input =
 			qreate_altmenutool(0);
 		else if(self.qreate_altmenulstt == 1)
 			qreate_altmenutool(6);
+		else if(self.qreate_altmenulstt == 2)
+			qreate_altmenutool(12);
+
 
 		return TRUE;
 	}
@@ -372,7 +378,10 @@ float() qreate_altspawnmenut_input =
 		if(self.qreate_altmenulstt == 0)
 			self.qreate_altmenulstt = 1;
 		else if(self.qreate_altmenulstt == 1)
+			self.qreate_altmenulstt = 2;
+		else if(self.qreate_altmenulstt == 2)
 			self.qreate_altmenulstt = 0;
+
 
 		return TRUE;
 

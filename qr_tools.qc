@@ -7,7 +7,7 @@
 float (entity trent) qreate_tool_denied =
 {
 	
-	if((trent.spawner && trent.spawner != self) || (!trent.spawner && trent.solid == SOLID_BSP))
+	if((trent.spawner && trent.spawner != self && trent.qreate_modify == FALSE) || (!trent.spawner && trent.solid == SOLID_BSP))
 	{
 		if(self.qmsg > time)
 			return FALSE;
@@ -128,7 +128,8 @@ void() qreate_tool_remove =
 		if(trace_ent.classname == "player")
 			return;
 		else if(trace_ent.classname == "monster_boss" || trace_ent.classname == "monster_oldone")
-			self.qreate_bosscnt = 0;
+			trace_ent.spawner.qreate_bosscnt = 0;
+
 			
 		remove(trace_ent);
 		sound (self, CHAN_AUTO, "effects/remove.wav", 1, ATTN_NORM);
@@ -413,7 +414,6 @@ void() qreate_tool_quakebreak =
 			trace_ent.takedamage = DAMAGE_AIM;
 			trace_ent.qmode = 2;
 		}
-
 		else if(trace_ent.qmode == 2)
 		{
 			centerprint(self, "QB: GIBBING\n");
@@ -426,7 +426,7 @@ void() qreate_tool_quakebreak =
 			else
 				trace_ent.qmode = 4;
 		}
-		else if(trace_ent.qmode == 3 && pmod == 1)
+		else if(trace_ent.qmode == 3)
 		{	
 			centerprint(self, "QB: PLEASE NO\n");
 			trace_ent.health = 1;
@@ -446,6 +446,41 @@ void() qreate_tool_quakebreak =
 		self.attack_finished = time + 0.2;
 	}
 };
+
+void(float reverse) qreate_tool_permissions =
+{
+	local	vector	src;
+	local	float	pmod;
+
+	src = self.origin + v_forward*10;
+	src_z = self.absmin_z + self.size_z * 0.7;
+	traceline (src, src + v_forward*1024, FALSE, self);
+
+
+	if (trace_ent.spawner != self)
+	{
+		if(self.qmsg > time)
+			return;
+
+		self.qmsg = time + 2;
+		sprint(self, "This does not belong to you.\n");
+
+		return;
+	}
+
+	if(!reverse)
+	{
+		trace_ent.qreate_modify = TRUE;
+		sprint(self, "[D] object is now public\n");
+	}
+	else
+	{
+		trace_ent.qreate_modify = FALSE;
+		sprint(self, "[D] object is now private\n");
+	}
+
+	self.attack_finished = time + 0.2;
+}
 
 void() qreate_printtselected =
 {
@@ -475,6 +510,9 @@ void() qreate_printtselected =
 			entname = "[t] 10 - quake breaker\n";
 		else if(self.tselected == 11)
 			entname = "[t] 11 - swap viewpoint\n";
+		else if(self.tselected == 12)
+			entname = "[t] 12 - change permissions\n";
+
 		
 	centerprint (self, entname);
 };
@@ -483,7 +521,7 @@ void() qreate_change_toolfw =
 {
 	self.tselected = self.tselected + 1;
 
-	if(self.tselected > 11)
+	if(self.tselected > 12)
 	self.tselected = 0;
 
  qreate_printtselected();
@@ -494,7 +532,7 @@ void() qreate_change_toolbw =
 	self.tselected = self.tselected - 1;
 
 	if(self.tselected < 0)
-	self.tselected = 11;
+	self.tselected = 12;
 
  qreate_printtselected();
 };
