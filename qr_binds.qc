@@ -42,7 +42,7 @@ float() qreate_altspawnmenut_input;
 
 void() qreate_altspawnmenu_switch;
 void() qreate_altspawnmenut_switch;
-
+void(void() monstername) qreate_spawn;
 float() Qreate_Binds =
 {
 	if(qreate_altspawnmenu_input() == TRUE)
@@ -97,6 +97,9 @@ float() Qreate_Binds =
 		return TRUE;}
 	if(self.impulse == 80){
 		qreate_serversidenoclip();
+		return TRUE;}
+	if(self.impulse == 81){
+		qreate_spawn(qreate_hack_fakeplayer);
 		return TRUE;}
 
 	return FALSE;

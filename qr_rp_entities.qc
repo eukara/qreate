@@ -276,6 +276,8 @@ void() rp_prop_bounce_touch =
 		self.velocity = v;
 		self.avelocity = v;
 		sound (self, CHAN_AUTO, self.noise, 0.6, ATTN_NORM);
+
+		self.spawner = other;
 	}
 };
 
@@ -290,6 +292,7 @@ void() rp_prop_bounce =
 
 	setmodel (self, self.model);	
 	setsize (self, '-6 -6 -6', '6 6 6');
+	self.oldorigin = self.origin;
 	self.touch = rp_prop_bounce_touch;
 
 };
@@ -313,3 +316,19 @@ void() rp_item_melon =
 	self.movetype = MOVETYPE_BOUNCE;
 	setsize (self, '-6 -6 6', '6 6 6');
 }
+
+void() qreate_trigger_goal_touch =
+{
+	if(other.classname != "rp_prop_bounce")
+		return;
+
+	other.spawner.frags = other.spawner.frags + 1;
+	other.velocity = '0 0 0';
+	setorigin(other, other.oldorigin);
+};
+
+void() qreate_trigger_goal =
+{
+	InitTrigger ();
+	self.touch = qreate_trigger_goal_touch;
+};

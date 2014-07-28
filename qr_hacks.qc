@@ -92,3 +92,11 @@ void(entity player) qreate_cleanup =
                 finder = finder.chain;
         }
 };
+void() player_stand1;
+void() qreate_hack_fakeplayer =
+{
+	setmodel(self, "progs/player.mdl");
+	self.solid = SOLID_BBOX;
+	setsize (self, '-16 -16 -24', '16 16 40');
+	player_stand1();
+}
