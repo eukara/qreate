@@ -913,6 +913,8 @@ void() W_Attack2 =
 			qreate_tool_move(1,1);
 		else if(self.tselected == 6)
 			qreate_tool_move(2,1);
+		else if(self.tselected == 7)
+			qreate_tool_skin(1);
 		else if(self.tselected == 8)
 			qreate_tool_frame(1);
 
@@ -1018,7 +1020,7 @@ if (self.secfire == 1)
 		else if(self.tselected == 6)
 			qreate_tool_move(2,0);
 		else if(self.tselected == 7)
-			qreate_tool_skin();
+			qreate_tool_skin(0);
 		else if(self.tselected == 8)
 			qreate_tool_frame(0);
 		else if(self.tselected == 9)

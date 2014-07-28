@@ -135,10 +135,11 @@ void() qreate_tool_remove =
 	}
 };
 
-void() qreate_tool_skin =
+void(float reverse) qreate_tool_skin =
 {
 	local entity new;
 	local vector dir;
+	local string skinp;
 
 	local	vector	src;
 	string	trackp;
@@ -152,11 +153,20 @@ void() qreate_tool_skin =
 
 	if(trace_ent != world)
 	{
-		if(trace_ent.skin == 12)
-		trace_ent.skin = 0;
-		else
+		if(reverse == 0)
 		trace_ent.skin = trace_ent.skin + 1;
+		else
+		{
+			if(trace_ent.skin == 0)
+				trace_ent.skin = 0;
+			else
+				trace_ent.skin = trace_ent.skin - 1;
+		}
 		
+		skinp = ftos(trace_ent.skin);
+		sprint(self, "[d] model skin: ");
+		sprint(self, skinp);
+		sprint(self, "\n");
 		sound (self, CHAN_AUTO, "effects/switch01.wav", 1, ATTN_NORM);
 		self.attack_finished = time + 0.4;
 	}
