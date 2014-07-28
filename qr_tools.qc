@@ -154,7 +154,12 @@ void(float reverse) qreate_tool_skin =
 	if(trace_ent != world)
 	{
 		if(reverse == 0)
-		trace_ent.skin = trace_ent.skin + 1;
+		{
+			if(trace_ent.skin == 31)
+				trace_ent.skin = 0;
+			else
+				trace_ent.skin = trace_ent.skin + 1;
+		}
 		else
 		{
 			if(trace_ent.skin == 0)
