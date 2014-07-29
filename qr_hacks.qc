@@ -100,3 +100,9 @@ void() qreate_hack_fakeplayer =
 	setsize (self, '-16 -16 -24', '16 16 40');
 	player_stand1();
 }
+
+void() qreate_model =
+{
+	precache_model(self.model);
+	setmodel(self, self.model);
+}
