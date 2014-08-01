@@ -126,6 +126,9 @@ void() walkmonster_start =
 	self.nextthink = self.nextthink + random()*0.5;
 	self.think = walkmonster_start_go;
 	total_monsters = total_monsters + 1;
+	WriteByte (MSG_ALL, SVC_UPDATESTAT);
+	WriteByte (MSG_ALL, STAT_TOTALMONSTERS);
+	WriteLong (MSG_ALL, total_monsters);
 };
 
 

@@ -30,3 +30,7 @@ float SVC_SETVIEWANGLES = 10;
 .float qmsg;
 .float qreate_bosscnt;
 .float qreate_modify;
+
+float SVC_UPDATESTAT = 3;
+float STAT_TOTALMONSTERS = 12;
+
