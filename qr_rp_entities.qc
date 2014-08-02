@@ -260,6 +260,8 @@ void() rp_prop_bounce_touch =
 		
 		self.velocity_z = self.velocity_z * 2+20 * self.health * self.style;
 		self.health = self.health - 1;
+
+		if(self.noise)
 		sound (self, CHAN_AUTO, self.noise, 0.6, ATTN_NORM);
 	}
 	else
@@ -270,11 +272,13 @@ void() rp_prop_bounce_touch =
 		self.health = 5;
 		
 		if(other.classname == "player")
-		v_z = 250;
+		v_z = 250 * self.style;
 
 		self.flags = self.flags - ( self.flags & FL_ONGROUND );
 		self.velocity = v;
 		self.avelocity = v;
+
+		if(self.noise)
 		sound (self, CHAN_AUTO, self.noise, 0.6, ATTN_NORM);
 	}
 };
@@ -282,6 +286,8 @@ void() rp_prop_bounce_touch =
 void() rp_prop_bounce =
 {
 	precache_model (self.model);
+
+	if(self.noise)
 	precache_sound (self.noise);
 
 	self.solid = SOLID_TRIGGER;
