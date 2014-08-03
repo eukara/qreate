@@ -59,9 +59,12 @@ float() qreate_CheckLIGHTRP =
 
 void() qreate_arcade =
 {
-	precache_model ("progs/qrcad1.mdl");
-	setmodel(self, "progs/qrcad1.mdl");
-	setorigin(self, self.origin + '0 0 -30');
+	precache_model (self.model);
+	if(self.noise)
+	precache_sound(self.noise);
+	setmodel(self, self.model);
+	if(self.noise)
+	ambientsound (self.origin, self.noise, 1.0, ATTN_IDLE);
 }
 
 void() qreate_serversidenoclip =
@@ -106,3 +109,19 @@ void() qreate_model =
 	precache_model(self.model);
 	setmodel(self, self.model);
 }
+
+void() qreate_ladder_touch =
+{
+	if(other.classname == "player")
+	other.velocity_z = other.velocity_z + 10;
+};
+// Not a REAL ladder, just a HACK!
+void() qreate_ladder =
+{
+	self.solid = SOLID_TRIGGER;
+	setmodel (self, self.model);
+	self.movetype = MOVETYPE_NONE;
+	self.modelindex = 0;
+	self.model = "";
+	self.touch = qreate_ladder_touch;
+};
