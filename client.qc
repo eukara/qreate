@@ -292,8 +292,6 @@ void() execute_changelevel =
 
 void() changelevel_touch =
 {
-	local entity	pos;
-
 	if (other.classname != "player")
 		return;
 
@@ -432,7 +430,21 @@ entity() SelectSpawnPoint =
 		spot = lastspawn;
 		while (1)
 		{
-			spot = find(spot, classname, "info_player_deathmatch");
+			if(qreate_CheckCOMMANDO() == TRUE)
+			{
+				if(self.fTeam == COMMANDO_TEAM1)
+					spot = find(spot, classname, "team1_start");
+				if(self.fTeam == COMMANDO_TEAM2)
+					spot = find(spot, classname, "team2_start");
+				if(self.fTeam == COMMANDO_TEAM3)
+					spot = find(spot, classname, "team3_start");
+				if(self.fTeam == COMMANDO_TEAM4)
+					spot = find(spot, classname, "team4_start");
+			}
+			else
+			{
+				spot = find(spot, classname, "info_player_deathmatch");
+			}
 			if (spot != world)
 			{
 				if (spot == lastspawn)
@@ -461,7 +473,20 @@ entity() SelectSpawnPoint =
 			return spot;
 	}
 	
-	spot = find (world, classname, "info_player_start");
+	if(qreate_CheckCOMMANDO() == TRUE)
+	{
+		if(self.fTeam == COMMANDO_TEAM1)
+			spot = find(spot, classname, "team1_start");
+		if(self.fTeam == COMMANDO_TEAM2)
+			spot = find(spot, classname, "team2_start");
+		if(self.fTeam == COMMANDO_TEAM3)
+			spot = find(spot, classname, "team3_start");
+		if(self.fTeam == COMMANDO_TEAM4)
+			spot = find(spot, classname, "team4_start");
+	}
+	else
+		spot = find (world, classname, "info_player_start");
+
 	if (!spot)
 		error ("PutClientInServer: no info_player_start on level");
 	
@@ -504,6 +529,9 @@ void() PutClientInServer =
 	self.view_fov = 90;		// Qreate - eukos
 
 	DecodeLevelParms ();
+
+	if(qreate_CheckCOMMANDO() == TRUE)
+		CommandoPutClient();
 
 	// ~eukara - Initialise Basic Character
 	if(qreate_CheckLIGHTRP() == TRUE)
@@ -699,7 +727,6 @@ void() CheckRules =
 
 void() PlayerDeathThink =
 {
-	local entity	old_self;
 	local float		forward;
 
 	if ((self.flags & FL_ONGROUND))
@@ -733,9 +760,7 @@ void() PlayerDeathThink =
 
 
 void() PlayerJump =
-{
-	local vector start, end;
-	
+{	
 	if (self.flags & FL_WATERJUMP)
 		return;
 
@@ -909,9 +934,6 @@ Called every frame before physics are run
 */
 void() PlayerPreThink =
 {
-	local	float	mspeed, aspeed;
-	local	float	r;
-
 	if (intermission_running)
 	{
 		IntermissionThink ();	// otherwise a button could be missed between
@@ -1133,9 +1155,6 @@ Called every frame after physics are run
 */
 void() PlayerPostThink =
 {
-	local	float	mspeed, aspeed;
-	local	float	r;
-
 	if (self.view_ofs == '0 0 0')
 		return;		// intermission or finale
 	if (self.deadflag)
@@ -1166,6 +1185,13 @@ void() PlayerPostThink =
 		self.jump_flag = self.velocity_z;
 
 	CheckPowerups ();
+
+	if(qreate_CheckCOMMANDO() == TRUE)
+	{
+		Commando_UpdatePositions();
+		Commando_DisplayMenu();
+		return;
+	}
 
 	// eukara ~ See rp_menu.qc
 	if(qreate_CheckLIGHTRP() == TRUE)
@@ -1476,4 +1502,4 @@ void(entity targ, entity attacker) ClientObituary =
 			bprint (" died\n");
 		}
 	}
-};
+}; 

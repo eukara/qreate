@@ -365,7 +365,7 @@ void() RP_DropMoney_Touch =
 {
 	local	string money;
 	
-	if(!other.classname == "player")
+	if(!(other.classname == "player"))
 		return;
 	
 	money = ftos(self.health);
@@ -381,7 +381,7 @@ void() RP_DropMoney_Touch =
 void(float amount) RP_DropMoney =
 {
 	local	vector	source;
-	local	vector	org;
+
 	local	entity 	new;
 	local	string money;
 	
@@ -419,4 +419,4 @@ void() info_roleplay =
 	world.mode = 2;
 
 	RP_Main();
-};
+}; 

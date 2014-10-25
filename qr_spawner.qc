@@ -10,10 +10,8 @@
 void(void() monstername) qreate_spawn =
  {
 	local entity new;
-	local vector dir;
 
 	local	vector	src;
-	string	trackp;
 
 	if(monstername == boss_awake || monstername == monster_oldone)
 	{
@@ -497,4 +495,4 @@ void() qreate_sound =
 {
 	precache_sound (self.noise);
 	self.use = qreate_sound_use;
-};
+}; 

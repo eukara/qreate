@@ -484,6 +484,8 @@ void() worldspawn =
 	precache_sound ("doors/baseuse.wav");
 	precache_sound ("misc/null.wav");
 	precache_sound ("misc/null.wav");	
+
+	fTeamFull = 0;
 //
 // Setup light animation tables. 'a' is total darkness, 'z' is maxbright.
 //
@@ -553,9 +555,7 @@ void() bodyque =
 };
 
 void() InitBodyQue =
-{
-	local entity	e;
-	
+{	
 	bodyque_head = spawn();
 	bodyque_head.classname = "bodyque";
 	bodyque_head.owner = spawn();
@@ -585,4 +585,4 @@ void(entity ent) CopyToBodyQue =
 	bodyque_head = bodyque_head.owner;
 };
 
-
+ 

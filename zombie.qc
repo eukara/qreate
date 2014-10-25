@@ -161,8 +161,8 @@ ZombieFireGrenade
 */
 void(vector st) ZombieFireGrenade =
 {
-	local	entity missile, mpuff;
 	local	vector	org;
+	local entity missile;
 
 	sound (self, CHAN_WEAPON, "zombie/z_shot1.wav", 1, ATTN_NORM);
 
@@ -492,4 +492,4 @@ void() monster_zombie =
 	}
 	else
 		walkmonster_start();
-};
+}; 

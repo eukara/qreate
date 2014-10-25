@@ -91,7 +91,7 @@ SpawnMeatSpray
 */
 void(vector org, vector vel) SpawnMeatSpray =
 {
-	local	entity missile, mpuff;
+	local	entity missile;
 	local	vector	org;
 
 	missile = spawn ();
@@ -376,7 +376,7 @@ W_FireRocket
 */
 void() W_FireRocket =
 {
-	local	entity missile, mpuff;
+	local	entity missile;
 	
 	self.currentammo = self.ammo_rockets = self.ammo_rockets - 1;
 	
@@ -553,7 +553,7 @@ W_FireGrenade
 */
 void() W_FireGrenade =
 {
-	local	entity missile, mpuff;
+	local	entity missile;
 	
 	self.currentammo = self.ammo_rockets = self.ammo_rockets - 1;
 	
@@ -632,7 +632,6 @@ void(vector org, vector dir) launch_spike =
 void() W_FireSuperSpikes =
 {
 	local vector	dir;
-	local entity	old;
 	
 	sound (self, CHAN_WEAPON, "weapons/spike2.wav", 1, ATTN_NORM);
 	self.attack_finished = time + 0.2;
@@ -648,7 +647,6 @@ void() W_FireSuperSpikes =
 void(float ox) W_FireSpikes =
 {
 	local vector	dir;
-	local entity	old;
 	
 	makevectors (self.v_angle);
 	
@@ -681,7 +679,6 @@ void(float ox) W_FireSpikes =
 .float hit_z;
 void() spike_touch =
 {
-local float rand;
 	if (other == self.owner)
 		return;
 
@@ -721,7 +718,6 @@ local float rand;
 
 void() superspike_touch =
 {
-local float rand;
 	if (other == self.owner)
 		return;
 
@@ -1340,7 +1336,11 @@ ImpulseCommands
 */
 void() ImpulseCommands =
 {
+	if(self.fInMenu == FALSE)
+	{
 
+	if(qreate_CheckCOMMANDO() == FALSE)
+	{
 	if(qreate_CheckLIGHTRP() == TRUE)
 	{
 		// ~eukara - start
@@ -1353,13 +1353,11 @@ void() ImpulseCommands =
 		self.impulse = 0;
 		return;
 	}
+	}
 
 	if (self.impulse >= 1 && self.impulse <= 8)
 		W_ChangeWeapon ();
 
-
-	if (self.impulse == 99)
-		CheatCommand ();
 
 	if (self.impulse == 10)
 		CycleWeaponCommand ();
@@ -1368,11 +1366,30 @@ void() ImpulseCommands =
 	if (self.impulse == 12)
 		CycleWeaponReverseCommand ();
 		
-	if (self.impulse == 19)
-		W_ChangeWeapon();
+	if((qreate_CheckLIGHTRP() == FALSE) && (qreate_CheckCOMMANDO() == FALSE))
+	{
+		if (self.impulse == 19)
+			W_ChangeWeapon();
+	}
 
-	if (self.impulse == 255)
-		QuadCheat ();
+	}
+	else
+	{
+		if (self.impulse >= 1 && self.impulse <= 5)
+			Commando_Selection(self.impulse - 1);
+		if (self.impulse == 10)
+			Commando_SelectionRotatePlus();
+		if (self.impulse == 12)
+			Commando_SelectionRotateMinus();
+	}
+	
+	if(qreate_CheckCOMMANDO() == TRUE)
+	{
+		if(self.impulse == 21)
+			Commando_ViewStats();
+		if(self.impulse == 78)
+			Commando_ToggleMenu();
+	}
 
 	self.impulse = 0;
 };
@@ -1394,8 +1411,15 @@ void() W_WeaponFrame =
 // check for attack
 	if (self.button0)
 	{
-		SuperDamageSound ();
-		W_Attack ();
+		if(self.fInMenu == FALSE)
+		{
+			SuperDamageSound ();
+			W_Attack ();
+		}
+		else
+		{
+			Commando_PlaceSelection();
+		}
 	}
 
 };
@@ -1420,4 +1444,4 @@ void() SuperDamageSound =
 	return;
 };
 
-
+ 

@@ -23,13 +23,9 @@ float (entity trent) qreate_tool_denied =
 
 	return TRUE;
 };
-void(float mode, float reverse) qreate_tool_rotate =
+void(float moda, float reverse) qreate_tool_rotate =
 {
-	local entity new;
-	local vector dir;
-
 	local	vector	src;
-	string	trackp;
 
 	src = self.origin + v_forward*10;
 	src_z = self.absmin_z + self.size_z * 0.7;
@@ -40,21 +36,21 @@ void(float mode, float reverse) qreate_tool_rotate =
 	
 	if(trace_ent != world)
 	{
-		if(mode == 0)
+		if(moda == 0)
 		{
 			if(reverse == 0)
 			trace_ent.angles_x = trace_ent.angles_x + 1;
 			else
 			trace_ent.angles_x = trace_ent.angles_x - 1;
 		}
-		else if(mode == 1)
+		else if(moda == 1)
 		{
 			if(reverse == 0)
 			trace_ent.angles_y = trace_ent.angles_y + 1;
 			else
 			trace_ent.angles_y = trace_ent.angles_y - 1;
 		}
-		else if(mode == 2)
+		else if(moda == 2)
 		{
 			if(reverse == 0)
 			trace_ent.angles_z = trace_ent.angles_z + 1;
@@ -65,13 +61,9 @@ void(float mode, float reverse) qreate_tool_rotate =
 
 };
 
-void(float mode, float reverse) qreate_tool_move =
+void(float moda, float reverse) qreate_tool_move =
 {
-	local entity new;
-	local vector dir;
-
 	local	vector	src;
-	string	trackp;
 
 	src = self.origin + v_forward*10;
 	src_z = self.absmin_z + self.size_z * 0.7;
@@ -82,21 +74,21 @@ void(float mode, float reverse) qreate_tool_move =
 
 	if(trace_ent != world)
 	{
-		if(mode == 0)
+		if(moda == 0)
 		{
 			if(reverse == 0)
 			trace_ent.origin_x = trace_ent.origin_x + 1;
 			else
 			trace_ent.origin_x = trace_ent.origin_x - 1;
 		}
-		else if(mode == 1)
+		else if(moda == 1)
 		{
 			if(reverse == 0)
 			trace_ent.origin_y = trace_ent.origin_y + 1;
 			else
 			trace_ent.origin_y = trace_ent.origin_y - 1;
 		}
-		else if(mode == 2)
+		else if(moda == 2)
 		{
 			if(reverse == 0)
 			trace_ent.origin_z = trace_ent.origin_z + 1;
@@ -111,11 +103,7 @@ void(float mode, float reverse) qreate_tool_move =
 
 void() qreate_tool_remove =
 {
-	local entity new;
-	local vector dir;
-
 	local	vector	src;
-	string	trackp;
 
 	src = self.origin + v_forward*10;
 	src_z = self.absmin_z + self.size_z * 0.7;
@@ -138,12 +126,9 @@ void() qreate_tool_remove =
 
 void(float reverse) qreate_tool_skin =
 {
-	local entity new;
-	local vector dir;
 	local string skinp;
 
 	local	vector	src;
-	string	trackp;
 
 	src = self.origin + v_forward*10;
 	src_z = self.absmin_z + self.size_z * 0.7;
@@ -180,11 +165,7 @@ void(float reverse) qreate_tool_skin =
 
 void(float reverse) qreate_tool_light =
 {
-	local entity new;
-	local vector dir;
-
 	local	vector	src;
-	string	trackp;
 
 	src = self.origin + v_forward*10;
 	src_z = self.absmin_z + self.size_z * 0.7;
@@ -229,12 +210,8 @@ void(float reverse) qreate_tool_light =
 
 void(float reverse) qreate_tool_frame =
 {
-	local entity new;
 	local string framep;
-	local vector dir;
-
 	local	vector	src;
-	string	trackp;
 
 	src = self.origin + v_forward*10;
 	src_z = self.absmin_z + self.size_z * 0.7;
@@ -450,7 +427,6 @@ void() qreate_tool_quakebreak =
 void(float reverse) qreate_tool_permissions =
 {
 	local	vector	src;
-	local	float	pmod;
 
 	src = self.origin + v_forward*10;
 	src_z = self.absmin_z + self.size_z * 0.7;
@@ -550,4 +526,4 @@ void() qreate_togglereverse =
 		centerprint (self, "reverse on\n");
 	}
 		
-};
+}; 

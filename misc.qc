@@ -436,8 +436,6 @@ void() bubble_remove =
 void() bubble_bob =
 {
 local float		rnd1, rnd2, rnd3;
-local vector	vtmp1, modi;
-
 	self.cnt = self.cnt + 1;
 	if (self.cnt == 4)
 		bubble_split();
@@ -661,4 +659,4 @@ void() misc_noisemaker =
 
 	self.nextthink = time + 0.1 + random();
 	self.think = noise_think;
-};
+}; 

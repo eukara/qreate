@@ -1067,8 +1067,7 @@ void() rotate_door_group_reversedirection =
    };
 
 void() rotate_door_use =
-   {
-   local entity t;
+{
    local vector start;
 
 	if(self.rp_locked)	// ~eukara - If it's locked, don't move
@@ -1198,4 +1197,4 @@ void() func_rotate_door =
 	self.rp_owner 	= world;
 	self.rp_locked 	= FALSE;
 
-   };
+   }; 

@@ -145,10 +145,7 @@ Set "sounds" to one of the following:
 
 
 void() func_plat =
-
 {
-local entity t;
-
 	if (!self.t_length)
 		self.t_length = 80;
 	if (!self.t_width)
@@ -361,4 +358,4 @@ void() misc_teleporttrain =
 	self.nextthink = self.ltime + 0.1;
 	self.think = func_train_find;
 };
-
+ 

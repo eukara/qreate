@@ -262,9 +262,7 @@ float()	CheckDemonJump =
 };
 
 float()	DemonCheckAttack =
-{
-	local	vector	vec;
-	
+{	
 // if close enough for slashing, go for it
 	if (CheckDemonMelee ())
 	{
@@ -346,4 +344,4 @@ void()	Demon_JumpTouch =
 	self.think = demon1_jump11;
 	self.nextthink = time + 0.1;
 };
-
+ 
