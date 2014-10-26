@@ -19,6 +19,14 @@ float   JOB_MEDIC		= 1006;
 float   JOB_MERCHANT		= 1007;
 float   JOB_MAYOR		= 1008;
 //float   JOB_EXTRA		= 1009;
+.string	TITLE_JOB_CITIZEN;
+.string	TITLE_JOB_POLICEFORCE;
+.string	TITLE_JOB_MOBSTER;
+.string	TITLE_JOB_GUNDEALER;
+.string	TITLE_JOB_MEDIC;
+.string	TITLE_JOB_MERCHANT;
+.string	TITLE_JOB_MAYOR;
+//string	TITLE_JOB_EXTRA;
 
 // Weapons (continued from Line 321)
 float   IT_KEYS			= 8388608;
@@ -40,4 +48,5 @@ float   IT_KEYS			= 8388608;
 .float rp_locked;
 float rp_lockdown;
 void(entity client, string s1, string s2, string s3, string s4) lightrp_centerprint = #73;
+void(entity client, string s1, string s2, string s3, string s4, string s5, string s6, string s7, string s8, string s9, string s10, string s11, string s12, string s13, string s14, string s15) lightrp_centerprintb = #73;
 

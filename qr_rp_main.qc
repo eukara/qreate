@@ -24,12 +24,31 @@ void() RP_Payday_Update =
 	self.nextthink = time + 160;
 };
 
+void() RP_InitJobs =
+{
+	if(!(world.TITLE_JOB_CITIZEN))
+		world.TITLE_JOB_CITIZEN = "Citizen";
+	if(!(world.TITLE_JOB_POLICEFORCE))
+		world.TITLE_JOB_POLICEFORCE = "Police Force";
+	if(!(world.TITLE_JOB_MOBSTER))
+		world.TITLE_JOB_MOBSTER = "Mobster";
+	if(!(world.TITLE_JOB_GUNDEALER))
+		world.TITLE_JOB_GUNDEALER = "Gun Dealer";
+	if(!(world.TITLE_JOB_MEDIC))
+		world.TITLE_JOB_MEDIC = "Medic";
+	if(!(world.TITLE_JOB_MERCHANT))
+		world.TITLE_JOB_MERCHANT = "Merchant";
+	if(!(world.TITLE_JOB_MAYOR))
+		world.TITLE_JOB_MAYOR = "Mayor";
+};
+
 void() RP_Main =
 {
 	local entity rp_pday;
 	local entity rp_lspeaker;
 	
 	RP_SetPrecaches();
+	RP_InitJobs();
 	
 	rp_pday = spawn();
 	rp_pday.think = RP_Payday_Update;
@@ -417,6 +436,5 @@ void(float amount) RP_DropMoney =
 void() info_roleplay =
 {
 	world.mode = 2;
-
 	RP_Main();
-}; 
+};
