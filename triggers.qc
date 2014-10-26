@@ -509,7 +509,6 @@ void() trigger_onlyregistered_touch =
 	{
 		self.message = "";
 		SUB_UseTargets ();
-		remove (self);
 	}
 	else
 	{
