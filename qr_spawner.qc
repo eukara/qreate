@@ -39,16 +39,16 @@ void(void() monstername) qreate_spawn =
 
 void() qreate_prop_wall =
 {
-    	self.solid = SOLID_BSP;
-    	self.movetype = MOVETYPE_PUSH;
-	setmodel (self, "progs/wall.bsp");
+    self.solid = SOLID_BSP;
+    self.movetype = MOVETYPE_PUSH;
+	setmodel (self, "progs/wall1.bsp");
 	self.angles = '0 0 0';
 	setorigin(self, self.origin + '0 0 -24');
 };
 
 void() qreate_prop_wall2 =
 {
-    	self.solid = SOLID_BSP;
+    self.solid = SOLID_BSP;
    	self.movetype = MOVETYPE_PUSH;
 	setmodel (self, "progs/wall2.bsp");
 	self.angles = '0 0 0';
@@ -57,8 +57,8 @@ void() qreate_prop_wall2 =
 
 void() qreate_prop_floor =
 {
-    	self.solid = SOLID_BSP;
-    	self.movetype = MOVETYPE_PUSH;
+    self.solid = SOLID_BSP;
+    self.movetype = MOVETYPE_PUSH;
 	setmodel (self, "progs/floor.bsp");
 	self.angles = '0 0 0';
 	setorigin(self, self.origin + '0 0 -24');

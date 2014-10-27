@@ -36,6 +36,8 @@ void(float moda, float reverse) qreate_tool_rotate =
 	
 	if(trace_ent != world)
 	{
+		if(trace_ent.model != "progs/wall1.bsp" && trace_ent.model != "progs/wall2.bsp" && trace_ent.model != "progs/wall3.bsp" && trace_ent.model != "progs/wall4.bsp")
+		{
 		if(moda == 0)
 		{
 			if(reverse == 0)
@@ -56,6 +58,32 @@ void(float moda, float reverse) qreate_tool_rotate =
 			trace_ent.angles_z = trace_ent.angles_z + 1;
 			else
 			trace_ent.angles_z = trace_ent.angles_z - 1;
+		}
+		}
+		else
+		{
+			if(!trace_ent.style)
+			{
+				trace_ent.style = 1;
+				setmodel(trace_ent, "progs/wall3.bsp");
+			}
+			else if(trace_ent.style == 1)
+			{
+				trace_ent.style = 2;
+				setmodel(trace_ent, "progs/wall2.bsp");
+			}
+			else if(trace_ent.style == 2)
+			{
+				trace_ent.style = 3;
+				setmodel(trace_ent, "progs/wall4.bsp");
+			}
+			else if(trace_ent.style == 3)
+			{	
+				trace_ent.style = 0;
+				setmodel(trace_ent, "progs/wall1.bsp");
+			}
+			
+			self.attack_finished = time + 0.2;
 		}
 	}
 

@@ -306,8 +306,10 @@ void() worldspawn =
 	precache_model ("progs/zombie.mdl");
 	precache_model ("maps/b_exbox2.bsp");
 	precache_model ("progs/laser.mdl");
-	precache_model ("progs/wall.bsp");
+	precache_model ("progs/wall1.bsp");
 	precache_model ("progs/wall2.bsp");
+	precache_model ("progs/wall3.bsp");
+	precache_model ("progs/wall4.bsp");
 	precache_model ("progs/floor.bsp");
 	
 	precache_sound ("blob/death1.wav");
