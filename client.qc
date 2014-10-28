@@ -430,21 +430,9 @@ entity() SelectSpawnPoint =
 		spot = lastspawn;
 		while (1)
 		{
-			if(qreate_CheckCOMMANDO() == TRUE)
-			{
-				if(self.fTeam == COMMANDO_TEAM1)
-					spot = find(spot, classname, "team1_start");
-				if(self.fTeam == COMMANDO_TEAM2)
-					spot = find(spot, classname, "team2_start");
-				if(self.fTeam == COMMANDO_TEAM3)
-					spot = find(spot, classname, "team3_start");
-				if(self.fTeam == COMMANDO_TEAM4)
-					spot = find(spot, classname, "team4_start");
-			}
-			else
-			{
-				spot = find(spot, classname, "info_player_deathmatch");
-			}
+			
+			spot = find(spot, classname, "info_player_deathmatch");
+			
 			if (spot != world)
 			{
 				if (spot == lastspawn)
@@ -473,19 +461,7 @@ entity() SelectSpawnPoint =
 			return spot;
 	}
 	
-	if(qreate_CheckCOMMANDO() == TRUE)
-	{
-		if(self.fTeam == COMMANDO_TEAM1)
-			spot = find(spot, classname, "team1_start");
-		if(self.fTeam == COMMANDO_TEAM2)
-			spot = find(spot, classname, "team2_start");
-		if(self.fTeam == COMMANDO_TEAM3)
-			spot = find(spot, classname, "team3_start");
-		if(self.fTeam == COMMANDO_TEAM4)
-			spot = find(spot, classname, "team4_start");
-	}
-	else
-		spot = find (world, classname, "info_player_start");
+	spot = find (world, classname, "info_player_start");
 
 	if (!spot)
 		error ("PutClientInServer: no info_player_start on level");
