@@ -30,7 +30,6 @@ float   JOB_MAYOR		= 1008;
 
 // Weapons (continued from Line 321)
 float   IT_KEYS			= 8388608;
-//float   IT_EXTRA_TOOL	= 16777216;
 
 // Player Definitions:
 .float	rp_job;

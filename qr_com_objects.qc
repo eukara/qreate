@@ -23,12 +23,12 @@ void() object_mine =
 
 void() qreate_commando_explode =
 {
-	ThrowGib("progs/debris.mdl", 50);
-	ThrowGib("progs/debris.mdl", 50);
-	ThrowGib("progs/debris.mdl", 50);
-	ThrowGib("progs/debris.mdl", 50);
-	ThrowGib("progs/debris.mdl", 50);
-	ThrowGib("progs/debris.mdl", 50);
+	ThrowGib("progs/debris.mdl", 150);
+	ThrowGib("progs/debris.mdl", 150);
+	ThrowGib("progs/debris.mdl", 150);
+	ThrowGib("progs/debris.mdl", 150);
+	ThrowGib("progs/debris.mdl", 150);
+	ThrowGib("progs/debris.mdl", 150);
 	
 	if(self.style == 1)
 	sound (self, CHAN_WEAPON, "commando/carexplo2.wav", 1, ATTN_NORM);
