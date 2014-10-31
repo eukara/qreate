@@ -306,7 +306,45 @@ void() qreate_tool_camera =
 	self.cammode = 0;
 	self.attack_finished = time + 0.7;
  }
-  
+};
+
+void(float mode) qreate_tool_stack =
+{
+	local string framep;
+	local	vector	src;
+
+	src = self.origin + v_forward*10;
+	src_z = self.absmin_z + self.size_z * 0.7;
+	traceline (src, src + v_forward*1024, FALSE, self);
+
+	if (qreate_tool_denied(trace_ent) == FALSE)
+		return;
+
+	if(trace_ent != world)
+	{
+		local entity eCopy;
+		local vector vTemp;
+		
+		vTemp_z = trace_ent.maxs_z;
+		
+		eCopy = spawn();
+		eCopy.origin = trace_ent.origin;
+		eCopy.angles_y = trace_ent.angles_y;
+		eCopy.qreate_modify = trace_ent.qreate_modify;
+			
+		eCopy.think = trace_ent.think;
+		eCopy.spawner = self;
+		eCopy.nextthink = trace_ent.nextthink;
+		setmodel(eCopy, trace_ent.model);
+		setorigin(eCopy, eCopy.origin + vTemp);
+		eCopy.solid = trace_ent.solid;
+		eCopy.takedamage = trace_ent.takedamage;
+		
+		if(trace_ent.th_die)
+			eCopy.th_die = trace_ent.th_die;
+			
+		self.attack_finished = time + 0.2;
+	}
 };
 
 void() BecomeExplosion;
