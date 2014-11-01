@@ -532,22 +532,18 @@ void() trigger_onlyregistered =
 
 //============================================================================
 
-void() hurt_on =
-{
-	self.solid = SOLID_TRIGGER;
-	self.nextthink = -1;
-};
-
 void() hurt_touch =
 {
 	if (other.takedamage)
 	{
-		self.solid = SOLID_NOT;
-		T_Damage (other, self, self, self.dmg);
-		self.think = hurt_on;
-		self.nextthink = time + 1;
-	}
+		if (time != self.hurt_together_time)
+			if (time < self.hurt_nextthink)
+				return;
 
+		T_Damage (other, self, self, self.dmg);
+		self.hurt_together_time = time;
+		self.hurt_nextthink = time + 1;
+	}
 	return;
 };
 

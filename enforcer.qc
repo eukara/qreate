@@ -57,6 +57,7 @@ void() Laser_Touch =
 	if (other.health)
 	{
 		SpawnBlood (org, self.velocity*0.2, 15);
+		other.deathtype = "laser";
 		T_Damage (other, self, self.owner, 15);
 	}
 	else

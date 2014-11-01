@@ -340,7 +340,7 @@ void() bound_other_ammo =
 
 float(float w) RankForWeapon =
 {
-	if (w == IT_LIGHTNING)
+	if (self.waterlevel <= 1 && w == IT_LIGHTNING)		// 1997-12-23 Thunderbolt fix by Maddes  recognize waterlevel
 		return 1;
 	if (w == IT_ROCKET_LAUNCHER)
 		return 2;
@@ -469,10 +469,7 @@ void() weapon_touch =
 	stemp = self;
 	self = other;
 
-	if (!deathmatch)
-		self.weapon = new;
-	else
-		Deathmatch_Weapon (old, new);
+	Deathmatch_Weapon (old, new);
 
 	W_SetCurrentAmmo();
 
@@ -1004,7 +1001,7 @@ void() sigil_touch =
 	if (other.health <= 0)
 		return;
 
-	centerprint (other, "You got the rune!");
+	centerprint (other, "You got the rune!\n");
 
 	sound (other, CHAN_ITEM, self.noise, 1, ATTN_NORM);
 	stuffcmd (other, "bf\n");
@@ -1025,7 +1022,7 @@ End of level sigil, pick up to end episode and return to jrstart.
 void() item_sigil =
 {
 	if (!self.spawnflags)
-		objerror ("no spawnflags");
+		objerror ("no spawnflags\n");
 
 	//precache_sound ("misc/runekey.wav");
 	self.noise = "misc/runekey.wav";
@@ -1229,6 +1226,7 @@ void() BackpackTouch =
 			acount = 1;
 			sprint (other, "the ");
 			sprint (other, self.netname);
+			sprint (other, "\n");
 		}
 
 // if the player was using his best weapon, change up to the new one if better		
@@ -1258,7 +1256,7 @@ void() BackpackTouch =
 		acount = 1;
 		s = ftos(self.ammo_shells);
 		sprint (other, s);
-		sprint (other, " shells");
+		sprint (other, " shells\n");
 	}
 	if (self.ammo_nails)
 	{
@@ -1267,7 +1265,7 @@ void() BackpackTouch =
 		acount = 1;
 		s = ftos(self.ammo_nails);
 		sprint (other, s);
-		sprint (other, " nails");
+		sprint (other, " nails\n");
 	}
 	if (self.ammo_rockets)
 	{
@@ -1276,7 +1274,7 @@ void() BackpackTouch =
 		acount = 1;
 		s = ftos(self.ammo_rockets);
 		sprint (other, s);
-		sprint (other, " rockets");
+		sprint (other, " rockets\n");
 	}
 	if (self.ammo_cells)
 	{
@@ -1285,7 +1283,7 @@ void() BackpackTouch =
 		acount = 1;
 		s = ftos(self.ammo_cells);
 		sprint (other, s);
-		sprint (other, " cells");
+		sprint (other, " cells\n");
 	}
 	
 	sprint (other, "\n");
@@ -1298,10 +1296,7 @@ void() BackpackTouch =
 	self = other;
 
 // change to the weapon
-	if (!deathmatch)
-		self.weapon = new;
-	else
-		Deathmatch_Weapon (old, new);
+	Deathmatch_Weapon (old, new);
 
 	W_SetCurrentAmmo ();
 };
@@ -1359,4 +1354,4 @@ void() DropBackpack =
 	
 	item.nextthink = time + 120;	// remove after 2 minutes
 	item.think = SUB_Remove;
-}; 
+};

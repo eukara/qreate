@@ -2,7 +2,7 @@
 */
 void (entity targ, entity inflictor, entity attacker, float damage) T_Damage;
 void () player_run;
-void(entity bomb, entity attacker, float rad, entity ignore) T_RadiusDamage;
+void(entity bomb, entity attacker, float rad, entity ignore, string dtype) T_RadiusDamage;
 void(vector org, vector vel, float damage) SpawnBlood;
 void() SuperDamageSound;
 
@@ -345,6 +345,7 @@ void() T_MissileTouch =
 	
 	if (other.health)
 	{
+		other.deathtype = "rocket";	// 1998-07-24 Wrong obituary messages fix by Zoid
 		if (other.classname == "monster_shambler")
 			damg = damg * 0.5;	// mostly immune
 		T_Damage (other, self, self.owner, damg );
@@ -352,7 +353,7 @@ void() T_MissileTouch =
 
 	// don't do radius damage to the other, because all the damage
 	// was done in the impact
-	T_RadiusDamage (self, self.owner, 120, other);
+	T_RadiusDamage (self, self.owner, 120, other, "rocket");
 
 //	sound (self, CHAN_WEAPON, "weapons/r_exp3.wav", 1, ATTN_NORM);
 	self.origin = self.origin - 8*normalize(self.velocity);
@@ -484,7 +485,7 @@ void() W_FireLightning =
 		cells = self.ammo_cells;
 		self.ammo_cells = 0;
 		W_SetCurrentAmmo ();
-		T_RadiusDamage (self, self, 35*cells, world);
+		T_RadiusDamage (self, self, 35*cells, world, "");
 		return;
 	}
 
@@ -520,7 +521,7 @@ void() W_FireLightning =
 
 void() GrenadeExplode =
 {
-	T_RadiusDamage (self, self.owner, 120, world);
+	T_RadiusDamage (self, self.owner, 120, world, "grenade");
 
 	WriteByte (MSG_BROADCAST, SVC_TEMPENTITY);
 	WriteByte (MSG_BROADCAST, TE_EXPLOSION);
@@ -694,6 +695,7 @@ void() spike_touch =
 	if (other.takedamage)
 	{
 		spawn_touchblood (9);
+		other.deathtype = "nail";	// 1998-07-24 Wrong obituary messages fix by Zoid
 		T_Damage (other, self, self.owner, 9);
 	}
 	else
@@ -733,6 +735,7 @@ void() superspike_touch =
 	if (other.takedamage)
 	{
 		spawn_touchblood (18);
+		other.deathtype = "supernail";	// 1998-07-24 Wrong obituary messages fix by Zoid
 		T_Damage (other, self, self.owner, 18);
 	}
 	else

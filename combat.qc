@@ -209,7 +209,7 @@ void(entity targ, entity inflictor, entity attacker, float damage) T_Damage=
 T_RadiusDamage
 ============
 */
-void(entity inflictor, entity attacker, float damage, entity ignore) T_RadiusDamage =
+void(entity inflictor, entity attacker, float damage, entity ignore, string dtype) T_RadiusDamage =
 {
 	local	float 	points;
 	local	entity	head;
@@ -233,7 +233,8 @@ void(entity inflictor, entity attacker, float damage, entity ignore) T_RadiusDam
 				if (points > 0)
 				{
 					if (CanDamage (head, inflictor))
-					{	// shambler takes half damage from all explosions
+					{	
+						head.deathtype = dtype;
 						if (head.classname == "monster_shambler")						
 							T_Damage (head, inflictor, attacker, points*0.5);
 						else

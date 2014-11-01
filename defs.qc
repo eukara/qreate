@@ -690,3 +690,10 @@ float (entity e, float healamount, float ignore) T_Heal; // health function
 
 float(entity targ, entity inflictor) CanDamage;
 
+// 1998-07-03 hurt_touch fix by Robert Field  start
+//
+// triggers.qc
+//
+.float hurt_together_time;
+.float hurt_nextthink;
+// 1998-07-03 hurt_touch fix by Robert Field  end

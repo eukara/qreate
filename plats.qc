@@ -109,8 +109,7 @@ void() plat_trigger_use =
 
 void() plat_crush =
 {
-//dprint ("plat_crush\n");
-
+	other.deathtype = "squish";
 	T_Damage (other, self, self, 1);
 	
 	if (self.state == STATE_UP)
@@ -220,6 +219,7 @@ void() train_blocked =
 	if (time < self.attack_finished)
 		return;
 	self.attack_finished = time + 0.5;
+	other.deathtype = "squish";
 	T_Damage (other, self, self, self.dmg);
 };
 void() train_use =

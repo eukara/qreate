@@ -79,7 +79,10 @@ void() SetNewParms =
 
 void() DecodeLevelParms =
 {
-	if (serverflags)
+	// 1998-01-21 Episode fix by Maddes  start
+	if (!deathmatch)
+//	if (serverflags)
+// 1998-01-21 Episode fix by Maddes  end
 	{
 		if (world.model == "maps/start.bsp")
 			SetNewParms ();		// take away all stuff on starting new episode
@@ -295,10 +298,13 @@ void() changelevel_touch =
 	if (other.classname != "player")
 		return;
 
-	if ((cvar("noexit") == 1) || ((cvar("noexit") == 2) && (mapname != "start")))
+	if(deathmatch)
 	{
-		T_Damage (other, self, self, 50000);
-		return;
+		if ((cvar("noexit") == 1) || ((cvar("noexit") == 2) && (mapname != "start")))
+		{
+			T_Damage (other, self, self, 50000);
+			return;
+		}
 	}
 
 	if (coop || deathmatch)
@@ -331,7 +337,7 @@ When the player touches this, he gets sent to the map listed in the "map" variab
 void() trigger_changelevel =
 {
 	if (!self.map)
-		objerror ("chagnelevel trigger doesn't have map");
+		objerror ("changelevel trigger doesn't have map\n");
 	
 	InitTrigger ();
 	self.touch = changelevel_touch;
@@ -503,6 +509,7 @@ void() PutClientInServer =
 	self.effects = 0;
 	self.invincible_time = 0;
 	self.view_fov = 90;		// Qreate - eukos
+	self.velocity = '0 0 0';
 
 	DecodeLevelParms ();
 
@@ -523,9 +530,8 @@ void() PutClientInServer =
 // paustime is set by teleporters to keep the player from moving a while
 	self.pausetime = 0;
 	
-//	spot = SelectSpawnPoint ();
 
-	self.origin = spot.origin + '0 0 1';
+	self.origin = self.oldorigin = spot.origin + '0 0 1';
 	self.angles = spot.angles;
 	self.fixangle = TRUE;		// turn this way immediately
 
@@ -936,6 +942,8 @@ void() PlayerPreThink =
 		return;		// intermission or finale
 
 	makevectors (self.v_angle);		// is this still used
+	
+	self.deathtype = "";	// 1998-07-24 Wrong obituary messages fix by Zoid
 
 	CheckRules ();
 	WaterMove ();
@@ -1156,6 +1164,7 @@ void() PlayerPostThink =
 		}
 		else if (self.jump_flag < -650)
 		{
+			self.deathtype = "falling";	// 1998-07-24 Wrong obituary messages fix by Zoid
 			T_Damage (self, world, world, 5);
 			
 			if(qreate_CheckCOMMANDO() == TRUE)
@@ -1283,6 +1292,36 @@ void(entity targ, entity attacker) ClientObituary =
 			return;
 		}
 
+// 1998-07-24 Wrong obituary messages fix by Zoid  start
+		if (targ.deathtype == "squish")
+		{
+			if (teamplay && targ.team == attacker.team && targ != attacker)
+			{
+				attacker.frags = attacker.frags - 1; 
+				bprint (attacker.netname);
+				bprint (" squished a teammate\n");
+				return;
+			}
+			else if (attacker.classname == "player" && targ != attacker)
+			{
+				bprint (attacker.netname);
+				bprint (" squishes ");
+				bprint (targ.netname);
+				bprint ("\n");
+				attacker.frags = attacker.frags + 1;
+				return;
+			}
+			else
+			{
+				targ.frags = targ.frags - 1;            // killed self
+				bprint (targ.netname);
+				bprint (" was squished\n");
+				return;
+			}
+			return;
+		}
+// 1998-07-24 Wrong obituary messages fix by Zoid  end
+
 		if (attacker.classname == "player")
 		{
 			if (targ == attacker)
@@ -1290,15 +1329,42 @@ void(entity targ, entity attacker) ClientObituary =
 				// killed self
 				attacker.frags = attacker.frags - 1;
 				bprint (targ.netname);
-				
-				if (targ.weapon == 64 && targ.waterlevel > 1)
+
+// 1998-07-24 Wrong obituary messages fix by Zoid  start
+				if (targ.deathtype == "grenade")
 				{
-					bprint (" discharges into the water.\n");
+					bprint (" tries to put the pin back in\n");
 					return;
 				}
-				if (targ.weapon == IT_GRENADE_LAUNCHER)
-					bprint (" tries to put the pin back in\n");
+				else if (targ.deathtype == "rocket")
+				{
+					// 1998-07-24 enhanced obituary messages by Maddes  start
+					if (targ.health < -40)
+						bprint (" explodes with his own rocket\n");
+					else
+						bprint (" dies through his own rocket\n");
+					// 1998-07-24 enhanced obituary messages by Maddes  end
+					return;
+				}
 				else
+// 1998-07-24 Wrong obituary messages fix by Zoid  end
+				if (targ.weapon == IT_LIGHTNING && targ.waterlevel > 1)
+				{
+// 1998-07-24 Wrong obituary messages fix by Zoid  start
+					if (targ.watertype == CONTENT_SLIME)
+						bprint (" discharges into the slime\n");
+					else if (targ.watertype == CONTENT_LAVA)
+						bprint (" discharges into the lava\n");
+					else
+// 1998-07-24 Wrong obituary messages fix by Zoid  end
+						bprint (" discharges into the water.\n");
+					return;
+				}
+// 1998-07-24 Wrong obituary messages fix by Zoid  start
+//				if (targ.weapon == IT_GRENADE_LAUNCHER)
+//					bprint (" tries to put the pin back in\n");
+//				else
+// 1998-07-24 Wrong obituary messages fix by Zoid  end
 					bprint (" becomes bored with life\n");
 				return;
 			}
@@ -1322,32 +1388,18 @@ void(entity targ, entity attacker) ClientObituary =
 				attacker.frags = attacker.frags + 1;
 				
 				rnum = attacker.weapon;
-				if (rnum == IT_AXE)
-				{
-					deathstring = " was ax-murdered by ";
-					deathstring2 = "\n";
-				}
-				if (rnum == IT_SHOTGUN)
-				{
-					deathstring = " chewed on ";
-					deathstring2 = "'s boomstick\n";
-				}
-				if (rnum == IT_SUPER_SHOTGUN)
-				{
-					deathstring = " ate 2 loads of ";
-					deathstring2 = "'s buckshot\n";
-				}
-				if (rnum == IT_NAILGUN)
+				// 1998-07-24 Wrong obituary messages fix by Zoid  start
+				if (targ.deathtype == "nail")
 				{
 					deathstring = " was nailed by ";
 					deathstring2 = "\n";
 				}
-				if (rnum == IT_SUPER_NAILGUN)
+				else if (targ.deathtype == "supernail")
 				{
 					deathstring = " was punctured by ";
 					deathstring2 = "\n";
 				}
-				if (rnum == IT_GRENADE_LAUNCHER)
+				else if (targ.deathtype == "grenade")
 				{
 					deathstring = " eats ";
 					deathstring2 = "'s pineapple\n";
@@ -1357,16 +1409,88 @@ void(entity targ, entity attacker) ClientObituary =
 						deathstring2 = "'s grenade\n";
 					}
 				}
-				if (rnum == IT_ROCKET_LAUNCHER)
+				else if (targ.deathtype == "rocket")
 				{
-					deathstring = " rides ";
-					deathstring2 = "'s rocket\n";
-					if (targ.health < -40)
+					if (attacker.super_damage_finished > 0 && targ.health < -40)
 					{
-						deathstring = " was gibbed by ";
-						deathstring2 = "'s rocket\n" ;
+						rnum = random();
+						if (rnum < 0.3)
+							deathstring = " was brutalized by ";
+						else if (rnum < 0.6)
+							deathstring = " was smeared by ";
+						else
+						{
+							bprint (attacker.netname);
+							bprint (" rips ");
+							bprint (targ.netname);
+							bprint (" a new one\n");
+							return;
+						}
+						deathstring2 = "'s quad rocket\n";
+					}
+					else
+					{
+						deathstring = " rides ";
+						deathstring2 = "'s rocket\n";
+						if (targ.health < -40)
+						{
+							deathstring = " was gibbed by ";
+							deathstring2 = "'s rocket\n";
+						}
 					}
 				}
+				else
+// 1998-07-24 Wrong obituary messages fix by Zoid  end
+				if (rnum == IT_AXE)
+				{
+					deathstring = " was ax-murdered by ";
+					deathstring2 = "\n";
+				}
+				else	// 1998-07-24 Wrong obituary messages fix by Zoid
+				if (rnum == IT_SHOTGUN)
+				{
+					deathstring = " chewed on ";
+					deathstring2 = "'s boomstick\n";
+				}
+				else	// 1998-07-24 Wrong obituary messages fix by Zoid
+				if (rnum == IT_SUPER_SHOTGUN)
+				{
+					deathstring = " ate 2 loads of ";
+					deathstring2 = "'s buckshot\n";
+				}
+				// 1998-07-24 Wrong obituary messages fix by Zoid  start
+//				if (rnum == IT_NAILGUN)
+//				{
+//					deathstring = " was nailed by ";
+//					deathstring2 = "\n";
+//				}
+//				if (rnum == IT_SUPER_NAILGUN)
+//				{
+//					deathstring = " was punctured by ";
+//					deathstring2 = "\n";
+//				}
+//				if (rnum == IT_GRENADE_LAUNCHER)
+//				{
+//					deathstring = " eats ";
+//					deathstring2 = "'s pineapple\n";
+//					if (targ.health < -40)
+//					{
+//						deathstring = " was gibbed by ";
+//						deathstring2 = "'s grenade\n";
+//					}
+//				}
+//				if (rnum == IT_ROCKET_LAUNCHER)
+//				{
+//					deathstring = " rides ";
+//					deathstring2 = "'s rocket\n";
+//					if (targ.health < -40)
+//					{
+//						deathstring = " was gibbed by ";
+//						deathstring2 = "'s rocket\n";
+//					}
+//				}
+				else
+// 1998-07-24 Wrong obituary messages fix by Zoid  end
 				if (rnum == IT_LIGHTNING)
 				{
 					deathstring = " accepts ";
@@ -1387,7 +1511,7 @@ void(entity targ, entity attacker) ClientObituary =
 			targ.frags = targ.frags - 1;
 			bprint (targ.netname);
 
-			// killed by a montser?
+			// killed by a monster?
 			if (attacker.flags & FL_MONSTER)
 			{
 				if (attacker.classname == "monster_army")
@@ -1431,7 +1555,13 @@ void(entity targ, entity attacker) ClientObituary =
 			{
 				bprint (" blew up\n");
 				return;
+			}// 1998-07-24 Wrong obituary messages fix by Zoid  start
+			if (targ.deathtype == "falling")
+			{
+				bprint (" fell to his death\n");
+				return;
 			}
+/*
 			if (attacker.solid == SOLID_BSP && attacker != world)
 			{	
 				bprint (" was squished\n");
@@ -1442,6 +1572,18 @@ void(entity targ, entity attacker) ClientObituary =
 				bprint (" was spiked\n");
 				return;
 			}
+*/
+			if (targ.deathtype == "nail" || targ.deathtype == "supernail")
+			{
+				bprint (" was spiked\n");
+				return;
+			}
+			if (targ.deathtype == "laser")
+			{
+				bprint (" was zapped\n");
+				return;
+			}
+// 1998-07-24 Wrong obituary messages fix by Zoid  end
 			if (attacker.classname == "fireball")
 			{
 				bprint (" ate a lavaball\n");
@@ -1485,6 +1627,8 @@ void(entity targ, entity attacker) ClientObituary =
 				return;
 			}
 
+// 1998-07-24 Wrong obituary messages fix by Zoid  start
+/*
 			// fell to their death?
 			if (targ.deathtype == "falling")
 			{
@@ -1492,9 +1636,11 @@ void(entity targ, entity attacker) ClientObituary =
 				bprint (" fell to his death\n");
 				return;
 			}
+*/
+// 1998-07-24 Wrong obituary messages fix by Zoid  end
 
 			// hell if I know; he's just dead!!!
 			bprint (" died\n");
 		}
 	}
-}; 
+};
