@@ -1,7 +1,7 @@
 // QREATE FOR QUAKE  by eukara //
 // --------------------------- //
 // This is released under GPL V2!
-// Feel free to modify and to redristribute,
+// Feel free to modify and to redistribute,
 // but do so along with your modified code!
 
 void() RP_Payday_Update =
@@ -430,11 +430,4 @@ void(float amount) RP_DropMoney =
 	centerprint(self, "You have dropped $", money, "!\n");
 	self.rp_menutime = time + 1;
 	self.rp_money = self.rp_money - amount;
-};
-
-// For Qreate:
-void() info_roleplay =
-{
-	world.mode = 2;
-	RP_Main();
 };

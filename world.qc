@@ -185,307 +185,314 @@ void() worldspawn =
 	W_Precache ();			// get weapon precaches
 
 // sounds used from C physics code
- precache_model("maps/b_bh10.bsp");
-	precache_model ("maps/b_batt0.bsp");
-	precache_model ("maps/b_batt1.bsp");
-	precache_model ("maps/b_nail0.bsp");
-	precache_model ("maps/b_nail1.bsp");
-	precache_model ("maps/b_rock0.bsp");
-	precache_model ("maps/b_rock1.bsp");
-	precache_model ("maps/b_shell0.bsp");
-	precache_model ("maps/b_shell1.bsp");
-	precache_model ("progs/armor.mdl");
-	precache_model ("progs/end1.mdl");
-	precache_model ("progs/g_light.mdl");
-	precache_model ("progs/g_nail.mdl");
-	precache_model ("progs/g_nail2.mdl");
-	precache_model ("progs/g_rock.mdl");
-	precache_model ("progs/g_rock2.mdl");
-	precache_model ("progs/g_shot.mdl");
-	precache_model ("progs/invisibl.mdl");
-	precache_model ("progs/invulner.mdl");
-	precache_model ("progs/m_g_key.mdl");
-	precache_model ("progs/m_s_key.mdl");
-	precache_model ("progs/quaddama.mdl");
-	precache_model ("progs/suit.mdl");
-	precache_model ("progs/w_g_key.mdl");
-	precache_model ("progs/w_s_key.mdl");
-	precache_model("maps/b_bh100.bsp");
-	precache_model("maps/b_bh25.bsp");
-	precache_model ("progs/b_g_key.mdl");
-	precache_model ("progs/b_s_key.mdl");
-	precache_model ("progs/end2.mdl");
-	precache_model ("progs/end3.mdl");
-	precache_model ("progs/end4.mdl");
-	precache_sound ("items/damage.wav");
-	precache_sound ("items/damage2.wav");
-	precache_sound ("items/damage3.wav");
-	precache_sound ("items/inv1.wav");
-	precache_sound ("items/inv2.wav");
-	precache_sound ("items/inv3.wav");
-	precache_sound ("items/protect.wav");
-	precache_sound ("items/protect2.wav");
-	precache_sound ("items/protect3.wav");
-	precache_sound ("items/suit.wav");
-	precache_sound ("items/suit2.wav");
-	precache_sound ("misc/medkey.wav");
-	precache_sound ("misc/runekey.wav");
-	precache_sound("items/health1.wav");
-	precache_sound("items/r_item1.wav");
-	precache_sound("items/r_item2.wav");
-	precache_sound("effects/freamc.wav");
-	precache_sound("effects/splash.wav");
-	precache_sound("effects/remove.wav");
-	precache_sound("effects/switch01.wav");
-	precache_sound ("misc/basekey.wav");
-	precache_model ("maps/b_explob.bsp");
-	precache_model ("progs/backpack.mdl");
-	precache_model ("progs/bolt.mdl");		// for lightning gun
-	precache_model ("progs/bolt.mdl");
-	precache_model ("progs/bolt2.mdl");		// for lightning gun
-	precache_model ("progs/bolt3.mdl");		// for boss shock
-	precache_model ("progs/boss.mdl");
-	precache_model ("progs/demon.mdl");
-	precache_model ("progs/dragon.mdl");
-	precache_model ("progs/dog.mdl");
-	precache_model ("progs/enforcer.mdl");
+
+	if(qreate_CheckSANDBOX() == TRUE)
+	{
+		precache_model("maps/b_bh10.bsp");
+		precache_model ("maps/b_batt0.bsp");
+		precache_model ("maps/b_batt1.bsp");
+		precache_model ("maps/b_nail0.bsp");
+		precache_model ("maps/b_nail1.bsp");
+		precache_model ("maps/b_rock0.bsp");
+		precache_model ("maps/b_rock1.bsp");
+		precache_model ("maps/b_shell0.bsp");
+		precache_model ("maps/b_shell1.bsp");
+		precache_model ("progs/armor.mdl");
+		precache_model ("progs/end1.mdl");
+		precache_model ("progs/g_light.mdl");
+		precache_model ("progs/g_nail.mdl");
+		precache_model ("progs/g_nail2.mdl");
+		precache_model ("progs/g_rock.mdl");
+		precache_model ("progs/g_rock2.mdl");
+		precache_model ("progs/g_shot.mdl");
+		precache_model ("progs/invisibl.mdl");
+		precache_model ("progs/invulner.mdl");
+		precache_model ("progs/m_g_key.mdl");
+		precache_model ("progs/m_s_key.mdl");
+		precache_model ("progs/quaddama.mdl");
+		precache_model ("progs/suit.mdl");
+		precache_model ("progs/w_g_key.mdl");
+		precache_model ("progs/w_s_key.mdl");
+		precache_model ("maps/b_bh100.bsp");
+		precache_model ("maps/b_bh25.bsp");
+		precache_model ("progs/b_g_key.mdl");
+		precache_model ("progs/b_s_key.mdl");
+		precache_model ("progs/end2.mdl");
+		precache_model ("progs/end3.mdl");
+		precache_model ("progs/end4.mdl");
+		precache_sound ("items/damage.wav");
+		precache_sound ("items/damage2.wav");
+		precache_sound ("items/damage3.wav");
+		precache_sound ("items/inv1.wav");
+		precache_sound ("items/inv2.wav");
+		precache_sound ("items/inv3.wav");
+		precache_sound ("items/protect.wav");
+		precache_sound ("items/protect2.wav");
+		precache_sound ("items/protect3.wav");
+		precache_sound ("items/suit.wav");
+		precache_sound ("items/suit2.wav");
+		precache_sound ("misc/medkey.wav");
+		precache_sound ("misc/runekey.wav");
+		precache_sound ("items/health1.wav");
+		precache_sound ("items/r_item1.wav");
+		precache_sound ("items/r_item2.wav");
+		precache_sound ("effects/freamc.wav");
+		precache_sound ("effects/splash.wav");
+		precache_sound ("effects/remove.wav");
+		precache_sound ("effects/switch01.wav");
+		precache_sound ("misc/basekey.wav");
+		precache_model ("maps/b_explob.bsp");
+		precache_model ("progs/backpack.mdl");
+		precache_model ("progs/bolt.mdl");		// for lightning gun
+		precache_model ("progs/bolt.mdl");
+		precache_model ("progs/bolt2.mdl");		// for lightning gun
+		precache_model ("progs/bolt3.mdl");		// for boss shock
+		precache_model ("progs/boss.mdl");
+		precache_model ("progs/demon.mdl");
+		precache_model ("progs/dragon.mdl");
+		precache_model ("progs/dog.mdl");
+		precache_model ("progs/enforcer.mdl");
+		precache_model ("progs/fish.mdl");
+		precache_model ("progs/flame.mdl");
+		precache_model ("progs/flame2.mdl");
+		precache_model ("progs/gib1.mdl");
+		precache_model ("progs/gib2.mdl");
+		precache_model ("progs/gib3.mdl");
+		precache_model ("progs/grenade.mdl");
+		precache_model ("progs/h_demon.mdl");
+		precache_model ("progs/h_dog.mdl");
+		precache_model ("progs/h_guard.mdl");
+		precache_model ("progs/h_hellkn.mdl");
+		precache_model ("progs/h_knight.mdl");
+		precache_model ("progs/h_mega.mdl");
+		precache_model ("progs/h_ogre.mdl");
+		precache_model ("progs/h_player.mdl");
+		precache_model ("progs/h_shal.mdl");
+		precache_model ("progs/h_shams.mdl");
+		precache_model ("progs/h_wizard.mdl");
+		precache_model ("progs/h_zombie.mdl");
+		precache_model ("progs/hknight.mdl");
+		precache_model ("progs/k_spike.mdl");
+		precache_model ("progs/knight.mdl");
+		precache_model ("progs/laser.mdl");
+		precache_model ("progs/lavaball.mdl");	// for testing
+		precache_model ("progs/lavaball.mdl");
+		precache_model ("progs/missile.mdl");
+		precache_model ("progs/ogre.mdl");
+		precache_model ("progs/oldone.mdl");
+		precache_model ("progs/s_bubble.spr");	// drowning bubbles
+		precache_model ("progs/s_bubble.spr");
+		precache_model ("progs/s_light.mdl");
+		precache_model ("progs/s_light.spr");
+		precache_model ("progs/s_spike.mdl");
+		precache_model ("progs/shalrath.mdl");
+		precache_model ("progs/shambler.mdl");
+		precache_model ("progs/soldier.mdl");
+		precache_model ("progs/spike.mdl");
+		precache_model ("progs/tarbaby.mdl");
+		precache_model ("progs/v_btt.mdl");
+		precache_model ("progs/v_light.mdl");
+		precache_model ("progs/v_nail.mdl");
+		precache_model ("progs/v_nail2.mdl");
+		precache_model ("progs/v_rock.mdl");
+		precache_model ("progs/v_rock2.mdl");
+		precache_model ("progs/v_shot2.mdl");
+		precache_model ("progs/v_spike.mdl");
+		precache_model ("progs/w_spike.mdl");
+		precache_model ("progs/wizard.mdl");
+		precache_model ("progs/zom_gib.mdl");
+		precache_model ("progs/zombie.mdl");
+		precache_model ("maps/b_exbox2.bsp");
+		precache_model ("progs/laser.mdl");
+		precache_model ("progs/dance.mdl");
+		precache_model ("progs/wall1.bsp");
+		precache_model ("progs/wall2.bsp");
+		precache_model ("progs/wall3.bsp");
+		precache_model ("progs/wall4.bsp");
+		precache_model ("progs/floor.bsp");
+		
+		precache_sound ("blob/death1.wav");
+		precache_sound ("blob/hit1.wav");
+		precache_sound ("blob/land1.wav");
+		precache_sound ("blob/sight1.wav");
+		precache_sound ("boss1/death.wav");
+		precache_sound ("boss1/out1.wav");
+		precache_sound ("boss1/pain.wav");
+		precache_sound ("boss1/sight1.wav");
+		precache_sound ("boss1/throw.wav");
+		precache_sound ("boss2/death.wav");
+		precache_sound ("boss2/idle.wav");
+		precache_sound ("boss2/pop2.wav");
+		precache_sound ("boss2/sight.wav");
+		precache_sound ("demon/ddeath.wav");
+		precache_sound ("demon/dhit2.wav");
+		precache_sound ("demon/djump.wav");
+		precache_sound ("demon/dland2.wav");		// landing thud
+		precache_sound ("demon/dpain1.wav");
+		precache_sound ("demon/idle1.wav");
+		precache_sound ("demon/sight2.wav");
+		precache_sound ("dog/dattack1.wav");
+		precache_sound ("dog/ddeath.wav");
+		precache_sound ("dog/dpain1.wav");
+		precache_sound ("dog/dsight.wav");
+		precache_sound ("dog/idle.wav");
+		precache_sound ("enforcer/death1.wav");
+		precache_sound ("enforcer/enfire.wav");
+		precache_sound ("enforcer/enfstop.wav");
+		precache_sound ("enforcer/idle1.wav");
+		precache_sound ("enforcer/pain1.wav");
+		precache_sound ("enforcer/pain2.wav");
+		precache_sound ("enforcer/sight1.wav");
+		precache_sound ("enforcer/sight2.wav");
+		precache_sound ("enforcer/sight3.wav");
+		precache_sound ("enforcer/sight4.wav");
+		precache_sound ("fish/bite.wav");
+		precache_sound ("fish/death.wav");
+		precache_sound ("fish/idle.wav");
+		precache_sound ("hknight/attack1.wav");
+		precache_sound ("hknight/death1.wav");
+		precache_sound ("hknight/grunt.wav");
+		precache_sound ("hknight/hit.wav");		// used by C code, so don't sound2
+		precache_sound ("hknight/idle.wav");
+		precache_sound ("hknight/pain1.wav");
+		precache_sound ("hknight/sight1.wav");
+		precache_sound ("hknight/slash1.wav");
+		precache_sound ("items/armor1.wav");		// armor up
+		precache_sound ("items/damage3.wav");
+		precache_sound ("items/itembk2.wav");		// item respawn sound
+		precache_sound ("knight/idle.wav");
+		precache_sound ("knight/kdeath.wav");
+		precache_sound ("knight/khurt.wav");
+		precache_sound ("knight/ksight.wav");
+		precache_sound ("knight/sword1.wav");
+		precache_sound ("knight/sword2.wav");
+		precache_sound ("misc/h2ohit1.wav");		// landing splash
+		precache_sound ("misc/outwater.wav");		// leaving water sound
+		precache_sound ("misc/power.wav");			//lightning for boss
+		precache_sound ("misc/power.wav");
+		precache_sound ("misc/r_tele1.wav");		// teleport sounds
+		precache_sound ("misc/r_tele2.wav");
+		precache_sound ("misc/r_tele3.wav");
+		precache_sound ("misc/r_tele4.wav");
+		precache_sound ("misc/r_tele5.wav");
+		precache_sound ("misc/talk.wav");			// talk
+		precache_sound ("misc/water1.wav");			// swimming
+		precache_sound ("misc/water2.wav");			// swimming
+		precache_sound ("ogre/ogdrag.wav");
+		precache_sound ("ogre/ogdth.wav");
+		precache_sound ("ogre/ogidle.wav");
+		precache_sound ("ogre/ogidle2.wav");
+		precache_sound ("ogre/ogpain1.wav");
+		precache_sound ("ogre/ogsawatk.wav");
+		precache_sound ("ogre/ogwake.wav");
+		precache_sound ("player/axhit1.wav");		// ax hit meat
+		precache_sound ("player/axhit2.wav");		// ax hit world
+		precache_sound ("player/death1.wav");
+		precache_sound ("player/death2.wav");
+		precache_sound ("player/death3.wav");
+		precache_sound ("player/death4.wav");
+		precache_sound ("player/death5.wav");
+		precache_sound ("player/drown1.wav");		// drowning pain
+		precache_sound ("player/drown2.wav");		// drowning pain
+		precache_sound ("player/gasp1.wav");		// gasping for air
+		precache_sound ("player/gasp2.wav");		// taking breath
+		precache_sound ("player/gib.wav");			// player gib sound
+		precache_sound ("player/h2odeath.wav");		// drowning death
+		precache_sound ("player/h2ojump.wav");		// player jumping into water
+		precache_sound ("player/inh2o.wav");		// player enter water
+		precache_sound ("player/inlava.wav");		// player enter lava
+		precache_sound ("player/land.wav");			// player landing
+		precache_sound ("player/land2.wav");		// player hurt landing
+		precache_sound ("player/lburn1.wav");		// lava burn
+		precache_sound ("player/lburn2.wav");		// lava burn
+		precache_sound ("player/pain1.wav");
+		precache_sound ("player/pain2.wav");
+		precache_sound ("player/pain3.wav");
+		precache_sound ("player/pain4.wav");
+		precache_sound ("player/pain5.wav");
+		precache_sound ("player/pain6.wav");
+		precache_sound ("player/plyrjmp8.wav");		// player jump
+		precache_sound ("player/slimbrn2.wav");		// player enter slime
+		precache_sound ("player/teledth1.wav");		// telefrag
+		precache_sound ("player/tornoff2.wav");		// gib sound
+		precache_sound ("player/udeath.wav");		// gib death
+		precache_sound ("player/udeath.wav");		// player gib sound
+		precache_sound ("shalrath/attack.wav");
+		precache_sound ("shalrath/attack2.wav");
+		precache_sound ("shalrath/death.wav");
+		precache_sound ("shalrath/idle.wav");
+		precache_sound ("shalrath/pain.wav");
+		precache_sound ("shalrath/sight.wav");
+		precache_sound ("shambler/melee1.wav");
+		precache_sound ("shambler/melee2.wav");
+		precache_sound ("shambler/sattck1.wav");
+		precache_sound ("shambler/sboom.wav");
+		precache_sound ("shambler/sdeath.wav");
+		precache_sound ("shambler/shurt2.wav");
+		precache_sound ("shambler/sidle.wav");
+		precache_sound ("shambler/smack.wav");
+		precache_sound ("shambler/ssight.wav");
+		precache_sound ("soldier/death1.wav");
+		precache_sound ("soldier/idle.wav");
+		precache_sound ("soldier/pain1.wav");
+		precache_sound ("soldier/pain2.wav");
+		precache_sound ("soldier/sattck1.wav");
+		precache_sound ("soldier/sight1.wav");
+		precache_sound ("weapons/ax1.wav");			// ax swoosh
+		precache_sound ("weapons/lhit.wav");		//lightning
+		precache_sound ("weapons/lock4.wav");		// ammo pick up
+		precache_sound ("weapons/lstart.wav");		//lightning start
+		precache_sound ("weapons/pkup.wav");		// weapon up
+		precache_sound ("weapons/r_exp3.wav");
+		precache_sound ("weapons/rocket1i.wav");
+		precache_sound ("weapons/spike2.wav");
+		precache_sound ("wizard/hit.wav");		// used by c code
+		precache_sound ("wizard/wattack.wav");
+		precache_sound ("wizard/wdeath.wav");
+		precache_sound ("wizard/widle1.wav");
+		precache_sound ("wizard/widle2.wav");
+		precache_sound ("wizard/wpain.wav");
+		precache_sound ("wizard/wsight.wav");
+		precache_sound ("zombie/idle_w2.wav");
+		precache_sound ("zombie/z_fall.wav");
+		precache_sound ("zombie/z_gib.wav");
+		precache_sound ("zombie/z_hit.wav");
+		precache_sound ("zombie/z_idle.wav");
+		precache_sound ("zombie/z_idle1.wav");
+		precache_sound ("zombie/z_miss.wav");
+		precache_sound ("zombie/z_pain.wav");
+		precache_sound ("zombie/z_pain1.wav");
+		precache_sound ("zombie/z_shot1.wav");
+		precache_sound ("enforcer/death1.wav");
+		precache_sound ("enforcer/enfire.wav");
+		precache_sound ("enforcer/enfstop.wav");
+		precache_sound ("enforcer/idle1.wav");
+		precache_sound ("enforcer/pain1.wav");
+		precache_sound ("enforcer/pain2.wav");
+		precache_sound ("enforcer/sight1.wav");
+		precache_sound ("enforcer/sight2.wav");
+		precache_sound ("enforcer/sight3.wav");
+		precache_sound ("enforcer/sight4.wav");
+		precache_sound ("buttons/airbut1.wav");
+		precache_sound ("buttons/switch21.wav");
+		precache_sound ("buttons/switch02.wav");
+		precache_sound ("buttons/switch04.wav");
+		precache_sound ("doors/medtry.wav");
+		precache_sound ("doors/meduse.wav");
+		precache_sound ("doors/runetry.wav");
+		precache_sound ("doors/runeuse.wav");
+		precache_sound ("doors/basetry.wav");
+		precache_sound ("doors/baseuse.wav");
+		precache_sound ("misc/null.wav");
+		precache_sound ("arcade/mntrain.wav");
+	}
+	else if(qreate_CheckLIGHTRP() == TRUE)
+		RP_Main();
+	else if(qreate_CheckCOMMANDO() == TRUE)
+		Commando_Main();
+
 	precache_model ("progs/eyes.mdl");
-	precache_model ("progs/fish.mdl");
-	precache_model ("progs/flame.mdl");
-	precache_model ("progs/flame2.mdl");
-	precache_model ("progs/gib1.mdl");
-	precache_model ("progs/gib2.mdl");
-	precache_model ("progs/gib3.mdl");
-	precache_model ("progs/grenade.mdl");
-	precache_model ("progs/h_demon.mdl");
-	precache_model ("progs/h_dog.mdl");
-	precache_model ("progs/h_guard.mdl");
-	precache_model ("progs/h_hellkn.mdl");
-	precache_model ("progs/h_knight.mdl");
-	precache_model ("progs/h_mega.mdl");
-	precache_model ("progs/h_ogre.mdl");
-	precache_model ("progs/h_player.mdl");
-	precache_model ("progs/h_shal.mdl");
-	precache_model ("progs/h_shams.mdl");
-	precache_model ("progs/h_wizard.mdl");
-	precache_model ("progs/h_zombie.mdl");
-	precache_model ("progs/hknight.mdl");
-	precache_model ("progs/k_spike.mdl");
-	precache_model ("progs/knight.mdl");
-	precache_model ("progs/laser.mdl");
-	precache_model ("progs/lavaball.mdl");	// for testing
-	precache_model ("progs/lavaball.mdl");
-	precache_model ("progs/missile.mdl");
-	precache_model ("progs/ogre.mdl");
-	precache_model ("progs/oldone.mdl");
 	precache_model ("progs/player.mdl");
-	precache_model ("progs/s_bubble.spr");	// drowning bubbles
-	precache_model ("progs/s_bubble.spr");
-	precache_model ("progs/s_explod.spr");	// sprite explosion
-	precache_model ("progs/s_light.mdl");
-	precache_model ("progs/s_light.spr");
-	precache_model ("progs/s_spike.mdl");
-	precache_model ("progs/shalrath.mdl");
-	precache_model ("progs/shambler.mdl");
-	precache_model ("progs/soldier.mdl");
-	precache_model ("progs/spike.mdl");
-	precache_model ("progs/tarbaby.mdl");
-	precache_model ("progs/v_axe.mdl");
-	precache_model ("progs/v_btt.mdl");
-	precache_model ("progs/v_light.mdl");
-	precache_model ("progs/v_nail.mdl");
-	precache_model ("progs/v_nail2.mdl");
-	precache_model ("progs/v_rock.mdl");
-	precache_model ("progs/v_rock2.mdl");
-	precache_model ("progs/v_shot.mdl");
-	precache_model ("progs/v_shot2.mdl");
-	precache_model ("progs/v_spike.mdl");
-	precache_model ("progs/w_spike.mdl");
-	precache_model ("progs/wizard.mdl");
-	precache_model ("progs/zom_gib.mdl");
-	precache_model ("progs/zombie.mdl");
-	precache_model ("maps/b_exbox2.bsp");
-	precache_model ("progs/laser.mdl");
-	precache_model ("progs/wall1.bsp");
-	precache_model ("progs/wall2.bsp");
-	precache_model ("progs/wall3.bsp");
-	precache_model ("progs/wall4.bsp");
-	precache_model ("progs/floor.bsp");
-	
-	precache_sound ("blob/death1.wav");
-	precache_sound ("blob/hit1.wav");
-	precache_sound ("blob/land1.wav");
-	precache_sound ("blob/sight1.wav");
-	precache_sound ("boss1/death.wav");
-	precache_sound ("boss1/out1.wav");
-	precache_sound ("boss1/pain.wav");
-	precache_sound ("boss1/sight1.wav");
-	precache_sound ("boss1/throw.wav");
-	precache_sound ("boss2/death.wav");
-	precache_sound ("boss2/idle.wav");
-	precache_sound ("boss2/pop2.wav");
-	precache_sound ("boss2/sight.wav");
-	precache_sound ("demon/ddeath.wav");
-	precache_sound ("demon/dhit2.wav");
-	precache_sound ("demon/djump.wav");
-	precache_sound ("demon/dland2.wav");		// landing thud
-	precache_sound ("demon/dpain1.wav");
-	precache_sound ("demon/idle1.wav");
-	precache_sound ("demon/sight2.wav");
-	precache_sound ("dog/dattack1.wav");
-	precache_sound ("dog/ddeath.wav");
-	precache_sound ("dog/dpain1.wav");
-	precache_sound ("dog/dsight.wav");
-	precache_sound ("dog/idle.wav");
-	precache_sound ("enforcer/death1.wav");
-	precache_sound ("enforcer/enfire.wav");
-	precache_sound ("enforcer/enfstop.wav");
-	precache_sound ("enforcer/idle1.wav");
-	precache_sound ("enforcer/pain1.wav");
-	precache_sound ("enforcer/pain2.wav");
-	precache_sound ("enforcer/sight1.wav");
-	precache_sound ("enforcer/sight2.wav");
-	precache_sound ("enforcer/sight3.wav");
-	precache_sound ("enforcer/sight4.wav");
-	precache_sound ("fish/bite.wav");
-	precache_sound ("fish/death.wav");
-	precache_sound ("fish/idle.wav");
-	precache_sound ("hknight/attack1.wav");
-	precache_sound ("hknight/death1.wav");
-	precache_sound ("hknight/grunt.wav");
-	precache_sound ("hknight/hit.wav");		// used by C code, so don't sound2
-	precache_sound ("hknight/idle.wav");
-	precache_sound ("hknight/pain1.wav");
-	precache_sound ("hknight/sight1.wav");
-	precache_sound ("hknight/slash1.wav");
-	precache_sound ("items/armor1.wav");		// armor up
-	precache_sound ("items/damage3.wav");
-	precache_sound ("items/itembk2.wav");		// item respawn sound
-	precache_sound ("knight/idle.wav");
-	precache_sound ("knight/kdeath.wav");
-	precache_sound ("knight/khurt.wav");
-	precache_sound ("knight/ksight.wav");
-	precache_sound ("knight/sword1.wav");
-	precache_sound ("knight/sword2.wav");
-	precache_sound ("misc/h2ohit1.wav");		// landing splash
-	precache_sound ("misc/outwater.wav");		// leaving water sound
-	precache_sound ("misc/power.wav");			//lightning for boss
-	precache_sound ("misc/power.wav");
-	precache_sound ("misc/r_tele1.wav");		// teleport sounds
-	precache_sound ("misc/r_tele2.wav");
-	precache_sound ("misc/r_tele3.wav");
-	precache_sound ("misc/r_tele4.wav");
-	precache_sound ("misc/r_tele5.wav");
-	precache_sound ("misc/talk.wav");			// talk
-	precache_sound ("misc/water1.wav");			// swimming
-	precache_sound ("misc/water2.wav");			// swimming
-	precache_sound ("ogre/ogdrag.wav");
-	precache_sound ("ogre/ogdth.wav");
-	precache_sound ("ogre/ogidle.wav");
-	precache_sound ("ogre/ogidle2.wav");
-	precache_sound ("ogre/ogpain1.wav");
-	precache_sound ("ogre/ogsawatk.wav");
-	precache_sound ("ogre/ogwake.wav");
-	precache_sound ("player/axhit1.wav");		// ax hit meat
-	precache_sound ("player/axhit2.wav");		// ax hit world
-	precache_sound ("player/death1.wav");
-	precache_sound ("player/death2.wav");
-	precache_sound ("player/death3.wav");
-	precache_sound ("player/death4.wav");
-	precache_sound ("player/death5.wav");
-	precache_sound ("player/drown1.wav");		// drowning pain
-	precache_sound ("player/drown2.wav");		// drowning pain
-	precache_sound ("player/gasp1.wav");		// gasping for air
-	precache_sound ("player/gasp2.wav");		// taking breath
-	precache_sound ("player/gib.wav");			// player gib sound
-	precache_sound ("player/h2odeath.wav");		// drowning death
-	precache_sound ("player/h2ojump.wav");		// player jumping into water
-	precache_sound ("player/inh2o.wav");		// player enter water
-	precache_sound ("player/inlava.wav");		// player enter lava
-	precache_sound ("player/land.wav");			// player landing
-	precache_sound ("player/land2.wav");		// player hurt landing
-	precache_sound ("player/lburn1.wav");		// lava burn
-	precache_sound ("player/lburn2.wav");		// lava burn
-	precache_sound ("player/pain1.wav");
-	precache_sound ("player/pain2.wav");
-	precache_sound ("player/pain3.wav");
-	precache_sound ("player/pain4.wav");
-	precache_sound ("player/pain5.wav");
-	precache_sound ("player/pain6.wav");
-	precache_sound ("player/plyrjmp8.wav");		// player jump
-	precache_sound ("player/slimbrn2.wav");		// player enter slime
-	precache_sound ("player/teledth1.wav");		// telefrag
-	precache_sound ("player/tornoff2.wav");		// gib sound
-	precache_sound ("player/udeath.wav");		// gib death
-	precache_sound ("player/udeath.wav");		// player gib sound
-	precache_sound ("shalrath/attack.wav");
-	precache_sound ("shalrath/attack2.wav");
-	precache_sound ("shalrath/death.wav");
-	precache_sound ("shalrath/idle.wav");
-	precache_sound ("shalrath/pain.wav");
-	precache_sound ("shalrath/sight.wav");
-	precache_sound ("shambler/melee1.wav");
-	precache_sound ("shambler/melee2.wav");
-	precache_sound ("shambler/sattck1.wav");
-	precache_sound ("shambler/sboom.wav");
-	precache_sound ("shambler/sdeath.wav");
-	precache_sound ("shambler/shurt2.wav");
-	precache_sound ("shambler/sidle.wav");
-	precache_sound ("shambler/smack.wav");
-	precache_sound ("shambler/ssight.wav");
-	precache_sound ("soldier/death1.wav");
-	precache_sound ("soldier/idle.wav");
-	precache_sound ("soldier/pain1.wav");
-	precache_sound ("soldier/pain2.wav");
-	precache_sound ("soldier/sattck1.wav");
-	precache_sound ("soldier/sight1.wav");
-	precache_sound ("weapons/ax1.wav");			// ax swoosh
-	precache_sound ("weapons/lhit.wav");		//lightning
-	precache_sound ("weapons/lock4.wav");		// ammo pick up
-	precache_sound ("weapons/lstart.wav");		//lightning start
-	precache_sound ("weapons/pkup.wav");		// weapon up
-	precache_sound ("weapons/r_exp3.wav");
-	precache_sound ("weapons/rocket1i.wav");
-	precache_sound ("weapons/spike2.wav");
-	precache_sound ("wizard/hit.wav");		// used by c code
-	precache_sound ("wizard/wattack.wav");
-	precache_sound ("wizard/wdeath.wav");
-	precache_sound ("wizard/widle1.wav");
-	precache_sound ("wizard/widle2.wav");
-	precache_sound ("wizard/wpain.wav");
-	precache_sound ("wizard/wsight.wav");
-	precache_sound ("zombie/idle_w2.wav");
-	precache_sound ("zombie/z_fall.wav");
-	precache_sound ("zombie/z_gib.wav");
-	precache_sound ("zombie/z_hit.wav");
-	precache_sound ("zombie/z_idle.wav");
-	precache_sound ("zombie/z_idle1.wav");
-	precache_sound ("zombie/z_miss.wav");
-	precache_sound ("zombie/z_pain.wav");
-	precache_sound ("zombie/z_pain1.wav");
-	precache_sound ("zombie/z_shot1.wav");
-	precache_sound ("enforcer/death1.wav");
-	precache_sound ("enforcer/enfire.wav");
-	precache_sound ("enforcer/enfstop.wav");
-	precache_sound ("enforcer/idle1.wav");
-	precache_sound ("enforcer/pain1.wav");
-	precache_sound ("enforcer/pain2.wav");
-	precache_sound ("enforcer/sight1.wav");
-	precache_sound ("enforcer/sight2.wav");
-	precache_sound ("enforcer/sight3.wav");
-	precache_sound ("enforcer/sight4.wav");
-	precache_sound ("buttons/airbut1.wav");
-	precache_sound ("buttons/switch21.wav");
-	precache_sound ("buttons/switch02.wav");
-	precache_sound ("buttons/switch04.wav");
-	precache_sound ("doors/medtry.wav");
-	precache_sound ("doors/meduse.wav");
-	precache_sound ("doors/runetry.wav");
-	precache_sound ("doors/runeuse.wav");
-	precache_sound ("doors/basetry.wav");
-	precache_sound ("doors/baseuse.wav");
-	precache_sound ("misc/null.wav");
-	precache_sound ("misc/null.wav");	
 
 	fTeamFull = 0;
 //
@@ -494,37 +501,26 @@ void() worldspawn =
 
 	// 0 normal
 	lightstyle(0, "m");
-	
 	// 1 FLICKER (first variety)
 	lightstyle(1, "mmnmmommommnonmmonqnmmo");
-	
 	// 2 SLOW STRONG PULSE
 	lightstyle(2, "abcdefghijklmnopqrstuvwxyzyxwvutsrqponmlkjihgfedcba");
-	
 	// 3 CANDLE (first variety)
 	lightstyle(3, "mmmmmaaaaammmmmaaaaaabcdefgabcdefg");
-	
 	// 4 FAST STROBE
 	lightstyle(4, "mamamamamama");
-	
 	// 5 GENTLE PULSE 1
 	lightstyle(5,"jklmnopqrstuvwxyzyxwvutsrqponmlkj");
-	
 	// 6 FLICKER (second variety)
 	lightstyle(6, "nmonqnmomnmomomno");
-	
 	// 7 CANDLE (second variety)
 	lightstyle(7, "mmmaaaabcdefgmmmmaaaammmaamm");
-	
 	// 8 CANDLE (third variety)
 	lightstyle(8, "mmmaaammmaaammmabcdefaaaammmmabcdefmmmaaaa");
-	
 	// 9 SLOW STROBE (fourth variety)
 	lightstyle(9, "aaaaaaaazzzzzzzz");
-	
 	// 10 FLUORESCENT FLICKER
 	lightstyle(10, "mmamammmmammamamaaamammma");
-
 	// 11 SLOW PULSE NOT FADE TO BLACK
 	lightstyle(11, "abcdefghijklmnopqrrqponmlkjihgfedcba");
 	

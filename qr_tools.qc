@@ -1,7 +1,7 @@
 // QREATE FOR QUAKE  by eukara //
 // --------------------------- //
 // This is released under GPL V2!
-// Feel free to modify and to redristribute,
+// Feel free to modify and to redistribute,
 // but do so along with your modified code!
 
 float (entity trent) qreate_tool_denied =
@@ -312,7 +312,6 @@ void() qreate_tool_camera =
 
 void(float mode) qreate_tool_stack =
 {
-	local string framep;
 	local	vector	src;
 
 	if(mode)

@@ -776,8 +776,12 @@ void() PlayerJump =
 	self.flags = self.flags - FL_ONGROUND;	// don't stairwalk
 	
 	self.button2 = 0;
-// player jumping sound
-	sound (self, CHAN_BODY, "player/plyrjmp8.wav", 1, ATTN_NORM);
+	
+	if(qreate_CheckCOMMANDO() == TRUE)
+		sound (self, CHAN_BODY, "commando/plyrjmp8.wav", 1, ATTN_NORM);
+	else
+		sound (self, CHAN_BODY, "player/plyrjmp8.wav", 1, ATTN_NORM);
+		
 	self.velocity_z = self.velocity_z + 270;
 };
 
@@ -1144,15 +1148,30 @@ void() PlayerPostThink =
 	if ((self.jump_flag < -300) && (self.flags & FL_ONGROUND) && (self.health > 0))
 	{
 		if (self.watertype == CONTENT_WATER)
-			sound (self, CHAN_BODY, "player/h2ojump.wav", 1, ATTN_NORM);
+		{
+			if(qreate_CheckCOMMANDO() == TRUE)
+				sound (self, CHAN_VOICE, "commando/h2ojump.wav", 1, ATTN_NORM);
+			else
+				sound (self, CHAN_BODY, "player/h2ojump.wav", 1, ATTN_NORM);
+		}
 		else if (self.jump_flag < -650)
 		{
-			T_Damage (self, world, world, 5); 
-			sound (self, CHAN_VOICE, "player/land2.wav", 1, ATTN_NORM);
+			T_Damage (self, world, world, 5);
+			
+			if(qreate_CheckCOMMANDO() == TRUE)
+				sound (self, CHAN_VOICE, "commando/land2.wav", 1, ATTN_NORM);
+			else
+				sound (self, CHAN_VOICE, "player/land2.wav", 1, ATTN_NORM);
+				
 			self.deathtype = "falling";
 		}
 		else
-			sound (self, CHAN_VOICE, "player/land.wav", 1, ATTN_NORM);
+		{
+			if(qreate_CheckCOMMANDO() == TRUE)
+				sound (self, CHAN_VOICE, "commando/land.wav", 1, ATTN_NORM);
+			else
+				sound (self, CHAN_VOICE, "player/land.wav", 1, ATTN_NORM);
+		}
 
 		self.jump_flag = 0;
 	}

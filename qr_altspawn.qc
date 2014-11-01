@@ -1,7 +1,7 @@
 // QREATE FOR QUAKE  by eukara //
 // --------------------------- //
 // This is released under GPL V2!
-// Feel free to modify and to redristribute,
+// Feel free to modify and to redistribute,
 // but do so along with your modified code!
 
 // Alternative Spawn Menu
@@ -12,7 +12,7 @@ void() qreate_altspawnmenu_draw =
 	if(self.rp_menutime > time)
 		return;
 		
-	self.rp_menutime = time + 0.75;
+	self.rp_menutime = time + 0.25;
 
 	if(self.qreate_altmenulst == 0)
 		centerprint(self, "\n  QREATE SPAWNMENU  \n\n  ) MONSTERS       \n  ) PROPS          \n  ) ITEMS          \n  ) WEAPONS        \n                    \n  ) QUIT           \n\n\nPRESS  TO RETURN TO THIS MENU");
@@ -46,7 +46,7 @@ void() qreate_altspawnmenut_draw =
 	if(self.rp_menutime > time)
 		return;
 		
-	self.rp_menutime = time + 0.75;
+	self.rp_menutime = time + 0.25;
 
 	if(self.qreate_altmenulstt == 0)
 		centerprint(self, "\n  TOOL LIST          (1/3)  \n\n  ) remove tool            \n  ) rotate x axis          \n  ) rotate y axis          \n  ) rotate z axis          \n  ) move x axis            \n  ) move y axis            \n  ) next ç                 \n");

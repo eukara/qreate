@@ -1,7 +1,7 @@
 // QREATE FOR QUAKE  by eukara //
 // --------------------------- //
 // This is released under GPL V2!
-// Feel free to modify and to redristribute,
+// Feel free to modify and to redistribute,
 // but do so along with your modified code!
 
 // Rotation from SOA

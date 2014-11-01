@@ -9,6 +9,9 @@ void() SuperDamageSound;
 // called by worldspawn
 void() W_Precache =
 {
+	precache_model ("progs/v_axe.mdl");
+	precache_model ("progs/v_shot.mdl");
+	precache_model ("progs/s_explod.spr");	// sprite explosion
 	precache_sound ("weapons/r_exp3.wav");	// new rocket explosion
 	precache_sound ("weapons/rocket1i.wav");	// spike gun
 	precache_sound ("weapons/sgun1.wav");
@@ -21,10 +24,6 @@ void() W_Precache =
 	precache_sound ("weapons/grenade.wav");	// grenade launcher
 	precache_sound ("weapons/bounce.wav");		// grenade bounce
 	precache_sound ("weapons/shotgn2.wav");	// super shotgun
-	precache_sound ("arcade/mntrain.wav");
-	precache_model ("progs/dance.mdl");
-
-	
 };
 
 float() crandom =
