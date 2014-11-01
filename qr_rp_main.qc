@@ -139,9 +139,7 @@ void() RP_BuyDoor =
 			self.rp_money = self.rp_money - 20;
 			trace_ent.owner.rp_owner = self;
 		}
-
 	}
-
 };
 
 void() RP_SellDoor =
@@ -182,7 +180,6 @@ void() RP_SellDoor =
 			self.rp_menutime = time + 2;
 		}
 	}
-
 };
 
 void() RP_Arrest =
@@ -207,7 +204,6 @@ void() RP_Arrest =
 		bprint (trace_ent.netname);
 		bprint (" has been arrested.\n");
 	}
-	
 };
 
 void() RP_Unarrest =
@@ -235,42 +231,42 @@ void() RP_Unarrest =
 
 void() RP_LockPickAttempt =
 {
-		local	vector	source;
-		local float r;
+	local	vector	source;
+	local float r;
 
-		makevectors (self.v_angle);
-		source = self.origin + '0 0 16';
-		traceline (source, source + v_forward*124, FALSE, self);
+	makevectors (self.v_angle);
+	source = self.origin + '0 0 16';
+	traceline (source, source + v_forward*124, FALSE, self);
 
-		if (trace_ent.classname == "door" || trace_ent.classname == "rotate_object")
+	if (trace_ent.classname == "door" || trace_ent.classname == "rotate_object")
+	{
+		if(trace_ent.rp_owner != self)
 		{
-			if(trace_ent.rp_owner != self)
+			if(trace_ent.rp_locked)
 			{
-				if(trace_ent.rp_locked)
+				r = random();
+				
+				if(r < 0.1)
 				{
-					r = random();
-					
-					if(r < 0.1)
-					{
-						centerprint(self, "Your door is now unlocked.");
-						self.rp_menutime = time + 2;
-						trace_ent.rp_locked = 0;
-						sound (self, CHAN_AUTO, "weapons/lstart.wav", 1, ATTN_NORM);
-					}
-					else
-					{
-						centerprint(self, "Lockpicking failed.");
-						self.rp_menutime = time + 2;
-						sound (self, CHAN_AUTO, "player/axhit2.wav", 1, ATTN_NORM);
-					}
+					centerprint(self, "Your door is now unlocked.");
+					self.rp_menutime = time + 2;
+					trace_ent.rp_locked = 0;
+					sound (self, CHAN_AUTO, "weapons/lstart.wav", 1, ATTN_NORM);
+				}
+				else
+				{
+					centerprint(self, "Lockpicking failed.");
+					self.rp_menutime = time + 2;
+					sound (self, CHAN_AUTO, "player/axhit2.wav", 1, ATTN_NORM);
 				}
 			}
-			else
-			{
-				centerprint(self, "You can't lockpick your own door.");
-				self.rp_menutime = time + 2;
-			}
 		}
+		else
+		{
+			centerprint(self, "You can't lockpick your own door.");
+			self.rp_menutime = time + 2;
+		}
+	}
 };
 
 void() RP_SellShotgun =
