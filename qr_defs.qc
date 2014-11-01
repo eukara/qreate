@@ -21,6 +21,7 @@ float SVC_SETVIEWANGLES = 10;
 .entity spawner;
 .float inveh;
 .float mode;
+.float stack;
 
 .float qreate_altmenulst;
 .float qreate_altmenu;

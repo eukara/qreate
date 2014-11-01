@@ -16,7 +16,7 @@ float (entity trent) qreate_tool_denied =
 			return FALSE;
 
 		self.qmsg = time + 2;
-		sprint(self, "This does not belong to you.\n");
+		sprint(self, "[D] This does not belong to you.\n");
 
 		return FALSE;
 	}
@@ -145,8 +145,10 @@ void() qreate_tool_remove =
 			return;
 		else if(trace_ent.classname == "monster_boss" || trace_ent.classname == "monster_oldone")
 			trace_ent.spawner.qreate_bosscnt = 0;
-
 			
+		if(trace_ent.owner.stack)
+			trace_ent.owner.stack = 0;
+
 		remove(trace_ent);
 		sound (self, CHAN_AUTO, "effects/remove.wav", 1, ATTN_NORM);
 	}
@@ -313,38 +315,87 @@ void(float mode) qreate_tool_stack =
 	local string framep;
 	local	vector	src;
 
-	src = self.origin + v_forward*10;
-	src_z = self.absmin_z + self.size_z * 0.7;
-	traceline (src, src + v_forward*1024, FALSE, self);
-
-	if (qreate_tool_denied(trace_ent) == FALSE)
-		return;
-
-	if(trace_ent != world)
+	if(mode)
 	{
-		local entity eCopy;
-		local vector vTemp;
+		self.stack = self.stack + 1;
 		
-		vTemp_z = trace_ent.maxs_z;
-		
-		eCopy = spawn();
-		eCopy.origin = trace_ent.origin;
-		eCopy.angles_y = trace_ent.angles_y;
-		eCopy.qreate_modify = trace_ent.qreate_modify;
+		if(self.stack > 5)
+			self.stack = 0;
 			
-		eCopy.think = trace_ent.think;
-		eCopy.spawner = self;
-		eCopy.nextthink = trace_ent.nextthink;
-		setmodel(eCopy, trace_ent.model);
-		setorigin(eCopy, eCopy.origin + vTemp);
-		eCopy.solid = trace_ent.solid;
-		eCopy.takedamage = trace_ent.takedamage;
+		if(!self.stack)
+			centerprint(self, "Stack: Top\n");
+		else if(self.stack == 1)
+			centerprint(self, "Stack: Bottom\n");
+		else if(self.stack == 2)
+			centerprint(self, "Stack: Front\n");
+		else if(self.stack == 3)
+			centerprint(self, "Stack: Back\n");
+		else if(self.stack == 4)
+			centerprint(self, "Stack: Left\n");
+		else if(self.stack == 5)
+			centerprint(self, "Stack: Right\n");
 		
-		if(trace_ent.th_die)
-			eCopy.th_die = trace_ent.th_die;
-			
-		self.attack_finished = time + 0.2;
 	}
+	else
+	{
+		src = self.origin + v_forward*10;
+		src_z = self.absmin_z + self.size_z * 0.7;
+		traceline (src, src + v_forward*1024, FALSE, self);
+
+		if (qreate_tool_denied(trace_ent) == FALSE)
+			return;
+
+		if(trace_ent != world)
+		{
+			local entity eCopy;
+			local vector vTemp;
+			
+			if(trace_ent.stack == 1)
+			{
+				sprint(self, "[D] Can't stack more of this\n");
+				self.attack_finished = time + 0.5;
+				return;
+			}
+			
+			if(!self.stack)
+				vTemp_z = trace_ent.maxs_z;	// Top
+			else if(self.stack == 1)
+				vTemp_z = trace_ent.maxs_z * -1;	// Bottom
+			else if(self.stack == 2)
+				vTemp_y = trace_ent.maxs_y + (trace_ent.mins_y * -1);	// Front
+			else if(self.stack == 3)
+				vTemp_y = (trace_ent.maxs_y * -1) + trace_ent.mins_y; // Back
+			else if(self.stack == 4)
+				vTemp_x = trace_ent.maxs_x + (trace_ent.mins_x * -1);	// Left
+			else if(self.stack == 5)
+				vTemp_x = (trace_ent.maxs_x * -1) + trace_ent.mins_x;	// Right
+
+			eCopy = spawn();
+			eCopy.origin = trace_ent.origin;
+			eCopy.angles_y = trace_ent.angles_y;
+			eCopy.qreate_modify = trace_ent.qreate_modify;
+				
+			eCopy.think = trace_ent.think;
+			eCopy.spawner = self;
+			eCopy.owner = trace_ent;
+			eCopy.nextthink = trace_ent.nextthink;
+			setmodel(eCopy, trace_ent.model);
+			setorigin(eCopy, eCopy.origin + vTemp);
+			eCopy.solid = trace_ent.solid;
+			setsize(eCopy, trace_ent.mins, trace_ent.maxs);
+			eCopy.movetype = trace_ent.movetype;
+			eCopy.takedamage = trace_ent.takedamage;
+			eCopy.frame = trace_ent.frame;
+			eCopy.skin = trace_ent.skin;
+			eCopy.effects = trace_ent.effects;
+			trace_ent.stack = 1;
+			
+			if(trace_ent.th_die)
+				eCopy.th_die = trace_ent.th_die;
+		}
+	}
+	
+	self.attack_finished = time + 0.2;
 };
 
 void() BecomeExplosion;
@@ -554,6 +605,8 @@ void() qreate_printtselected =
 			entname = "[t] 11 - swap viewpoint\n";
 		else if(self.tselected == 12)
 			entname = "[t] 12 - change permissions\n";
+		else if(self.tselected == 13)
+			entname = "[t] 13 - stacker\n";
 
 		
 	centerprint (self, entname);
@@ -563,7 +616,7 @@ void() qreate_change_toolfw =
 {
 	self.tselected = self.tselected + 1;
 
-	if(self.tselected > 12)
+	if(self.tselected > 13)
 	self.tselected = 0;
 
  qreate_printtselected();
@@ -574,7 +627,7 @@ void() qreate_change_toolbw =
 	self.tselected = self.tselected - 1;
 
 	if(self.tselected < 0)
-	self.tselected = 12;
+	self.tselected = 13;
 
  qreate_printtselected();
 };

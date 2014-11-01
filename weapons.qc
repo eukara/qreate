@@ -917,6 +917,8 @@ void() W_Attack2 =
 			qreate_tool_light(1);
 		else if(self.tselected == 12)
 			qreate_tool_permissions(1);
+		else if(self.tselected == 13)
+			qreate_tool_stack(1);
 
 
 	}
@@ -1032,6 +1034,8 @@ if (self.secfire == 1)
 			qreate_tool_camera();
 		else if(self.tselected == 12)
 			qreate_tool_permissions(0);
+		else if(self.tselected == 13)
+			qreate_tool_stack(0);
 	}
 };
 /*
