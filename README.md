@@ -1,5 +1,5 @@
 #Qreate-QC
-#=========
+
 Serverside QC code (Stable)
 
 ##Compiling
