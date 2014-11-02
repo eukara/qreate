@@ -495,4 +495,4 @@ void() monster_zombie =
 	}
 	else
 		walkmonster_start();
-}; 
+};

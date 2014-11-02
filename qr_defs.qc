@@ -28,9 +28,9 @@ float SVC_SETVIEWANGLES = 10;
 
 .float qreate_altmenulstt;
 .float qreate_altmenut;
-.float qmsg;
 .float qreate_bosscnt;
 .float qreate_modify;
+.float qmsg;
 
 float SVC_UPDATESTAT = 3;
 float STAT_TOTALMONSTERS = 12;

@@ -10,7 +10,6 @@
 //		<code>
 // };
 
-
 /*
 ================
 monster_use
@@ -61,14 +60,13 @@ void() monster_death_use =
 	SUB_UseTargets ();
 };
 
-
 //============================================================================
 
 void() walkmonster_start_go =
 {
 
 	self.origin_z = self.origin_z + 1;	// raise off floor a bit
-	droptofloor();
+	droptofloor(0,0);
 	
 	if (!walkmove(0,0))
 	{
@@ -186,7 +184,6 @@ void() flymonster_start =
 	self.think = flymonster_start_go;
 	total_monsters = total_monsters + 1;
 };
-
 
 void() swimmonster_start_go =
 {

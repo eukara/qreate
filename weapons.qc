@@ -24,6 +24,7 @@ void() W_Precache =
 	precache_sound ("weapons/grenade.wav");	// grenade launcher
 	precache_sound ("weapons/bounce.wav");		// grenade bounce
 	precache_sound ("weapons/shotgn2.wav");	// super shotgun
+	precache_sound ("player/tornoff2.wav");
 };
 
 float() crandom =
@@ -91,7 +92,6 @@ SpawnMeatSpray
 void(vector org, vector vel) SpawnMeatSpray =
 {
 	local	entity missile;
-	local	vector	org;
 
 	missile = spawn ();
 	missile.owner = self;
@@ -472,7 +472,7 @@ void() W_FireLightning =
 
 	if (self.ammo_cells < 1)
 	{
-		if(qreate_CheckLIGHTRP() == FALSE)
+		if(qreate_CheckSANDBOX() == TRUE)
 		self.weapon = W_BestWeapon ();
 
 		W_SetCurrentAmmo ();
@@ -658,7 +658,7 @@ void(float ox) W_FireSpikes =
 
 	if (self.ammo_nails < 1)
 	{
-		if(qreate_CheckLIGHTRP() == FALSE)
+		if(qreate_CheckSANDBOX() == TRUE)
 		self.weapon = W_BestWeapon ();
 
 		W_SetCurrentAmmo ();
@@ -673,8 +673,6 @@ void(float ox) W_FireSpikes =
 
 	self.punchangle_x = -2;
 };
-
-
 
 .float hit_z;
 void() spike_touch =
@@ -714,7 +712,6 @@ void() spike_touch =
 	}
 
 	remove(self);
-
 };
 
 void() superspike_touch =
@@ -748,7 +745,6 @@ void() superspike_touch =
 	}
 
 	remove(self);
-
 };
 
 
@@ -830,6 +826,12 @@ void() W_SetCurrentAmmo =
 		self.weaponmodel = "progs/v_btt.mdl";
 		self.weaponframe = 0;
 	}
+	else if (self.weapon == IT_MECHWARRIOR)
+	{
+		self.currentammo = 100;
+		self.weaponmodel = "progs/v_mech.mdl";
+		self.weaponframe = 0;
+	}
 	else
 	{
 		self.currentammo = 0;
@@ -842,7 +844,7 @@ float() W_BestWeapon =
 {
 	local	float	it;
 
-	if(qreate_CheckLIGHTRP() == FALSE)
+	if(qreate_CheckSANDBOX() == TRUE)
 	{
 	it = self.items;
 
@@ -862,7 +864,7 @@ float() W_BestWeapon =
 
 float() W_CheckNoAmmo =
 {
-	if(qreate_CheckLIGHTRP() == FALSE)
+	if(qreate_CheckSANDBOX() == TRUE)
 	{
 
 	if (self.currentammo > 0)
@@ -921,8 +923,6 @@ void() W_Attack2 =
 			qreate_tool_permissions(1);
 		else if(self.tselected == 13)
 			qreate_tool_stack(1);
-
-
 	}
 };
 
@@ -944,7 +944,7 @@ if (self.secfire == 1)
     return;
 }
 	
-	if(qreate_CheckLIGHTRP() == FALSE)
+	if(qreate_CheckSANDBOX() == TRUE)
 	{	
 	if (!W_CheckNoAmmo ())
 		return;
@@ -1038,6 +1038,10 @@ if (self.secfire == 1)
 			qreate_tool_permissions(0);
 		else if(self.tselected == 13)
 			qreate_tool_stack(0);
+	}
+	else if (self.weapon == IT_MECHWARRIOR)
+	{
+		Commando_Mechwarrior_Fire();
 	}
 };
 /*
@@ -1303,40 +1307,38 @@ void() ImpulseCommands =
 {
 	if(self.fInMenu == FALSE)
 	{
+		if(qreate_CheckCOMMANDO() == FALSE)
+		{
+			if(qreate_CheckLIGHTRP() == TRUE)
+			{
+				// ~eukara - start
+				if(RP_Menu_Input())
+					return;
+				// ~eukara - end
+			}
+			else if(Qreate_Binds() == TRUE)
+			{
+				self.impulse = 0;
+				return;
+			}
+		}
 
-	if(qreate_CheckCOMMANDO() == FALSE)
-	{
-	if(qreate_CheckLIGHTRP() == TRUE)
-	{
-		// ~eukara - start
-		if(RP_Menu_Input())
-		return;
-		// ~eukara - end
-	}
-	else if(Qreate_Binds() == TRUE)
-	{
-		self.impulse = 0;
-		return;
-	}
-	}
-
-	if (self.impulse >= 1 && self.impulse <= 8)
-		W_ChangeWeapon ();
+		if (self.impulse >= 1 && self.impulse <= 8)
+			W_ChangeWeapon ();
 
 
-	if (self.impulse == 10)
-		CycleWeaponCommand ();
-	if (self.impulse == 11)
-		ServerflagsCommand ();
-	if (self.impulse == 12)
-		CycleWeaponReverseCommand ();
-		
-	if((qreate_CheckLIGHTRP() == FALSE) && (qreate_CheckCOMMANDO() == FALSE))
-	{
-		if (self.impulse == 19)
-			W_ChangeWeapon();
-	}
-
+		if (self.impulse == 10)
+			CycleWeaponCommand ();
+		if (self.impulse == 11)
+			ServerflagsCommand ();
+		if (self.impulse == 12)
+			CycleWeaponReverseCommand ();
+			
+		if(qreate_CheckSANDBOX() == TRUE)
+		{
+			if (self.impulse == 19)
+				W_ChangeWeapon();
+		}
 	}
 	else
 	{
@@ -1409,5 +1411,3 @@ void() SuperDamageSound =
 	}
 	return;
 };
-
- 

@@ -1,4 +1,3 @@
-
 // prototypes
 void () W_WeaponFrame;
 void() W_SetCurrentAmmo;
@@ -30,8 +29,6 @@ Use mangle instead of angle, so you can set pitch or roll as well as yaw.  'pitc
 void() info_intermission =
 {
 };
-
-
 
 void() SetChangeParms =
 {
@@ -139,7 +136,6 @@ entity() FindIntermission =
 	objerror ("FindIntermission: no spot");
 };
 
-
 string nextmap;
 void() GotoNextMap =
 {
@@ -148,7 +144,6 @@ void() GotoNextMap =
 	else
 		changelevel (nextmap);
 };
-
 
 void() ExitIntermission =
 {
@@ -234,7 +229,6 @@ void() ExitIntermission =
 		}
 		
 	}
-
 	GotoNextMap();
 };
 
@@ -292,7 +286,6 @@ void() execute_changelevel =
 	WriteByte (MSG_ALL, SVC_INTERMISSION);
 };
 
-
 void() changelevel_touch =
 {
 	if (other.classname != "player")
@@ -343,7 +336,6 @@ void() trigger_changelevel =
 	self.touch = changelevel_touch;
 };
 
-
 /*
 =============================================================================
 
@@ -380,7 +372,6 @@ void() respawn =
 		localcmd ("restart\n");
 	}
 };
-
 
 /*
 ============
@@ -560,7 +551,6 @@ void() PutClientInServer =
 	spawn_tdeath (self.origin, self);
 };
 
-
 /*
 =============================================================================
 
@@ -569,7 +559,6 @@ void() PutClientInServer =
 =============================================================================
 */
 
-
 /*QUAKED info_player_start (1 0 0) (-16 -16 -24) (16 16 24)
 The normal starting point for a level.
 */
@@ -577,14 +566,12 @@ void() info_player_start =
 {
 };
 
-
 /*QUAKED info_player_start2 (1 0 0) (-16 -16 -24) (16 16 24)
 Only used on start map for the return point from an episode.
 */
 void() info_player_start2 =
 {
 };
-
 
 /*
 saved out by quaked in region mode
@@ -743,7 +730,6 @@ void() PlayerDeathThink =
 	respawn();
 };
 
-
 void() PlayerJump =
 {	
 	if (self.flags & FL_WATERJUMP)
@@ -793,7 +779,6 @@ void() PlayerJump =
 		
 	self.velocity_z = self.velocity_z + 270;
 };
-
 
 /*
 ===========
@@ -912,7 +897,6 @@ void() CheckWaterJump =
 		}
 	}
 };
-
 
 /*
 ================
@@ -1136,7 +1120,6 @@ void() CheckPowerups =
 
 };
 
-
 /*
 ================
 PlayerPostThink
@@ -1210,7 +1193,6 @@ void() PlayerPostThink =
 
 };
 
-
 /*
 ===========
 ClientConnect
@@ -1232,7 +1214,6 @@ void() ClientConnect =
 };
 
 void(entity player) qreate_cleanup;
-
 /*
 ===========
 ClientDisconnect

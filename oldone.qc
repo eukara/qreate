@@ -26,7 +26,7 @@ $frame old30 old31 old32 old33 old34 old35 old36 old37 old38 old39
 $frame old40 old41 old42 old43 old44 old45 old46 
 
 $frame shake1 shake2 shake3 shake4 shake5 shake6 shake7 shake8
-$frame shake9 shake10 shake11 shake12 shake12 shake13 shake14
+$frame shake9 shake10 shake11 shake12 shake13 shake14
 $frame shake15 shake16 shake17 shake18 shake19 shake20
 
 //void() old_stand     =[      $old1,       old_stand    ] {};
@@ -249,7 +249,6 @@ void () nopain =
 
 //============================================================================
 
-
 /*QUAKED monster_oldone (1 0 0) (-16 -16 -24) (16 16 32)
 */
 void() monster_oldone =
@@ -271,4 +270,3 @@ void() monster_oldone =
 	
 	total_monsters = total_monsters + 1;
 };
-

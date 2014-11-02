@@ -35,7 +35,7 @@ void() qreate_commando_explode =
 	ThrowGib("progs/debris.mdl", 150);
 	
 	if(self.style == 1)
-	sound (self, CHAN_WEAPON, "commando/carexplo2.wav", 1, ATTN_NORM);
+		sound (self, CHAN_WEAPON, "commando/carexplo2.wav", 1, ATTN_NORM);
 	
 	BecomeExplosion ();
 };
@@ -75,19 +75,66 @@ void() qreate_commando_car_die =
 	remove(self);
 };
 
+void() qreate_commando_car_touch =
+{
+	if(self.model == "progs/lpcar1.mdl")
+		setmodel(self, "progs/lpcar1c.mdl");
+};
+
 void() qreate_commando_car =
 {
-	if(!self.health)			// If no health was set, make default 2000
+	if(!self.health)
 		self.health = 1;
-	if(!self.model)				// Ditto for the model
+	if(!self.model)	
 		self.model = "progs/lpcar1.mdl";
 	
 	precache_model(self.model);
 	setmodel(self, self.model);
 	self.solid = SOLID_BBOX;
+	self.touch = qreate_commando_car_touch;
 	self.takedamage = DAMAGE_AIM;
 	self.th_die = qreate_commando_car_die;
 	setorigin(self, self.origin + '0 0 -10');
+};
+
+void() qreate_commando_pedestrian_die = {remove(self);};
+void() qreate_commando_pedestrian_touch =
+{
+	if(other.classname == "player")
+		remove(self);
+};
+void() qreate_commando_pedestrian_stand = {ai_stand();};
+void() qreate_commando_pedestrian_walk = {ai_walk(1);};
+void() qreate_commando_pedestrian_run = {ai_run(1);};
+
+void() qreate_commando_pedestrian_think =
+{
+	walkmonster_start ();
+};
+void() qreate_commando_pedestrian =
+{
+	if(!self.health)
+		self.health = 1;
+	if(!self.model)
+		self.model = "progs/lpplayer.mdl";
+		
+	precache_model(self.model);
+	setmodel(self, self.model);
+	
+	self.solid = SOLID_SLIDEBOX;
+	self.movetype = MOVETYPE_STEP;
+	self.flags = FL_MONSTER;
+	self.takedamage = DAMAGE_AIM;
+	self.th_die = qreate_commando_pedestrian_die;	
+	self.th_stand = qreate_commando_pedestrian_stand;
+	self.th_walk = qreate_commando_pedestrian_walk;
+	self.th_run = qreate_commando_pedestrian_run;
+	self.th_missile = ai_face;
+	self.th_pain = qreate_commando_pedestrian_die;
+	self.touch = qreate_commando_pedestrian_touch;
+	setorigin(self, self.origin);
+	
+	walkmonster_start ();
 };
 
 void() qreate_breakwall_die =

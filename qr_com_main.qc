@@ -7,16 +7,12 @@ void() W_Precache;
 void() Commando_Main =
 {
 	W_Precache();
-	precache_model ("progs/compowergen.mdl");
-	precache_model ("progs/compowerstor.mdl");
-	precache_model ("progs/comlandfac.mdl");
-	precache_model ("progs/comairfac.mdl");
-	precache_model ("progs/combridge.mdl");
-	precache_model ("progs/comdefwall.mdl");
 	precache_model ("progs/debris.mdl");
 	precache_model ("progs/v_mech.mdl");
 	precache_model ("progs/lpcar1.mdl");
 	precache_model ("progs/lpcar1w.mdl");
+	precache_model ("progs/lpcar1c.mdl");
+	precache_model ("progs/lpplayer.mdl");
 	precache_sound ("commando/bloop.wav");
 	precache_sound ("commando/carexplo1.wav");
 	precache_sound ("commando/carexplo2.wav");
@@ -24,6 +20,8 @@ void() Commando_Main =
 	precache_sound ("commando/land2.wav");
 	precache_sound ("commando/h2ojump.wav");
 	precache_sound ("commando/plyrjmp8.wav");
+	precache_sound ("commando/ratling1.wav");
+	precache_sound ("commando/ratling2.wav");
 };
 
 void() Commando_UpdateView =
@@ -101,7 +99,6 @@ void() Commando_DisplayMenu =
 		self.eSelection.alpha = 0.8;
 		
 	setmodel(self.eSelection, self.sSelectionModel);
-		
 	centerprint(self, "1) Power Generator                   \n2) Power Storage                     \n3) Landcraft Facility                \n4) Aircraft Facility                 \n5) Bridging Block                    \n");
 };
 
@@ -217,4 +214,96 @@ void() CommandoPutClient =
 	self.fTeamEnergy	= 0;
 	self.fTeamResources = 0;
 	self.eSelection = spawn();
+	
+	self.items = IT_MECHWARRIOR;
+	self.health = 100;
+	self.armorvalue = 100;
+	self.ammo_shells = 0;
+	self.ammo_nails = 0;
+	self.ammo_rockets = 0;
+	self.ammo_cells = 0;
+	self.weapon = IT_MECHWARRIOR;
+	self.armortype = 0;
+};
+
+void()	mech_shot1 =	[1, mech_shot2	] {self.weaponframe=1; self.effects = self.effects | EF_MUZZLEFLASH; self.nextthink = time + 0.04;};
+void()	mech_shot2 =	[2, mech_shot3	] {self.weaponframe=2; self.nextthink = time + 0.04;};
+void()	mech_shot3 =	[3, mech_shot4	] {self.weaponframe=3; self.nextthink = time + 0.04;};
+void()	mech_shot4 =	[4, mech_shot5	] {self.weaponframe=4; self.nextthink = time + 0.05;};
+void()	mech_shot5 =	[5, mech_shot6	] {self.weaponframe=5; self.nextthink = time + 0.07;};
+void()	mech_shot6 =	[6, mech_shot7	] {self.weaponframe=6; self.nextthink = time + 0.09;};
+void()	mech_shot7 =	[4, mech_shot8	] {self.weaponframe=7; self.nextthink = time + 0.1;};
+void()	mech_shot8 =	[5, mech_shot9	] {self.weaponframe=8; self.nextthink = time + 0.2;};
+void()	mech_shot9 =	[6, player_run	] {self.weaponframe=9; self.nextthink = time + 0.3;};
+
+float() crandom;
+void() ApplyMultiDamage;
+void() ClearMultiDamage;
+void(entity hit, float damage) AddMultiDamage;
+void(vector org, vector vel, float damage) SpawnBlood;
+
+void(float damage, vector dir) Commando_TraceAttack =
+{
+	local	vector	vel, org;
+	
+	vel = normalize(dir + v_up*crandom() + v_right*crandom());
+	vel = vel + 2*trace_plane_normal;
+	vel = vel * 200;
+
+	org = trace_endpos - dir*4;
+
+	if (trace_ent.takedamage)
+	{
+		SpawnBlood (org, vel*0.2, damage);
+		AddMultiDamage (trace_ent, damage);
+	}
+	else
+	{
+		WriteByte (MSG_BROADCAST, SVC_TEMPENTITY);
+		WriteByte (MSG_BROADCAST, TE_EXPLOSION);
+		WriteCoord (MSG_BROADCAST, org_x);
+		WriteCoord (MSG_BROADCAST, org_y);
+		WriteCoord (MSG_BROADCAST, org_z);
+	}
+};
+
+void(float shotcount, vector dir, vector spread) Commando_FireBullets =
+{
+	local	vector direction;
+	local	vector	src;
+	
+	makevectors(self.v_angle);
+
+	src = self.origin + v_forward*10;
+	src_z = self.absmin_z + self.size_z * 0.7;
+
+	ClearMultiDamage ();
+	while (shotcount > 0)
+	{
+		direction = dir + crandom()*spread_x*v_right + crandom()*spread_y*v_up;
+
+		traceline (src, src + direction*2048, FALSE, self);
+		if (trace_fraction != 1.0)
+			Commando_TraceAttack (4, direction);
+
+		shotcount = shotcount - 1;
+	}
+	ApplyMultiDamage ();
+};
+
+void() Commando_Mechwarrior_Fire =
+{
+	local vector dir;
+	
+	self.punchangle_x = -3 * random() - 1;
+	mech_shot1();
+	dir = aim (self, 100000);
+	Commando_FireBullets (2, dir, '0.07 0.07 0');
+	
+	if(random() >= 0.5)
+		sound (self, CHAN_WEAPON, "commando/ratling1.wav", 1, ATTN_NORM);
+	else
+		sound (self, CHAN_WEAPON, "commando/ratling2.wav", 1, ATTN_NORM);
+	
+	self.attack_finished = time + 0.12;
 };

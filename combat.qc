@@ -1,12 +1,7 @@
-
 void() T_MissileTouch;
 void() info_player_start;
 void(entity targ, entity attacker) ClientObituary;
-
 void() monster_death_use;
-
-//============================================================================
-
 /*
 ============
 CanDamage
@@ -288,4 +283,3 @@ void(entity attacker, float damage) T_BeamDamage =
 		head = head.chain;
 	}
 };
-

@@ -24,21 +24,21 @@ void() RP_PlayerID =
 		if (trace_ent.classname == "player" && trace_ent.health > 0)
 		{
 				trackp = ftos(trace_ent.health);
-				centerprint(self, "Name: ",trace_ent.netname, "\nHealth: ", trackp, "\nJob: ",trace_ent.rp_title, "\n");
+				lightrp_centerprintb(self, "Name: ",trace_ent.netname, "\nHealth: ", trackp, "\nJob: ",trace_ent.rp_title, "", "", "", "", "", "", "", "", "\n");
 		}
 		else if (trace_ent.classname == "door")
 		{
 			if(trace_ent.rp_owner == world)
 				centerprint(self, "Unowned Door\n-Buy for 20$-\n");
 			else
-				centerprint(self, "Owned by ",trace_ent.rp_owner.netname, "\n");
+				lightrp_centerprintb(self, "Owned by ",trace_ent.rp_owner.netname, "", "", "", "", "", "", "", "", "", "", "", "", "\n");
 		}
 		else if (trace_ent.classname == "func_movewall")
 		{
 			if(trace_ent.owner.rp_owner == world)
 				centerprint(self, "Unowned Door\n-Buy for 20$-\n");
 			else
-				centerprint(self, "Owned by ",trace_ent.owner.rp_owner.netname, "\n");
+				lightrp_centerprintb(self, "Owned by ",trace_ent.owner.rp_owner.netname, "", "", "", "", "", "", "", "", "", "", "", "", "\n");
 
 		}
 		

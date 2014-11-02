@@ -249,7 +249,7 @@ void() ogre_smash11	=[	$smash11,		ogre_smash12 ] {ai_charge(2); chainsaw(0);
 //self.nextthink = self.nextthink + random()*0.2;};	// slight variation
 self.nextthink = time + 0.1 + random()*0.2;};	// slight variation
 // 1998-08-14 Incorrect setting of nextthink fix by Maddes/Lord Sméagol  end
-void() ogre_smash12	=[	$smash12,		ogre_smash13 ] {ai_charge();};
+void() ogre_smash12	=[	$smash12,		ogre_smash13 ] {ai_charge(0);};
 void() ogre_smash13	=[	$smash13,		ogre_smash14 ] {ai_charge(4);};
 void() ogre_smash14	=[	$smash14,		ogre_run1	] {ai_charge(12);};
 
@@ -443,5 +443,3 @@ void() monster_ogre_marksman =
 {
 	monster_ogre ();
 };
-
- 

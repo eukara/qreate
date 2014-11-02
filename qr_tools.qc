@@ -412,7 +412,7 @@ void() qreate_break_explodechain =
 	self.takedamage = DAMAGE_NO;
 	sound (self, CHAN_VOICE, "weapons/r_exp3.wav", 1, ATTN_NORM);
 	particle (self.origin, '0 0 0', 75, 255);
-	T_RadiusDamage (self, self.owner, 50, world);
+	T_RadiusDamage (self, self.owner, 50, world, "");
 	self.origin_z = self.origin_z + 32;
 	BecomeExplosion ();
 };

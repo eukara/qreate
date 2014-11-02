@@ -312,7 +312,6 @@ void(vector org) spawn_tfog =
 	WriteCoord (MSG_BROADCAST, org_z);
 };
 
-
 void() tdeath_touch =
 {
 	if (other == self.owner)
@@ -374,7 +373,6 @@ void() tdeath_touch =
 		T_Damage (other, self, self, 50000);
 	}
 };
-
 
 void(vector org, entity death_owner) spawn_tdeath =
 {
@@ -670,4 +668,3 @@ void() trigger_monsterjump =
 	InitTrigger ();
 	self.touch = trigger_monsterjump_touch;
 };
- 

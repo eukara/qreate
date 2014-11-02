@@ -244,10 +244,6 @@ void() army_die =
 */
 void() monster_army =
 {	
-
-	//precache_sound ("player/udeath.wav");		// gib death
-
-
 	self.solid = SOLID_SLIDEBOX;
 	self.movetype = MOVETYPE_STEP;
 	self.flags = FL_MONSTER;

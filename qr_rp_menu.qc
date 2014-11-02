@@ -38,7 +38,7 @@ void() RP_InfoMenu_Draw =
 	string money;
 	
 	money = ftos(self.rp_money);
-	centerprint (self, "|-----------------------|\n|     LIGHT RP STATS    |\n|-----------------------|\n\nName: ", self.netname,"\nJob: ", self.rp_title,"\nMoney: $", money,"\n");
+	lightrp_centerprintb (self, "|-----------------------|\n|     LIGHT RP STATS    |\n|-----------------------|\n\nName: ", self.netname,"\nJob: ", self.rp_title,"\nMoney: $", money, "", "", "", "", "", "", "", "", "\n");
 };
 
 void() RP_Menu_Switch =

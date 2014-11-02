@@ -16,7 +16,7 @@ void() RP_Payday_Update =
         {
 			pls = ftos(pl.rp_salary);
 			pl.rp_money = pl.rp_money + pl.rp_salary;
-			centerprint (pl, "Payday! You received $", pls, "!\n");
+			lightrp_centerprintb (pl, "Payday! You received $", pls, "", "", "", "", "", "", "", "", "", "", "", "", "!\n");
 		}
         pl = pl.chain;
     }
@@ -384,7 +384,7 @@ void() RP_DropMoney_Touch =
 		return;
 	
 	money = ftos(self.health);
-	centerprint(other, "You have found $", money, "!\n");
+	lightrp_centerprintb(other, "You have found $", money, "", "", "", "", "", "", "", "", "", "", "", "", "!\n");
 	other.rp_menutime = time + 2;
 	
 	stuffcmd(other, "play items/health1.wav\n");
@@ -423,7 +423,7 @@ void(float amount) RP_DropMoney =
 	setsize (new, '-9 -12 0', '9 12 7');
 	
 	money = ftos(amount);
-	centerprint(self, "You have dropped $", money, "!\n");
+	lightrp_centerprintb(self, "You have dropped $", money, "", "", "", "", "", "", "", "", "", "", "", "", "!\n");
 	self.rp_menutime = time + 1;
 	self.rp_money = self.rp_money - amount;
 };
