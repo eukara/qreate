@@ -20,6 +20,10 @@ void() Commando_Main =
 	precache_sound ("commando/bloop.wav");
 	precache_sound ("commando/carexplo1.wav");
 	precache_sound ("commando/carexplo2.wav");
+	precache_sound ("commando/land.wav");
+	precache_sound ("commando/land2.wav");
+	precache_sound ("commando/h2ojump.wav");
+	precache_sound ("commando/plyrjmp8.wav");
 };
 
 void() Commando_UpdateView =
@@ -196,7 +200,6 @@ void() Commando_PlaceSelection =
 };
 
 // For use in PutClientInServer:
-
 void() CommandoPutClient =
 {
 	// Automatic team selection ~eukos

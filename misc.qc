@@ -170,13 +170,18 @@ void() fire_fly;
 void() fire_touch;
 void() misc_fireball =
 {
-	
 	precache_model ("progs/lavaball.mdl");
 	self.classname = "fireball";
-	self.nextthink = time + (random() * 5);
+// 1998-08-14 Incorrect setting of nextthink fix by Maddes/Lord Sméagol
+//	self.nextthink = time + (random() * 5);
+	self.nextthink = time + 0.1 + (random() * 5);
+// 1998-08-14 Incorrect setting of nextthink fix by Maddes/Lord Sméagol
 	self.think = fire_fly;
 	if (!self.speed)
+// 1998-08-14 Misc_FireBall default speed typo fix by Perged  start
+//		self.speed == 1000;
 		self.speed = 1000;
+// 1998-08-14 Misc_FireBall default speed typo fix by Perged  end
 };
 
 void() fire_fly =

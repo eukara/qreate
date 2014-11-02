@@ -146,53 +146,114 @@ void() item_health =
 	StartItem ();
 };
 
+// 1998-08-11 Multiple megahealth rot down too fast fix by Maddes/Athos  start
+void(entity rotowner) MakeHealthRot =
+{
+	local entity rot;
+	rot = spawn ();
+	rot.classname = "health_rot";
+	rot.nextthink = time + 5;
+	rot.think = item_megahealth_rot;
+	rot.owner = rotowner;
+};
+// 1998-08-11 Multiple megahealth rot down too fast fix by Maddes/Athos  end
 
 void() health_touch =
 {
 	local	string	s;
+	local float	donttake;	// 1998-08-15 Do not take unnecessary items but fire all targets by Maddes
 	
 	if (other.classname != "player")
 		return;
+		
+	donttake = 0;	// 1998-08-15 Do not take unnecessary items but fire all targets by Maddes
 	
 	if (self.healtype == 2) // Megahealth?  Ignore max_health...
 	{
 		if (other.health >= 250)
-			return;
+// 1998-08-15 Do not take unnecessary items but fire all targets by Maddes  start
+//			return;
+			donttake = 1;
+		else
+// 1998-08-15 Do not take unnecessary items but fire all targets by Maddes  end
 		if (!T_Heal(other, self.healamount, 1))
-			return;
+// 1998-08-15 Do not take unnecessary items but fire all targets by Maddes  start
+//			return;
+			donttake = 1;
+// 1998-08-15 Do not take unnecessary items but fire all targets by Maddes  end
 	}
 	else
 	{
 		if (!T_Heal(other, self.healamount, 0))
-			return;
+// 1998-08-15 Do not take unnecessary items but fire all targets by Maddes  start
+//			return;
+			donttake = 1;
+// 1998-08-15 Do not take unnecessary items but fire all targets by Maddes  end
 	}
-	
-	sprint(other, "You receive ");
-	s = ftos(self.healamount);
-	sprint(other, s);
-	sprint(other, " health\n");
-	
-// health touch sound
-	sound(other, CHAN_ITEM, self.noise, 1, ATTN_NORM);
 
-	stuffcmd (other, "bf\n");
-	
-	self.model = string_null;
-	self.solid = SOLID_NOT;
-
-	// Megahealth = rot down the player's super health
-	if (self.healtype == 2)
+// 1998-08-15 Do not take unnecessary items but fire all targets by Maddes  start
+	if (!donttake)
 	{
-		other.items = other.items | IT_SUPERHEALTH;
-		self.nextthink = time + 5;
-		self.think = item_megahealth_rot;
-		self.owner = other;
-	}
-	else
-	{
-		if (deathmatch != 2)		// deathmatch 2 is the silly old rules
-			self.think = SUB_regen;
+	// 1998-08-15 Do not take unnecessary items but fire all targets by Maddes  end
+		
+		sprint(other, "You receive ");
+		s = ftos(self.healamount);
+		sprint(other, s);
+		sprint(other, " health\n");
+		
+	// health touch sound
+		sound(other, CHAN_ITEM, self.noise, 1, ATTN_NORM);
 
+		stuffcmd (other, "bf\n");
+		
+		self.model = string_null;
+		self.solid = SOLID_NOT;
+
+		// Megahealth = rot down the player's super health
+		if (self.healtype == 2)
+		{
+			// 1998-08-11 Multiple megahealth rot down too fast fix by Maddes/Athos  start
+			local entity	stemp;
+
+			// search player's health rot entity
+			stemp = find (world, classname, "health_rot");
+			while ( (stemp!=world) && (stemp.owner != other) )
+			{
+				stemp = find(stemp,classname,"health_rot");
+			}
+
+			if (stemp)
+			{
+				// delay health rotting again
+				stemp.nextthink = time + 5;
+				stemp.think = item_megahealth_rot;
+			}
+			else
+				MakeHealthRot(other);	// create rot entity
+	// 1998-08-11 Multiple megahealth rot down too fast fix by Maddes/Athos  end
+			other.items = other.items | IT_SUPERHEALTH;
+			// 1998-08-11 Multiple megahealth rot down too fast fix by Maddes/Athos  start
+	/*
+			self.nextthink = time + 5;
+			self.think = item_megahealth_rot;
+			self.owner = other;
+	*/
+			if (deathmatch == 1)	// deathmatch 2 is silly old rules
+			{
+				self.nextthink = time + self.healamount + 25;	// delay (5) + health + respawn wait (20)
+				self.think = SUB_regen;
+			}
+	// 1998-08-11 Multiple megahealth rot down too fast fix by Maddes/Athos  end
+			self.nextthink = time + 5;
+			self.think = item_megahealth_rot;
+			self.owner = other;
+		}
+		else
+		{
+			if (deathmatch != 2)		// deathmatch 2 is the silly old rules
+				self.think = SUB_regen;
+
+		}
 	}
 	
 	activator = other;
@@ -202,10 +263,14 @@ void() health_touch =
 void() item_megahealth_rot =
 {
 	other = self.owner;
-	
+
+	if (other.health > other.max_health)
+// 1998-08-11 Multiple megahealth rot down too fast fix by Maddes/Athos  start
+		other.health = other.health - 1;
+
 	if (other.health > other.max_health)
 	{
-		other.health = other.health - 1;
+// 1998-08-11 Multiple megahealth rot down too fast fix by Maddes/Athos  end
 		self.nextthink = time + 1;
 		return;
 	}
@@ -213,7 +278,17 @@ void() item_megahealth_rot =
 // it is possible for a player to die and respawn between rots, so don't
 // just blindly subtract the flag off
 	other.items = other.items - (other.items & IT_SUPERHEALTH);
-	
+
+// 1998-08-11 Multiple megahealth rot down too fast fix by Maddes/Athos  start
+	remove (self);
+/*
+	if (deathmatch == 1)	// deathmatch 2 is silly old rules
+	{
+		self.nextthink = time + 20;
+		self.think = SUB_regen;
+	}
+*/
+// 1998-08-11 Multiple megahealth rot down too fast fix by Maddes/Athos  end
 };
 
 /*
@@ -223,8 +298,6 @@ ARMOR
 
 ===============================================================================
 */
-
-void() armor_touch;
 
 void() armor_touch =
 {
@@ -253,23 +326,24 @@ void() armor_touch =
 		value = 200;
 		bit = IT_ARMOR3;
 	}
-	if (other.armortype*other.armorvalue >= type*value)
-		return;
+	// 1998-08-15 Do not take unnecessary items but fire all targets by Maddes  start
+	if (other.armortype*other.armorvalue < type*value)
+	{
+		// 1998-08-15 Do not take unnecessary items but fire all targets by Maddes  end
+		other.armortype = type;
+		other.armorvalue = value;
+		other.items = other.items - (other.items & (IT_ARMOR1 | IT_ARMOR2 | IT_ARMOR3)) + bit;
+
+		self.solid = SOLID_NOT;
+		self.model = string_null;
 		
-	other.armortype = type;
-	other.armorvalue = value;
-	other.items = other.items - (other.items & (IT_ARMOR1 | IT_ARMOR2 | IT_ARMOR3)) + bit;
+		self.think = SUB_regen;
 
-	self.solid = SOLID_NOT;
-	self.model = string_null;
-	
-	self.think = SUB_regen;
-
-	sprint(other, "You got armor\n");
-// armor touch sound
-	sound(other, CHAN_ITEM, "items/armor1.wav", 1, ATTN_NORM);
-	stuffcmd (other, "bf\n");
-	
+		sprint(other, "You got armor\n");
+		// armor touch sound
+		sound(other, CHAN_ITEM, "items/armor1.wav", 1, ATTN_NORM);
+		stuffcmd (other, "bf\n");
+	}	// 1998-08-15 Do not take unnecessary items but fire all targets by Maddes
 	activator = other;
 	SUB_UseTargets();				// fire all targets / killtargets
 };
@@ -384,13 +458,15 @@ float() W_BestWeapon;
 
 void() weapon_touch =
 {
-	local	float	hadammo, best, new, old;
+	local	float	best, new, old;
 	local	entity	stemp;
 	local	float	leave;
+	local 	float	donttake;	// 1998-08-15 Do not take unnecessary items but fire all targets by Maddes
 
 	if (!(other.flags & FL_CLIENT))
 		return;
 
+	donttake = 0;	// 1998-08-15 Do not take unnecessary items but fire all targets by Maddes
 // if the player was using his best weapon, change up to the new one if better		
 	stemp = self;
 	self = other;
@@ -404,85 +480,148 @@ void() weapon_touch =
 	
 	if (self.classname == "weapon_nailgun")
 	{
-		if (leave && (other.items & IT_NAILGUN) )
-			return;
-		hadammo = other.ammo_nails;			
+// 1998-08-15 Do not take unnecessary items but fire all targets by Maddes  start
+//		if (leave && (other.items & IT_NAILGUN) )
+//			return;
+		if ( (other.items & IT_NAILGUN)
+		&& (leave || (other.ammo_nails >= 200)) )
+			donttake = 1;
+		else
+		{
+//		hadammo = other.ammo_nails;
+// 1998-08-15 Do not take unnecessary items but fire all targets by Maddes  end			
 		new = IT_NAILGUN;
 		other.ammo_nails = other.ammo_nails + 30;
+		}
 	}
 	else if (self.classname == "weapon_supernailgun")
 	{
-		if (leave && (other.items & IT_SUPER_NAILGUN) )
-			return;
-		hadammo = other.ammo_rockets;			
+// 1998-08-15 Do not take unnecessary items but fire all targets by Maddes  start
+//		if (leave && (other.items & IT_SUPER_NAILGUN) )
+//			return;
+		if ( (other.items & IT_SUPER_NAILGUN)
+		&& (leave || (other.ammo_nails >= 200)) )
+			donttake = 1;
+		else
+		{
+//		hadammo = other.ammo_rockets;
+// 1998-08-15 Do not take unnecessary items but fire all targets by Maddes  end
 		new = IT_SUPER_NAILGUN;
 		other.ammo_nails = other.ammo_nails + 30;
+		}	// 1998-08-15 Do not take unnecessary items but fire all targets by Maddes
 	}
 	else if (self.classname == "weapon_supershotgun")
 	{
-		if (leave && (other.items & IT_SUPER_SHOTGUN) )
-			return;
-		hadammo = other.ammo_rockets;			
+// 1998-08-15 Do not take unnecessary items but fire all targets by Maddes  start
+//		if (leave && (other.items & IT_SUPER_SHOTGUN) )
+//			return;
+		if ( (other.items & IT_SUPER_SHOTGUN)
+		&& (leave || (other.ammo_shells >= 100)) )
+			donttake = 1;
+		else
+		{
+//		hadammo = other.ammo_rockets;
+// 1998-08-15 Do not take unnecessary items but fire all targets by Maddes  end
 		new = IT_SUPER_SHOTGUN;
 		other.ammo_shells = other.ammo_shells + 5;
+		}	// 1998-08-15 Do not take unnecessary items but fire all targets by Maddes
 	}
 	else if (self.classname == "weapon_rocketlauncher")
 	{
-		if (leave && (other.items & IT_ROCKET_LAUNCHER) )
-			return;
-		hadammo = other.ammo_rockets;			
+// 1998-08-15 Do not take unnecessary items but fire all targets by Maddes  start
+//		if (leave && (other.items & IT_ROCKET_LAUNCHER) )
+//			return;
+		if ( (other.items & IT_ROCKET_LAUNCHER)
+		&& (leave || (other.ammo_rockets >= 100)) )
+			donttake = 1;
+		else
+		{
+//		hadammo = other.ammo_rockets;
+// 1998-08-15 Do not take unnecessary items but fire all targets by Maddes  end
 		new = IT_ROCKET_LAUNCHER;
 		other.ammo_rockets = other.ammo_rockets + 5;
+		}	// 1998-08-15 Do not take unnecessary items but fire all targets by Maddes
 	}
 	else if (self.classname == "weapon_grenadelauncher")
 	{
-		if (leave && (other.items & IT_GRENADE_LAUNCHER) )
-			return;
-		hadammo = other.ammo_rockets;			
+// 1998-08-15 Do not take unnecessary items but fire all targets by Maddes  start
+//		if (leave && (other.items & IT_GRENADE_LAUNCHER) )
+//			return;
+		if ( (other.items & IT_GRENADE_LAUNCHER)
+		&& (leave || (other.ammo_rockets >= 100)) )
+			donttake = 1;
+		else
+		{
+//		hadammo = other.ammo_rockets;			
+// 1998-08-15 Do not take unnecessary items but fire all targets by Maddes  end
 		new = IT_GRENADE_LAUNCHER;
 		other.ammo_rockets = other.ammo_rockets + 5;
+		}	// 1998-08-15 Do not take unnecessary items but fire all targets by Maddes
 	}
 	else if (self.classname == "weapon_lightning")
 	{
-		if (leave && (other.items & IT_LIGHTNING) )
-			return;
-		hadammo = other.ammo_rockets;			
+// 1998-08-15 Do not take unnecessary items but fire all targets by Maddes  start
+//		if (leave && (other.items & IT_LIGHTNING) )
+//			return;
+		if ( (other.items & IT_LIGHTNING)
+		&& (leave || (other.ammo_cells >= 100)) )
+			donttake = 1;
+		else
+		{
+//		hadammo = other.ammo_rockets;			
+// 1998-08-15 Do not take unnecessary items but fire all targets by Maddes  end
 		new = IT_LIGHTNING;
 		other.ammo_cells = other.ammo_cells + 15;
+		}	// 1998-08-15 Do not take unnecessary items but fire all targets by Maddes
 	}
 	else
 		objerror ("weapon_touch: unknown classname");
 
-	sprint (other, "You got the ");
-	sprint (other, self.netname);
-	sprint (other, "\n");
-// weapon touch sound
-	sound (other, CHAN_ITEM, "weapons/pkup.wav", 1, ATTN_NORM);
-	stuffcmd (other, "bf\n");
+// 1998-08-15 Do not take unnecessary items but fire all targets by Maddes  start
+	if (!donttake)
+	{
+		// 1998-08-15 Do not take unnecessary items but fire all targets by Maddes  end
 
-	bound_other_ammo ();
+		sprint (other, "You got the ");
+		sprint (other, self.netname);
+		sprint (other, "\n");
+		// weapon touch sound
+		sound (other, CHAN_ITEM, "weapons/pkup.wav", 1, ATTN_NORM);
+		stuffcmd (other, "bf\n");
 
-// change to the weapon
-	old = other.items;
-	other.items = other.items | new;
-	
-	stemp = self;
-	self = other;
+		bound_other_ammo ();
 
-	Deathmatch_Weapon (old, new);
+		// change to the weapon
+		old = other.items;
+		other.items = other.items | new;
+		
+		stemp = self;
+		self = other;
 
-	W_SetCurrentAmmo();
+		Deathmatch_Weapon (old, new);
 
-	self = stemp;
+		W_SetCurrentAmmo();
 
-	if (leave)
-		return;
+		self = stemp;
+		
+		// 1998-08-15 Do not take unnecessary items but fire all targets by Maddes  start
+	//	if (leave)
+	//		return;
+		if (!leave)
+		{
+	// 1998-08-15 Do not take unnecessary items but fire all targets by Maddes  end
 
-// remove it in single player, or setup for respawning in deathmatch
-	self.model = string_null;
-	self.solid = SOLID_NOT;
-	
-	self.think = SUB_regen;
+		if (leave)
+			return;
+
+	// remove it in single player, or setup for respawning in deathmatch
+		self.model = string_null;
+		self.solid = SOLID_NOT;
+		
+		self.think = SUB_regen;
+		
+		}
+	}	// 1998-08-15 Do not take unnecessary items but fire all targets by Maddes
 	
 	activator = other;
 	SUB_UseTargets();				// fire all targets / killtargets
@@ -591,14 +730,16 @@ AMMO
 
 void() ammo_touch =
 {
-local entity	stemp;
-local float		best;
+	local entity	stemp;
+	local float		best;
+	local float	donttake;	// 1998-08-15 Do not take unnecessary items but fire all targets by Maddes
 
 	if (other.classname != "player")
 		return;
 	if (other.health <= 0)
 		return;
 
+	donttake = 0;	// 1998-08-15 Do not take unnecessary items but fire all targets by Maddes
 // if the player was using his best weapon, change up to the new one if better		
 	stemp = self;
 	self = other;
@@ -610,7 +751,11 @@ local float		best;
 	if (self.weapon == 1)
 	{
 		if (other.ammo_shells >= 100)
-			return;
+			// 1998-08-15 Do not take unnecessary items but fire all targets by Maddes  start
+//			return;
+			donttake = 1;
+		else
+// 1998-08-15 Do not take unnecessary items but fire all targets by Maddes  end
 		other.ammo_shells = other.ammo_shells + self.aflag;
 	}
 
@@ -618,57 +763,73 @@ local float		best;
 	if (self.weapon == 2)
 	{
 		if (other.ammo_nails >= 200)
-			return;
+			// 1998-08-15 Do not take unnecessary items but fire all targets by Maddes  start
+//			return;
+			donttake = 1;
+		else
+// 1998-08-15 Do not take unnecessary items but fire all targets by Maddes  end
 		other.ammo_nails = other.ammo_nails + self.aflag;
 	}
 
 //	rockets
-	if (self.weapon == 3)
+	else if (self.weapon == 3)
 	{
 		if (other.ammo_rockets >= 100)
-			return;
+// 1998-08-15 Do not take unnecessary items but fire all targets by Maddes  start
+//			return;
+			donttake = 1;
+		else
+// 1998-08-15 Do not take unnecessary items but fire all targets by Maddes  end
 		other.ammo_rockets = other.ammo_rockets + self.aflag;
 	}
 
 //	cells
-	if (self.weapon == 4)
+	else if (self.weapon == 4)
 	{
 		if (other.ammo_cells >= 100)
-			return;
+// 1998-08-15 Do not take unnecessary items but fire all targets by Maddes  start
+//			return;
+			donttake = 1;
+		else
+// 1998-08-15 Do not take unnecessary items but fire all targets by Maddes  end
 		other.ammo_cells = other.ammo_cells + self.aflag;
 	}
 
-	bound_other_ammo ();
-	
-	sprint (other, "You got the ");
-	sprint (other, self.netname);
-	sprint (other, "\n");
-// ammo touch sound
-	sound (other, CHAN_ITEM, "weapons/lock4.wav", 1, ATTN_NORM);
-	stuffcmd (other, "bf\n");
-
-// change to a better weapon if appropriate
-
-	if ( other.weapon == best )
+// 1998-08-15 Do not take unnecessary items but fire all targets by Maddes  start
+	if (!donttake)
 	{
+// 1998-08-15 Do not take unnecessary items but fire all targets by Maddes  end
+		bound_other_ammo ();
+	
+		sprint (other, "You got the ");
+		sprint (other, self.netname);
+		sprint (other, "\n");
+	// ammo touch sound
+		sound (other, CHAN_ITEM, "weapons/lock4.wav", 1, ATTN_NORM);
+		stuffcmd (other, "bf\n");
+
+	// change to a better weapon if appropriate
+
+		if ( other.weapon == best )
+		{
+			stemp = self;
+			self = other;
+			self.weapon = W_BestWeapon();
+			W_SetCurrentAmmo ();
+			self = stemp;
+		}
+
+	// if changed current ammo, update it
 		stemp = self;
 		self = other;
-		self.weapon = W_BestWeapon();
-		W_SetCurrentAmmo ();
+		W_SetCurrentAmmo();
 		self = stemp;
-	}
 
-// if changed current ammo, update it
-	stemp = self;
-	self = other;
-	W_SetCurrentAmmo();
-	self = stemp;
-
-// remove it in single player, or setup for respawning in deathmatch
-	self.model = string_null;
-	self.solid = SOLID_NOT;
-	self.think = SUB_regen;
-
+	// remove it in single player, or setup for respawning in deathmatch
+		self.model = string_null;
+		self.solid = SOLID_NOT;
+		self.think = SUB_regen;
+	}	// 1998-08-15 Do not take unnecessary items but fire all targets by Maddes
 	activator = other;
 	SUB_UseTargets();				// fire all targets / killtargets
 };
@@ -861,13 +1022,16 @@ KEYS
 
 void() key_touch =
 {
-
 	if (other.classname != "player")
 		return;
 	if (other.health <= 0)
 		return;
-	if (other.items & self.items)
-		return;
+	// 1998-08-15 Do not take unnecessary items but fire all targets by Maddes  start
+//	if (other.items & self.items)
+//		return;
+	if (!other.items & self.items)
+	{
+// 1998-08-15 Do not take unnecessary items but fire all targets by Maddes  end
 
 	sprint (other, "You got the ");
 	sprint (other, self.netname);
@@ -883,6 +1047,7 @@ void() key_touch =
 		self.model = string_null;
 	}
 
+	}	// 1998-08-15 Do not take unnecessary items but fire all targets by Maddes
 	activator = other;
 	SUB_UseTargets();				// fire all targets / killtargets
 };
@@ -1285,8 +1450,6 @@ void() BackpackTouch =
 		sprint (other, s);
 		sprint (other, " cells\n");
 	}
-	
-	sprint (other, "\n");
 // backpack touch sound
 	sound (other, CHAN_ITEM, "weapons/lock4.wav", 1, ATTN_NORM);
 	stuffcmd (other, "bf\n");

@@ -352,7 +352,10 @@ void() zombie_paine10	=[	$paine10,	zombie_paine11	] {
 sound (self, CHAN_BODY, "zombie/z_fall.wav", 1, ATTN_NORM);
 self.solid = SOLID_NOT;
 };
-void() zombie_paine11	=[	$paine11,	zombie_paine12	] {self.nextthink = self.nextthink + 5;self.health = 60;};
+// 1998-08-14 Incorrect setting of nextthink fix by Maddes/Lord Sméagol  start
+//void() zombie_paine11	=[	$paine11,	zombie_paine12	] {self.nextthink = self.nextthink + 5;self.health = 60;};
+void() zombie_paine11	=[	$paine11,	zombie_paine12	] {self.nextthink = time + 5;self.health = 60;};
+// 1998-08-14 Incorrect setting of nextthink fix by Maddes/Lord Sméagol  end
 void() zombie_paine12	=[	$paine12,	zombie_paine13	]{
 // see if ok to stand up
 self.health = 60;

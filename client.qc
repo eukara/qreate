@@ -391,6 +391,9 @@ Player entered the suicide command
 */
 void() ClientKill =
 {
+	if ((intermission_running)&&((coop)||(deathmatch)))  // not allowed during intermission
+		return;
+		
 	bprint (self.netname);
 	bprint (" suicides\n");
 	set_suicide_frame ();
@@ -692,13 +695,13 @@ void() CheckRules =
 	timelimit = cvar("timelimit") * 60;
 	fraglimit = cvar("fraglimit");
 	
-	if (timelimit && time >= timelimit)
+	if (deathmatch && timelimit && time >= timelimit)	// 1998-07-27 Timelimit/Fraglimit fix by Maddes
 	{
 		NextLevel ();
 		return;
 	}
 	
-	if (fraglimit && self.frags >= fraglimit)
+	if (deathmatch && fraglimit && self.frags >= fraglimit)	// 1998-07-27 Timelimit/Fraglimit fix by Maddes
 	{
 		NextLevel ();
 		return;
@@ -1291,6 +1294,23 @@ void(entity targ, entity attacker) ClientObituary =
 			targ.frags = targ.frags - 1;
 			return;
 		}
+
+		// 1998-07-26 Pentagram telefrag fix by Zoid/Maddes  start
+		// double 666 telefrag
+		// (can happen often in deathmatch 4 and levels with more than one pentagram)
+		if (attacker.classname == "teledeath3")
+		{
+			bprint (targ.netname);
+			bprint (" was telefragged by ");
+			bprint (attacker.owner.netname);
+			bprint ("'s Satan's power\n");
+// 1998-07-26 only telefrag player on spot by Maddes  start
+//			targ.frags = targ.frags - 1;
+			attacker.owner.frags = attacker.owner.frags + 1;
+// 1998-07-26 only telefrag player on spot by Maddes  end
+			return;
+		}
+// 1998-07-26 Pentagram telefrag fix by Zoid/Maddes  end
 
 // 1998-07-24 Wrong obituary messages fix by Zoid  start
 		if (targ.deathtype == "squish")
