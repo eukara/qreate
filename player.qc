@@ -272,6 +272,9 @@ local float		rs;
 // slime pain sounds
 	if (self.watertype == CONTENT_SLIME)
 	{
+		if (self.waterlevel == 3)
+			DeathBubbles(1);
+			
 // FIX ME	put in some steam here
 		if (random() > 0.5)
 			sound (self, CHAN_VOICE, "player/lburn1.wav", 1, ATTN_NORM);

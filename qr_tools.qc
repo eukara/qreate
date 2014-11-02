@@ -123,9 +123,7 @@ void(float moda, float reverse) qreate_tool_move =
 			trace_ent.origin_z = trace_ent.origin_z - 1;
 		}
 		setorigin(trace_ent, trace_ent.origin);
-	
 	}
-
 };
 
 void() qreate_tool_remove =
