@@ -151,3 +151,23 @@ void() qreate_hack_fakeplayer =
 	setsize (self, '-16 -16 -24', '16 16 40');
 	player_stand1();
 };
+
+void() qreate_tree =
+{
+	float r;
+	r = random();
+	
+	if(r < 0.25)
+		self.model = "progs/tree1.spr";
+	else if(r < 0.5)
+		self.model = "progs/tree4.spr";
+	else if(r < 0.75)
+		self.model = "progs/tree5.spr";
+	else
+		self.model = "progs/tree3.spr";
+
+	precache_model(self.model);
+	setmodel(self, self.model);
+	self.solid = SOLID_BBOX;
+	setsize (self, '-16 -16 -24', '16 16 40');
+};
