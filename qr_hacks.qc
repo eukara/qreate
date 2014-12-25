@@ -86,6 +86,7 @@ void() qreate_arcade =
 		precache_sound(self.noise);
 		
 	setmodel(self, self.model);
+	self.skin = 0;
 	
 	if(self.noise)
 		ambientsound (self.origin, self.noise, 1.0, ATTN_IDLE);

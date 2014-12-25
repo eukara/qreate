@@ -470,6 +470,43 @@ void() qreate_dance =
 	qreate_dance1();
 };
 
+void() qreate_break_fall_touch =
+{
+	if(!other.health)
+		return;
+	
+	if(!self.velocity_z)
+	  return;
+	
+	other.deathtype = "squish";
+	T_Damage (other, self, self, 200);
+	
+	WriteByte (MSG_BROADCAST, SVC_TEMPENTITY);
+	WriteByte (MSG_BROADCAST, TE_SUPERSPIKE);
+	WriteCoord (MSG_BROADCAST, self.origin_x);
+	WriteCoord (MSG_BROADCAST, self.origin_y);
+	WriteCoord (MSG_BROADCAST, self.origin_z);
+};
+
+void() qreate_break_fall =
+{
+	/*entity fall;
+	fall = spawn();
+	setmodel(fall, self.model);
+	setorigin(fall, self.origin);
+	setsize(fall, self.mins, self.maxs);
+	fall.angles = self.angles;
+	fall.movetype = MOVETYPE_BOUNCE;
+	fall.velocity_z = -5;
+	fall.touch = qreate_break_fall_touch;
+	fall.solid = SOLID_BBOX;*/
+	self.takedamage = DAMAGE_NO;
+	self.movetype = MOVETYPE_BOUNCE;
+	self.velocity_z = -5;
+	self.touch = qreate_break_fall_touch;
+	self.solid = SOLID_BBOX;
+};
+
 void() qreate_tool_quakebreak =
 {
 	local	vector	src;
@@ -490,11 +527,20 @@ void() qreate_tool_quakebreak =
 		else
 			pmod = 0;
 
-		if(trace_ent.qmode == 4)
+		
+		if(trace_ent.qmode == 5)
 		{
 			centerprint(self, "QB: NONE\n");
 			trace_ent.takedamage = DAMAGE_NO;
 			trace_ent.qmode = 0;
+		}
+		else if(trace_ent.qmode == 4)
+		{
+			centerprint(self, "QB: FALL\n");
+			trace_ent.health = 1;
+			trace_ent.th_die = qreate_break_fall;
+			trace_ent.takedamage = DAMAGE_AIM;
+			trace_ent.qmode = 5;
 		}
 		else if(trace_ent.qmode == 1)
 		{	

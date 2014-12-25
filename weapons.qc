@@ -951,7 +951,9 @@ if (self.secfire == 1)
 	}
 
 	makevectors	(self.v_angle);			// calculate forward angle for velocity
-	self.show_hostile = time + 1;	// wake monsters up
+	
+	if(self.weapon != IT_TOOL)
+		self.show_hostile = time + 1;	// wake monsters up
 
 	if(RP_WeaponAttack())
 		return;
