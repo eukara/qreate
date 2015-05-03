@@ -372,6 +372,20 @@ void(float mode) qreate_tool_stack =
 			eCopy.origin = trace_ent.origin;
 			eCopy.angles_y = trace_ent.angles_y;
 			eCopy.qreate_modify = trace_ent.qreate_modify;
+
+			if(trace_ent.th_walk)
+				eCopy.th_walk = trace_ent.th_walk;
+			if(trace_ent.th_run)
+				eCopy.th_run = trace_ent.th_run;
+			if(trace_ent.th_pain)
+				eCopy.th_pain = trace_ent.th_pain;
+			if(trace_ent.th_stand)
+				eCopy.th_stand = trace_ent.th_stand;
+			if(trace_ent.th_missile)
+				eCopy.th_missile = trace_ent.th_missile;
+			if(trace_ent.th_die)
+				eCopy.th_die = trace_ent.th_die;
+
 				
 			eCopy.think = trace_ent.think;
 			eCopy.spawner = self;
@@ -387,9 +401,6 @@ void(float mode) qreate_tool_stack =
 			eCopy.skin = trace_ent.skin;
 			eCopy.effects = trace_ent.effects;
 			trace_ent.stack = 1;
-			
-			if(trace_ent.th_die)
-				eCopy.th_die = trace_ent.th_die;
 		}
 	}
 	
