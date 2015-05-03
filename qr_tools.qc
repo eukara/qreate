@@ -6,7 +6,9 @@
 
 float (entity trent) qreate_tool_denied =
 {
-	
+	if(trent.model == "" && trent.modelindex == 0) // Don't allow the player to delete invisible entities such as triggers
+		return FALSE;
+
 	if((trent.spawner && trent.spawner != self && trent.qreate_modify == FALSE) || (!trent.spawner && trent.solid == SOLID_BSP))
 	{
 		if(self.qmsg > time)
