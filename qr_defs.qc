@@ -28,9 +28,14 @@ float SVC_SETVIEWANGLES = 10;
 
 .float qreate_altmenulstt;
 .float qreate_altmenut;
+
 .float qreate_bosscnt;
+.string qreate_team;
+.entity qreate_monster_target;
+
 .float qreate_modify;
 .float qmsg;
 
 float SVC_UPDATESTAT = 3;
 float STAT_TOTALMONSTERS = 12;
+

@@ -1040,6 +1040,8 @@ if (self.secfire == 1)
 			qreate_tool_permissions(0);
 		else if(self.tselected == 13)
 			qreate_tool_stack(0);
+		else if(self.tselected == 14)
+			qreate_tool_switchteam();
 	}
 	else if (self.weapon == IT_MECHWARRIOR)
 	{

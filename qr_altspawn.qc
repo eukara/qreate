@@ -53,7 +53,7 @@ void() qreate_altspawnmenut_draw =
 	else if(self.qreate_altmenulstt == 1)
 		centerprint(self, "\n  TOOL LIST          (2/3)  \n\n  ) move z axis            \n  ) change skin            \n  ) change frame           \n  ) change effects         \n  ) quake breaker!         \n  ) switch viewpoint       \n  ) next ç                 \n");
 	else if(self.qreate_altmenulstt == 2)
-		centerprint(self, "\n  TOOL LIST          (3/3)  \n\n  ) change permissions     \n  ) stacker tool           \n                            \n                            \n                            \n                            \n  ) next ç                 \n");
+		centerprint(self, "\n  TOOL LIST          (3/3)  \n\n  ) change permissions     \n  ) stacker tool           \n  ) switch team            \n                            \n                            \n                            \n  ) next ç                 \n");
 
 }
 
@@ -349,6 +349,9 @@ float() qreate_altspawnmenut_input =
 			qreate_altmenutool(2);
 		else if(self.qreate_altmenulstt == 1)
 			qreate_altmenutool(8);
+		else if(self.qreate_altmenulstt == 2)
+			qreate_altmenutool(14);
+
 		return TRUE;
 	}
 	else if(self.impulse == 4)

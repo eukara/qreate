@@ -605,16 +605,8 @@ void(float reverse) qreate_tool_permissions =
 	traceline (src, src + v_forward*1024, FALSE, self);
 
 
-	if (trace_ent.spawner != self)
-	{
-		if(self.qmsg > time)
-			return;
-
-		self.qmsg = time + 2;
-		sprint(self, "This does not belong to you.\n");
-
+	if (qreate_tool_denied(trace_ent) == FALSE)
 		return;
-	}
 
 	if(!reverse)
 	{
@@ -629,6 +621,39 @@ void(float reverse) qreate_tool_permissions =
 
 	self.attack_finished = time + 0.2;
 }
+
+void() qreate_tool_switchteam =
+{
+	local	vector	src;
+
+	src = self.origin + v_forward*10;
+	src_z = self.absmin_z + self.size_z * 0.7;
+	traceline (src, src + v_forward*1024, FALSE, self);
+
+
+	if (qreate_tool_denied(trace_ent) == FALSE)
+		return;
+
+	if(!trace_ent.qreate_team)
+	{
+		trace_ent.qreate_team = "friend";
+		sprint(self, "[D] monster team = friend\n");
+	}
+	else if (trace_ent.qreate_team == "friend")
+	{
+		trace_ent.qreate_team = "enemy";
+		sprint(self, "[D] monster team = enemy\n");
+	}
+	else
+	{
+		trace_ent.qreate_team = "";
+		sprint(self, "[D] monster team = default\n");
+	}
+
+
+	self.attack_finished = time + 0.2;
+}
+
 
 void() qreate_printtselected =
 {
@@ -662,6 +687,8 @@ void() qreate_printtselected =
 			entname = "[t] 12 - change permissions\n";
 		else if(self.tselected == 13)
 			entname = "[t] 13 - stacker\n";
+		else if(self.tselected == 14)
+			entname = "[t] 14 - change team\n";
 
 		
 	centerprint (self, entname);
@@ -671,7 +698,7 @@ void() qreate_change_toolfw =
 {
 	self.tselected = self.tselected + 1;
 
-	if(self.tselected > 13)
+	if(self.tselected > 14)
 	self.tselected = 0;
 
  qreate_printtselected();
@@ -682,7 +709,7 @@ void() qreate_change_toolbw =
 	self.tselected = self.tselected - 1;
 
 	if(self.tselected < 0)
-	self.tselected = 13;
+	self.tselected = 14;
 
  qreate_printtselected();
 };

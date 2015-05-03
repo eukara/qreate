@@ -345,6 +345,21 @@ checked each frame.  This means multi player games will have slightly
 slower noticing monsters.
 ============
 */
+
+entity(string team) qreate_checkteam =
+{
+	if (self.qreate_team == "friend")
+		self.qreate_monster_target = find(self.qreate_monster_target, qreate_team, "enemy");
+	if (self.qreate_team == "enemy")
+		self.qreate_monster_target = find(self.qreate_monster_target, qreate_team, "friend");
+
+	if (self.qreate_monster_target)
+ 		traceline(self.origin, self.qreate_monster_target.origin, TRUE, self);
+
+	if (trace_fraction == 1)
+  		return self.qreate_monster_target;
+};
+
 float() FindTarget =
 {
 	local entity	client;
@@ -364,7 +379,11 @@ float() FindTarget =
 	}
 	else
 	{
-		client = checkclient ();
+		if (self.qreate_team && self.qreate_team != "")
+ 			client = qreate_checkteam (self.qreate_team);
+		else
+ 			client = checkclient ();
+
 		if (!client)
 			return FALSE;	// current check entity isn't in PVS
 	}
@@ -398,7 +417,30 @@ float() FindTarget =
 //
 // got one
 //
+
 	self.enemy = client;
+
+	if (self.qreate_team == "enemy")
+	{
+		if (self.enemy.qreate_team == "friend" && self.enemy.health > 0)
+		{
+ 			FoundTarget ();
+			return TRUE;
+		}
+		else
+			return FALSE;
+	}
+	if (self.qreate_team == "friend")
+	{
+		if (self.enemy.qreate_team == "enemy" && self.enemy.health > 0)
+		{
+ 			FoundTarget ();
+			return TRUE;
+		}
+		else
+			return FALSE;
+	}
+
 	if (self.enemy.classname != "player")
 	{
 		self.enemy = self.enemy.enemy;
