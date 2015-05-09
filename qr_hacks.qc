@@ -155,7 +155,7 @@ void() qreate_hack_fakeplayer =
 
 void() qreate_tree =
 {
-	float r;
+	local float r;
 	r = random();
 	
 	if(r < 0.25)

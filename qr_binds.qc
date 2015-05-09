@@ -4,9 +4,9 @@
 // Feel free to modify and to redistribute,
 // but do so along with your modified code!
 
-void qreate_selectspawn ();
-void qreate_change_entityfw ();
-void qreate_change_entitybw ();
+void() qreate_selectspawn;
+void() qreate_change_entityfw;
+void() qreate_change_entitybw;
 void(entity client, string s, string b, string c) qreate_stuffcmd = #21;
 
 void() Qreate_FOVInc =

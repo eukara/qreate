@@ -11,8 +11,8 @@
 
 void() RP_PlayerID =
 {
-	local	vector	src;
-	string	trackp;
+	local vector	src;
+	local string	trackp;
 	
 	if(self.rp_menutime > time)
 	return;

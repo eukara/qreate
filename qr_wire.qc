@@ -403,6 +403,56 @@ void() qreate_wire_binaryvalue =
 	self.attack_finished = time + 0.3;
 };
 
+void() qreate_wire_random_think =
+{
+	if(self.qreate_wirein1 && self.qreate_wirein1.qreate_wireout)
+	{	
+		local float fRandom = random();
+
+		if(fRandom < 0.5)
+			self.qreate_wireout = 1;
+		else
+			self.qreate_wireout = 0;
+		
+		self.nextthink = self.ltime + 0.1;
+		return;
+	}
+	
+	self.qreate_wireout = 0;
+	self.nextthink = self.ltime + 0.1;
+};
+
+void() qreate_wire_random =
+{
+	local	vector	vSrc;
+	local 	vector vNorm;
+
+	vSrc = self.origin + v_forward*10;
+	vSrc_z = self.absmin_z + self.size_z * 0.7;
+	traceline (vSrc, vSrc + v_forward*1024, FALSE, self);
+
+	entity eGate;
+	eGate = spawn();
+	eGate.classname = "Wire: Random";
+
+	vNorm = trace_plane_normal;
+	eGate.angles = vectoangles(vNorm);
+	eGate.angles_x = eGate.angles_x - 90;
+
+	setorigin(eGate, trace_endpos);
+	setmodel(eGate, "progs/wgat.mdl");
+	eGate.solid = SOLID_BBOX;
+	eGate.movetype = MOVETYPE_PUSH;
+	setsize(eGate, '-6 -6 -6', '6 6 6');
+	eGate.think	= qreate_wire_random_think;
+	eGate.nextthink = eGate.ltime + 1;
+	eGate.skin = 4;
+	eGate.spawner = self;
+	eGate.flags = FL_WIRE;
+	eGate.qreate_wire_maxmode = 1;
+	self.attack_finished = time + 0.3;
+};
+
 
 // OBJECTS
 //
@@ -747,8 +797,66 @@ void() qreate_wire_timer =
 	setsize(eGate, '-6 -6 -6', '6 6 6');
 	eGate.think = qreate_wire_timer_think;
 	eGate.nextthink = eGate.ltime + 0.1;
+	eGate.skin = 3;
 	eGate.spawner = self;
 	eGate.qreate_wire_maxmode = 9;
 	self.attack_finished = time + 0.3;
 };
 
+void(vector p1, vector p2, entity from, float damage) LightningDamage;
+void() qreate_wire_laser_think =
+{
+	if(self.qreate_wirein1 && self.qreate_wirein1.qreate_wireout)
+	{	
+		makevectors(self.angles);
+	
+		traceline (self.origin + v_forward*5, self.origin + v_forward*600, TRUE, self);
+		WriteByte (MSG_BROADCAST, SVC_TEMPENTITY);
+		WriteByte (MSG_BROADCAST, TE_LIGHTNING1);
+		WriteEntity (MSG_BROADCAST, self);
+		WriteCoord (MSG_BROADCAST, self.origin_x);
+		WriteCoord (MSG_BROADCAST, self.origin_y);
+		WriteCoord (MSG_BROADCAST, self.origin_z);
+		WriteCoord (MSG_BROADCAST, trace_endpos_x);
+		WriteCoord (MSG_BROADCAST, trace_endpos_y);
+		WriteCoord (MSG_BROADCAST, trace_endpos_z);
+		LightningDamage (self.origin, trace_endpos, self, 10);
+		//T_Damage (trace_ent, self, self, 10);
+		self.qreate_wireout = 1;
+		self.nextthink = self.ltime + 0.1;
+		return;
+	}
+	
+	self.qreate_wireout = 0;
+	self.nextthink = self.ltime + 0.1;
+};
+
+void() qreate_wire_laser =
+{
+	local	vector	vSrc;
+	local 	vector 	vNorm;
+
+	vSrc = self.origin + v_forward*10;
+	vSrc_z = self.absmin_z + self.size_z * 0.7;
+	traceline (vSrc, vSrc + v_forward*1024, FALSE, self);
+
+	entity eGate;
+	eGate = spawn();
+	eGate.classname = "Wire: Laser";
+	eGate.flags = FL_WIRE;
+
+	vNorm = trace_plane_normal;
+	eGate.angles = vectoangles(vNorm);
+	eGate.angles_x = eGate.angles_x - 90;
+
+	setorigin(eGate, trace_endpos);
+	setmodel(eGate, "progs/grenade.mdl");
+	eGate.solid = SOLID_BBOX;
+	eGate.movetype = MOVETYPE_PUSH;
+	setsize(eGate, '-6 -6 -6', '6 6 6');
+	eGate.think = qreate_wire_laser_think;
+	eGate.nextthink = eGate.ltime + 0.1;
+	eGate.spawner = self;
+	eGate.qreate_wire_maxmode = 0;
+	self.attack_finished = time + 0.3;
+};

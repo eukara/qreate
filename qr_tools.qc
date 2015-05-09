@@ -611,7 +611,7 @@ void(float reverse) qreate_tool_permissions =
 	}
 
 	self.attack_finished = time + 0.2;
-}
+};
 
 void() qreate_tool_switchteam =
 {
@@ -643,7 +643,7 @@ void() qreate_tool_switchteam =
 
 
 	self.attack_finished = time + 0.2;
-}
+};
 
 
 void() qreate_printtselected =
@@ -718,4 +718,4 @@ void() qreate_togglereverse =
 		centerprint (self, "reverse on\n");
 	}
 		
-}; 
+};

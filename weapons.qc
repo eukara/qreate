@@ -1069,6 +1069,11 @@ if (self.secfire == 1)
 			qreate_wire_timer();
 		else if(self.tselected == 26)
 			qreate_wire_door();
+		else if(self.tselected == 27)
+			qreate_wire_laser();
+		else if(self.tselected == 28)
+			qreate_wire_random();
+
 
 
 	}

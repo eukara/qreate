@@ -35,7 +35,7 @@ void() RP_Menu_Draw =
 };
 void() RP_InfoMenu_Draw =
 {
-	string money;
+	local string money;
 	
 	money = ftos(self.rp_money);
 	lightrp_centerprintb (self, "|-----------------------|\n|     LIGHT RP STATS    |\n|-----------------------|\n\nName: ", self.netname,"\nJob: ", self.rp_title,"\nMoney: $", money, "", "", "", "", "", "", "", "", "\n");

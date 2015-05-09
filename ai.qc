@@ -776,4 +776,3 @@ void(float dist) ai_run =
 // head straight in
 	movetogoal (dist);		// done in C code...
 };
- 

@@ -7,7 +7,7 @@
 void() RP_Payday_Update =
 {
 	local entity pl;
-	string pls;
+	local string pls;
 	
 	pl = findradius (self.origin, 10000);
     while(pl)

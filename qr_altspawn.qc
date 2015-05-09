@@ -43,7 +43,7 @@ void() qreate_altspawnmenu_draw =
 	else if(self.qreate_altmenulst == 13)
 		centerprint(self, "\n  WIRE LIST          (2/2)  \n\n  ) button                 \n  ) door                   \n  ) lamp                   \n  ) speaker                \n  ) explosive              \n  ) timer                  \n  ) next ç                 \n");
 	else if(self.qreate_altmenulst == 14) 
-		centerprint(self, "\n  WIRE LIST          (3/3)  \n\n  )                        \n  )                        \n  )                        \n                            \n                            \n                            \n  ) next ç                 \n");
+		centerprint(self, "\n  WIRE LIST          (3/3)  \n\n  ) laser                  \n  ) random-gate            \n  )                        \n                            \n                            \n                            \n  ) next ç                 \n");
 
 
 };
@@ -135,7 +135,8 @@ float() qreate_altspawnmenu_input =
 			qreate_altmenutool(15);
 		else if(self.qreate_altmenulst == 13)
 			qreate_altmenutool(21);
-
+		else if(self.qreate_altmenulst == 14)
+			qreate_altmenutool(27);
 
 		return TRUE;
 	}
@@ -169,6 +170,8 @@ float() qreate_altspawnmenu_input =
 			qreate_altmenutool(16);
 		else if(self.qreate_altmenulst == 13)
 			qreate_altmenutool(26);
+		else if(self.qreate_altmenulst == 14)
+			qreate_altmenutool(28);
 
 		return TRUE;
 	}
@@ -308,7 +311,7 @@ float() qreate_altspawnmenu_input =
 		else if(self.qreate_altmenulst == 12)
 			self.qreate_altmenulst = 13;
 		else if(self.qreate_altmenulst == 13)
-			self.qreate_altmenulst = 12;
+			self.qreate_altmenulst = 14;
 		else if(self.qreate_altmenulst == 14)
 			self.qreate_altmenulst = 12;
 
