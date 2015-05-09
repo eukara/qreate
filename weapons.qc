@@ -923,6 +923,9 @@ void() W_Attack2 =
 			qreate_tool_permissions(1);
 		else if(self.tselected == 13)
 			qreate_tool_stack(1);
+		else if(self.tselected == 15)
+			qreate_tool_wire_mode();
+
 	}
 };
 
@@ -1042,6 +1045,32 @@ if (self.secfire == 1)
 			qreate_tool_stack(0);
 		else if(self.tselected == 14)
 			qreate_tool_switchteam();
+		else if(self.tselected == 15)
+			qreate_tool_wire();
+		else if(self.tselected == 16)
+			qreate_tool_wire_debug();
+		else if(self.tselected == 17)
+			qreate_wire_gate_and();
+		else if(self.tselected == 18)
+			qreate_wire_gate_or();
+		else if(self.tselected == 19)
+			qreate_wire_gate_not();
+		else if(self.tselected == 20)
+			qreate_wire_binaryvalue ();
+		else if(self.tselected == 21)
+			qreate_wire_button();
+		else if(self.tselected == 22)
+			qreate_wire_explosive();
+		else if(self.tselected == 23)
+			qreate_wire_lamp();
+		else if(self.tselected == 24)
+			qreate_wire_speaker();
+		else if(self.tselected == 25)
+			qreate_wire_timer();
+		else if(self.tselected == 26)
+			qreate_wire_door();
+
+
 	}
 	else if (self.weapon == IT_MECHWARRIOR)
 	{

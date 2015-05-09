@@ -15,7 +15,7 @@ void() qreate_altspawnmenu_draw =
 	self.rp_menutime = time + 0.25;
 
 	if(self.qreate_altmenulst == 0)
-		centerprint(self, "\n  QREATE SPAWNMENU  \n\n  ) MONSTERS       \n  ) PROPS          \n  ) ITEMS          \n  ) WEAPONS        \n                    \n  ) QUIT           \n\n\nPRESS  TO RETURN TO THIS MENU");
+		centerprint(self, "\n  QREATE SPAWNMENU  \n\n  ) MONSTERS       \n  ) PROPS          \n  ) ITEMS          \n  ) WEAPONS        \n   ) WIRE            \n                    \n  ) QUIT           \n\n\nPRESS  TO RETURN TO THIS MENU");
 	else if(self.qreate_altmenulst == 1)
 		centerprint(self, "\n  MONSTER LIST            (1/3)  \n\n  ) monster_army                \n  ) monster_boss                \n  ) monster_demon1              \n  ) monster_dog                 \n  ) monster_enforcer            \n  ) monster_fish                \n  ) next ç                      \n");
 	else if(self.qreate_altmenulst == 2)
@@ -38,6 +38,13 @@ void() qreate_altspawnmenu_draw =
 		centerprint(self, "\n  ITEM LIST               (3/3)  \n\n  ) item_spikes                 \n  ) item_artifact_invulnerbility\n                                 \n                                 \n                                 \n                                 \n  ) next ç                      \n");
 	else if(self.qreate_altmenulst == 11)
 		centerprint(self, "\n  WEAPON LIST               \n\n  ) weapon_shotgun         \n  ) weapon_supershotgun    \n  ) weapon_nailgun         \n  ) weapon_supernailgun    \n  ) weapon_grenadelauncher \n  ) weapon_rocketlauncher  \n  ) weapon_lighting        \n");
+	else if(self.qreate_altmenulst == 12)
+		centerprint(self, "\n  WIRE LIST          (1/2)  \n\n  ) wire tool              \n  ) debugger               \n  ) and-gate               \n  ) or-gate                \n  ) not-gate               \n  ) binary value           \n  ) next ç                 \n");
+	else if(self.qreate_altmenulst == 13)
+		centerprint(self, "\n  WIRE LIST          (2/2)  \n\n  ) button                 \n  ) door                   \n  ) lamp                   \n  ) speaker                \n  ) explosive              \n  ) timer                  \n  ) next ç                 \n");
+	else if(self.qreate_altmenulst == 14) 
+		centerprint(self, "\n  WIRE LIST          (3/3)  \n\n  )                        \n  )                        \n  )                        \n                            \n                            \n                            \n  ) next ç                 \n");
+
 
 };
 
@@ -87,8 +94,10 @@ void() qreate_altspawnmenut_switch =
 
 void(float toolnr) qreate_altmenutool =
 {
+	self.weapon = IT_TOOL;
 	self.tselected = toolnr;
 	stuffcmd (self, "play effects/switch01.wav\n");
+	W_SetCurrentAmmo();
 };
 
 float() qreate_altspawnmenu_input =
@@ -123,9 +132,9 @@ float() qreate_altspawnmenu_input =
 		else if(self.qreate_altmenulst == 11)
 			qreate_spawn (weapon_supershotgun);
 		else if(self.qreate_altmenulst == 12)
-			qreate_altmenutool(0);
+			qreate_altmenutool(15);
 		else if(self.qreate_altmenulst == 13)
-			qreate_altmenutool(6);
+			qreate_altmenutool(21);
 
 
 		return TRUE;
@@ -157,9 +166,10 @@ float() qreate_altspawnmenu_input =
 		else if(self.qreate_altmenulst == 11)
 			qreate_spawn (weapon_supershotgun);
 		else if(self.qreate_altmenulst == 12)
-			qreate_altmenutool(1);
+			qreate_altmenutool(16);
 		else if(self.qreate_altmenulst == 13)
-			qreate_altmenutool(7);
+			qreate_altmenutool(26);
+
 		return TRUE;
 	}
 	else if(self.impulse == 3)
@@ -187,9 +197,9 @@ float() qreate_altspawnmenu_input =
 		else if(self.qreate_altmenulst == 11)
 			qreate_spawn (weapon_nailgun);
 		else if(self.qreate_altmenulst == 12)
-			qreate_altmenutool(2);
+			qreate_altmenutool(17);
 		else if(self.qreate_altmenulst == 13)
-			qreate_altmenutool(8);
+			qreate_altmenutool(23);
 		return TRUE;
 	}
 	else if(self.impulse == 4)
@@ -213,14 +223,16 @@ float() qreate_altspawnmenu_input =
 		else if(self.qreate_altmenulst == 11)
 			qreate_spawn (weapon_supernailgun);
 		else if(self.qreate_altmenulst == 12)
-			qreate_altmenutool(3);
+			qreate_altmenutool(18);
 		else if(self.qreate_altmenulst == 13)
-			qreate_altmenutool(9);
+			qreate_altmenutool(24);
 		return TRUE;
 	}
 	else if(self.impulse == 5)
 	{
-		if(self.qreate_altmenulst == 1)
+		if(self.qreate_altmenulst == 0)
+			self.qreate_altmenulst = 12;
+		else if(self.qreate_altmenulst == 1)
 			qreate_spawn (monster_enforcer);
 		else if(self.qreate_altmenulst == 2)
 			qreate_spawn (monster_shalrath);
@@ -237,9 +249,10 @@ float() qreate_altspawnmenu_input =
 		else if(self.qreate_altmenulst == 11)
 			qreate_spawn (weapon_grenadelauncher);
 		else if(self.qreate_altmenulst == 12)
-			qreate_altmenutool(4);
+			qreate_altmenutool(19);
 		else if(self.qreate_altmenulst == 13)
-			qreate_altmenutool(10);
+			qreate_altmenutool(22);
+
 		return TRUE;
 
 	}
@@ -262,9 +275,9 @@ float() qreate_altspawnmenu_input =
 		else if(self.qreate_altmenulst == 11)
 			qreate_spawn (weapon_rocketlauncher);
 		else if(self.qreate_altmenulst == 12)
-			qreate_altmenutool(5);
+			qreate_altmenutool(20);
 		else if(self.qreate_altmenulst == 13)
-			qreate_altmenutool(11);
+			qreate_altmenutool(25);
 		return TRUE;
 
 	}
@@ -296,6 +309,9 @@ float() qreate_altspawnmenu_input =
 			self.qreate_altmenulst = 13;
 		else if(self.qreate_altmenulst == 13)
 			self.qreate_altmenulst = 12;
+		else if(self.qreate_altmenulst == 14)
+			self.qreate_altmenulst = 12;
+
 
 		return TRUE;
 

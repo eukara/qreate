@@ -12,13 +12,13 @@ qr_rp_hud.qc		// Qreate - eukos
 qr_rp_precaches.qc	// Qreate - eukos
 qr_rp_main.qc		// Qreate - eukos
 qr_rp_menu.qc		// Qreate - eukos
-
 subs.qc
 fight.qc
 ai.qc
 combat.qc
 items.qc
 qr_tools.qc		// Qreate - eukos
+qr_wire.qc		// Qreate - eukos
 qr_binds.qc		// Qreate - eukos
 weapons.qc
 world.qc

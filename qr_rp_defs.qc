@@ -38,6 +38,7 @@ float   IT_KEYS			= 8388608;
 .float	rp_inmenu;
 .float	rp_infmenu;
 .float	rp_menutime;
+.float  rp_daytime;
 .string	rp_title;
 
 // Entity definitions:

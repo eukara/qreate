@@ -150,6 +150,7 @@ void() qreate_tool_remove =
 
 		remove(trace_ent);
 		sound (self, CHAN_AUTO, "effects/remove.wav", 1, ATTN_NORM);
+		self.attack_finished = time + 0.3;
 	}
 };
 
@@ -503,16 +504,6 @@ void() qreate_break_fall_touch =
 
 void() qreate_break_fall =
 {
-	/*entity fall;
-	fall = spawn();
-	setmodel(fall, self.model);
-	setorigin(fall, self.origin);
-	setsize(fall, self.mins, self.maxs);
-	fall.angles = self.angles;
-	fall.movetype = MOVETYPE_BOUNCE;
-	fall.velocity_z = -5;
-	fall.touch = qreate_break_fall_touch;
-	fall.solid = SOLID_BBOX;*/
 	self.takedamage = DAMAGE_NO;
 	self.movetype = MOVETYPE_BOUNCE;
 	self.velocity_z = -5;

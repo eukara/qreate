@@ -1186,10 +1186,12 @@ void() PlayerPostThink =
 	// eukara ~ See rp_menu.qc
 	if(qreate_CheckLIGHTRP() == TRUE)
 		RP_Menu_Draw();
-	if(self.qreate_altmenu)
+	else if(self.qreate_altmenu)
 		qreate_altspawnmenu_draw();
-	if(self.qreate_altmenut)
+	else if(self.qreate_altmenut)
 		qreate_altspawnmenut_draw();
+	else if(self.weapon == IT_TOOL && (self.tselected >= 15 || self.tselected <= 26))
+		qreate_wire_helper();
 
 };
 

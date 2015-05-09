@@ -182,12 +182,16 @@ void() worldspawn =
 // the area based ambient sounds MUST be the first precache_sounds
 
 // player precaches	
+	
+	bprint("Precaching weapons...");
 	W_Precache ();			// get weapon precaches
-
+	bprint("Precaching wire...");
+	qreate_wire_precache();
 // sounds used from C physics code
 
 	if(qreate_CheckSANDBOX() == TRUE)
 	{
+		bprint("Precaching sandbox content...");
 		precache_model("maps/b_bh10.bsp");
 		precache_model ("maps/b_batt0.bsp");
 		precache_model ("maps/b_batt1.bsp");
@@ -275,13 +279,11 @@ void() worldspawn =
 		precache_model ("progs/k_spike.mdl");
 		precache_model ("progs/knight.mdl");
 		precache_model ("progs/laser.mdl");
-		precache_model ("progs/lavaball.mdl");	// for testing
 		precache_model ("progs/lavaball.mdl");
 		precache_model ("progs/missile.mdl");
 		precache_model ("progs/ogre.mdl");
 		precache_model ("progs/oldone.mdl");
 		precache_model ("progs/s_bubble.spr");	// drowning bubbles
-		precache_model ("progs/s_bubble.spr");
 		precache_model ("progs/s_light.mdl");
 		precache_model ("progs/s_light.spr");
 		precache_model ("progs/s_spike.mdl");
@@ -487,10 +489,14 @@ void() worldspawn =
 		precache_sound ("arcade/mntrain.wav");
 	}
 	else if(qreate_CheckLIGHTRP() == TRUE)
+	{
+		bprint("Precaching roleplay content...");
 		RP_Main();
+	}
 	else if(qreate_CheckCOMMANDO() == TRUE)
 		Commando_Main();
 
+	bprint("Precaching player models...");
 	precache_model ("progs/eyes.mdl");
 	precache_model ("progs/player.mdl");
 

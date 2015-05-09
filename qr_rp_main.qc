@@ -42,10 +42,72 @@ void() RP_InitJobs =
 		world.TITLE_JOB_MAYOR = "Mayor";
 };
 
+void() RP_Time_Think =
+{
+	if(self.rp_daytime < 1)
+		lightstyle(0, "a");
+	else if(self.rp_daytime < 2)
+		lightstyle(0, "b");
+	else if(self.rp_daytime < 3)
+		lightstyle(0, "c");
+	else if(self.rp_daytime < 3.5)
+		lightstyle(0, "d");
+	else if(self.rp_daytime < 4)
+		lightstyle(0, "e");
+	else if(self.rp_daytime < 4.5)
+		lightstyle(0, "f");
+	else if(self.rp_daytime < 5)
+		lightstyle(0, "g");
+	else if(self.rp_daytime < 5.5)
+		lightstyle(0, "h");
+	else if(self.rp_daytime < 6)
+		lightstyle(0, "i");
+	else if(self.rp_daytime < 6.5)
+		lightstyle(0, "j");
+	else if(self.rp_daytime < 7)
+		lightstyle(0, "k");
+	else if(self.rp_daytime < 7.5)
+		lightstyle(0, "l");
+	else if(self.rp_daytime < 16.5)
+		lightstyle(0, "m");
+	else if(self.rp_daytime < 17)
+		lightstyle(0, "l");
+	else if(self.rp_daytime < 17.5)
+		lightstyle(0, "k");
+	else if(self.rp_daytime < 18)
+		lightstyle(0, "j");
+	else if(self.rp_daytime < 18.5)
+		lightstyle(0, "i");
+	else if(self.rp_daytime < 19)
+		lightstyle(0, "h");
+	else if(self.rp_daytime < 19.5)
+		lightstyle(0, "g");
+	else if(self.rp_daytime < 20)
+		lightstyle(0, "f");
+	else if(self.rp_daytime < 20.5)
+		lightstyle(0, "e");
+	else if(self.rp_daytime < 21)
+		lightstyle(0, "d");
+	else if(self.rp_daytime < 21.5)
+		lightstyle(0, "c");
+	else if(self.rp_daytime < 22)
+		lightstyle(0, "b");
+	else 
+		lightstyle(0, "a");
+		
+	if(self.rp_daytime >= 24)
+		self.rp_daytime = 0.0;
+	
+	self.rp_daytime = self.rp_daytime + 0.5;
+	self.nextthink = time + 0.2;
+};
+
 void() RP_Main =
 {
 	local entity rp_pday;
 	local entity rp_lspeaker;
+	local entity rp_timer;
+
 	
 	RP_SetPrecaches();
 	RP_InitJobs();
@@ -58,6 +120,12 @@ void() RP_Main =
 	rp_lspeaker = spawn();
 	rp_lockdown = FALSE;
 	world.rp_lockdownspeaker = rp_lspeaker;
+
+	rp_timer = spawn();
+	rp_timer.rp_daytime = 12.0;
+	rp_timer.think = RP_Time_Think;
+	rp_timer.nextthink = time + 1;
+
 };
 
 float(float value) RP_CheckMoney =
