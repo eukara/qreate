@@ -49,3 +49,9 @@ float	FL_WIREGATE			= 16384;
 float SVC_UPDATESTAT = 3;
 float STAT_TOTALMONSTERS = 12;
 
+// qr_ladder by pox
+.float ladderjump;
+.float laddertime;
+.float zerogtime;
+.float gravity;
+.float oldgravity;

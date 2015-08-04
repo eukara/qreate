@@ -737,6 +737,19 @@ void() PlayerJump =
 
 	if(self.inveh)		// qreate - eukos 
 		self.inveh = 0;
+
+	if (self.laddertime > time && self.ladderjump < time)
+	{
+
+		if (!(self.flags & FL_ONGROUND)) 
+			self.flags = self.flags + FL_ONGROUND;
+		
+		self.ladderjump = time + 0.4;
+
+		self.velocity_z = 0;
+		makevectors(self.angles);
+		self.velocity = self.velocity + (v_forward * 100);
+	}
 	
 	if (self.waterlevel >= 2)
 	{
@@ -929,6 +942,11 @@ void() PlayerPreThink =
 		return;		// intermission or finale
 
 	makevectors (self.v_angle);		// is this still used
+
+	if (self.zerogtime < time)
+		self.gravity = self.oldgravity;
+	else
+		self.gravity = 0.0001;
 	
 	self.deathtype = "";	// 1998-07-24 Wrong obituary messages fix by Zoid
 
