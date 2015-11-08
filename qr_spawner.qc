@@ -495,4 +495,4 @@ void() qreate_sound =
 {
 	precache_sound (self.noise);
 	self.use = qreate_sound_use;
-}; 
+};

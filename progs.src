@@ -3,8 +3,6 @@
 defs.qc
 qr_defs.qc			// Qreate - eukos
 qr_rp_defs.qc		// Qreate - eukos
-qr_com_defs.qc		// Qreate - eukos
-qr_com_main.qc		// Qreate - eukos
 qr_hacks.qc			// Qreate - eukos
 qr_rp_weapons.qc		// Qreate - eukos
 qr_rp_jobs.qc		// Qreate - eukos
@@ -47,8 +45,6 @@ fish.qc			// registered
 shalrath.qc		// registered
 enforcer.qc		// registered
 oldone.qc		// registered
-
-qr_com_objects.qc		// Qreate - eukos
 
 qr_spawner.qc 		// Qreate - eukos
 qr_altspawn.qc		// Qreate - eukos

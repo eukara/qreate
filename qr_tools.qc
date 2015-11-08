@@ -25,6 +25,7 @@ float (entity trent) qreate_tool_denied =
 
 	return TRUE;
 };
+
 void(float moda, float reverse) qreate_tool_rotate =
 {
 	local	vector	src;
@@ -106,23 +107,23 @@ void(float moda, float reverse) qreate_tool_move =
 		if(moda == 0)
 		{
 			if(reverse == 0)
-			trace_ent.origin_x = trace_ent.origin_x + 1;
+				trace_ent.origin_x = trace_ent.origin_x + 1;
 			else
-			trace_ent.origin_x = trace_ent.origin_x - 1;
+				trace_ent.origin_x = trace_ent.origin_x - 1;
 		}
 		else if(moda == 1)
 		{
 			if(reverse == 0)
-			trace_ent.origin_y = trace_ent.origin_y + 1;
+				trace_ent.origin_y = trace_ent.origin_y + 1;
 			else
-			trace_ent.origin_y = trace_ent.origin_y - 1;
+				trace_ent.origin_y = trace_ent.origin_y - 1;
 		}
 		else if(moda == 2)
 		{
 			if(reverse == 0)
-			trace_ent.origin_z = trace_ent.origin_z + 1;
+				trace_ent.origin_z = trace_ent.origin_z + 1;
 			else
-			trace_ent.origin_z = trace_ent.origin_z - 1;
+				trace_ent.origin_z = trace_ent.origin_z - 1;
 		}
 		setorigin(trace_ent, trace_ent.origin);
 	}
@@ -171,14 +172,14 @@ void(float reverse) qreate_tool_skin =
 	{
 		if(reverse == 0)
 		{
-			if(trace_ent.skin == 31)
+			if(trace_ent.skin >= 31)
 				trace_ent.skin = 0;
 			else
 				trace_ent.skin = trace_ent.skin + 1;
 		}
 		else
 		{
-			if(trace_ent.skin == 0)
+			if(trace_ent.skin <= 0)
 				trace_ent.skin = 0;
 			else
 				trace_ent.skin = trace_ent.skin - 1;
@@ -253,9 +254,9 @@ void(float reverse) qreate_tool_frame =
 	if(trace_ent != world)
 	{
 		if(reverse == 0)
-		trace_ent.frame = trace_ent.frame + 1;
+			trace_ent.frame = trace_ent.frame + 1;
 		else
-		trace_ent.frame = trace_ent.frame - 1;
+			trace_ent.frame = trace_ent.frame - 1;
 		
 		framep = ftos(trace_ent.frame);
 		sprint(self, "[d] model frame: ");
@@ -281,7 +282,6 @@ void() qreate_tool_camera =
 	{
 		self.fixangle = TRUE;
 		self.view_oldangles = self.angles;
-		self.cam = trace_ent;	// Experimental.
 		msg_entity = self;
   		WriteByte (MSG_ONE, SVC_SETVIEWPORT);
   		WriteEntity( MSG_ONE, trace_ent);
@@ -300,9 +300,9 @@ void() qreate_tool_camera =
   	WriteByte (MSG_ONE, SVC_SETVIEWPORT);
   	WriteEntity( MSG_ONE, self);
  	WriteByte (MSG_ONE, SVC_SETVIEWANGLES);
- 	WriteAngle( MSG_ONE, 0); 
+ 	WriteAngle( MSG_ONE, self.view_oldangles_x); 
  	WriteAngle( MSG_ONE, self.view_oldangles_y);
- 	WriteAngle( MSG_ONE, 0);
+ 	WriteAngle( MSG_ONE, self.view_oldangles_z);
 
 	W_SetCurrentAmmo();
 	self.cammode = 0;
@@ -333,7 +333,6 @@ void(float mode) qreate_tool_stack =
 			centerprint(self, "Stack: Left\n");
 		else if(self.stack == 5)
 			centerprint(self, "Stack: Right\n");
-		
 	}
 	else
 	{
@@ -681,7 +680,6 @@ void() qreate_printtselected =
 		else if(self.tselected == 14)
 			entname = "[t] 14 - change team\n";
 
-		
 	centerprint (self, entname);
 };
 

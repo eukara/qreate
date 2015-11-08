@@ -493,14 +493,11 @@ void() worldspawn =
 		bprint("Precaching roleplay content...");
 		RP_Main();
 	}
-	else if(qreate_CheckCOMMANDO() == TRUE)
-		Commando_Main();
 
 	bprint("Precaching player models...");
 	precache_model ("progs/eyes.mdl");
 	precache_model ("progs/player.mdl");
 
-	fTeamFull = 0;
 //
 // Setup light animation tables. 'a' is total darkness, 'z' is maxbright.
 //

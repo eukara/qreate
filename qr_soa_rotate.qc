@@ -1197,4 +1197,4 @@ void() func_rotate_door =
 	self.rp_owner 	= world;
 	self.rp_locked 	= FALSE;
 
-   }; 
+   };

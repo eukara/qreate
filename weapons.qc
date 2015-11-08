@@ -826,12 +826,6 @@ void() W_SetCurrentAmmo =
 		self.weaponmodel = "progs/v_btt.mdl";
 		self.weaponframe = 0;
 	}
-	else if (self.weapon == IT_MECHWARRIOR)
-	{
-		self.currentammo = 100;
-		self.weaponmodel = "progs/v_mech.mdl";
-		self.weaponframe = 0;
-	}
 	else
 	{
 		self.currentammo = 0;
@@ -1076,10 +1070,6 @@ if (self.secfire == 1)
 
 
 
-	}
-	else if (self.weapon == IT_MECHWARRIOR)
-	{
-		Commando_Mechwarrior_Fire();
 	}
 };
 /*
@@ -1343,59 +1333,35 @@ ImpulseCommands
 */
 void() ImpulseCommands =
 {
-	if(self.fInMenu == FALSE)
+	if(qreate_CheckLIGHTRP() == TRUE)
 	{
-		if(qreate_CheckCOMMANDO() == FALSE)
-		{
-			if(qreate_CheckLIGHTRP() == TRUE)
-			{
-				// ~eukara - start
-				if(RP_Menu_Input())
-					return;
-				// ~eukara - end
-			}
-			else if(Qreate_Binds() == TRUE)
-			{
-				self.impulse = 0;
-				return;
-			}
-		}
-
-		if (self.impulse >= 1 && self.impulse <= 8)
-			W_ChangeWeapon ();
-
-
-		if (self.impulse == 10)
-			CycleWeaponCommand ();
-		if (self.impulse == 11)
-			ServerflagsCommand ();
-		if (self.impulse == 12)
-			CycleWeaponReverseCommand ();
-			
-		if(qreate_CheckSANDBOX() == TRUE)
-		{
-			if (self.impulse == 19)
-				W_ChangeWeapon();
-		}
+		if(RP_Menu_Input())
+			return;
 	}
-	else
+	else if(Qreate_Binds() == TRUE)
 	{
-		if (self.impulse >= 1 && self.impulse <= 5)
-			Commando_Selection(self.impulse - 1);
-		if (self.impulse == 10)
-			Commando_SelectionRotatePlus();
-		if (self.impulse == 12)
-			Commando_SelectionRotateMinus();
+		self.impulse = 0;
+		return;
+	}
+		
+	if (self.impulse >= 1 && self.impulse <= 8)
+		W_ChangeWeapon ();
+
+
+	if (self.impulse == 10)
+		CycleWeaponCommand ();
+	if (self.impulse == 11)
+		ServerflagsCommand ();
+	if (self.impulse == 12)
+		CycleWeaponReverseCommand ();
+			
+	if(qreate_CheckSANDBOX() == TRUE)
+	{
+		if (self.impulse == 19)
+			W_ChangeWeapon();
 	}
 	
-	if(qreate_CheckCOMMANDO() == TRUE)
-	{
-		if(self.impulse == 21)
-			Commando_ViewStats();
-		if(self.impulse == 78)
-			Commando_ToggleMenu();
-	}
-
+	
 	self.impulse = 0;
 };
 
@@ -1412,20 +1378,12 @@ void() W_WeaponFrame =
 		return;
 		
 	if (self.impulse)
-	ImpulseCommands ();
+		ImpulseCommands ();
 	
-// check for attack
 	if (self.button0)
 	{
-		if(self.fInMenu == FALSE)
-		{
-			SuperDamageSound ();
-			W_Attack ();
-		}
-		else
-		{
-			Commando_PlaceSelection();
-		}
+		SuperDamageSound ();
+		W_Attack ();
 	}
 
 };

@@ -67,14 +67,6 @@ float() qreate_CheckLIGHTRP =
 		return FALSE;
 };
 
-float() qreate_CheckCOMMANDO =
-{
-	if(world.mode == 3)
-		return TRUE;
-	else
-		return FALSE;
-};
-
 void() qreate_arcade =
 {
 	if(!(self.model))

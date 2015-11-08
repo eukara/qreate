@@ -294,8 +294,6 @@ local float	rsnd;
 		sound (self, CHAN_VOICE, "hknight/sight1.wav", 1, ATTN_NORM);
 	else if (self.classname == "monster_tarbaby")
 		sound (self, CHAN_VOICE, "blob/sight1.wav", 1, ATTN_NORM);
-	else if (self.classname == "monster_vomit")
-		sound (self, CHAN_VOICE, "vomitus/v_sight1.wav", 1, ATTN_NORM);
 	else if (self.classname == "monster_enforcer")
 	{
 		rsnd = rint(random() * 3);			
@@ -354,10 +352,12 @@ entity(string team) qreate_checkteam =
 		self.qreate_monster_target = find(self.qreate_monster_target, qreate_team, "friend");
 
 	if (self.qreate_monster_target)
+	{
  		traceline(self.origin, self.qreate_monster_target.origin, TRUE, self);
 
-	if (trace_fraction == 1)
-  		return self.qreate_monster_target;
+		if (trace_fraction == 1)
+  			return self.qreate_monster_target;
+	}
 };
 
 float() FindTarget =
